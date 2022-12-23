@@ -1,0 +1,33 @@
+from ._entity_request_builder import EntityRequestBuilder
+from pyservicenow.requests.request._table_entry_collection_request import TableEntryCollectionRequest
+from pyservicenow.requests.request import TableEntryRequest
+from pyservicenow.types.models import ServiceNowEntry
+
+class TableRequestBuilder(EntityRequestBuilder):
+    """The Table Request Builder type
+    """
+
+    def __init__(self, request_url: str, client) -> None:
+        super().__init__(request_url, client)
+    
+    @property
+    def Request(self) -> TableEntryCollectionRequest:
+        """Constructs a Table Entry Collection Request
+
+        Returns:
+            TableEntryCollectionRequest: The constructed Table Entry Collection Request
+        """
+
+        return TableEntryCollectionRequest(self.RequestUrl, self.Client, None)
+    
+    def id(self, sys_id: str) -> TableEntryRequest:
+        """Constructs a Table Entry Requst using the provided sys_id
+
+        Args:
+            sys_id (str): Table Entry's sys_id
+
+        Returns:
+            TableEntryRequest: The constructed Table Entry Request
+        """
+
+        return TableEntryRequest(self.AppendSegmentToRequestUrl(sys_id), self.Client, None)
