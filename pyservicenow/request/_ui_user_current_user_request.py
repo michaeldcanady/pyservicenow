@@ -1,7 +1,8 @@
 from typing import Union, TypeVar, Type, List, Optional, Generic
 
+from pyrestsdk.request import BaseRequest
+
 # Interal Imports
-from ._base_request import BaseRequest
 from pyservicenow.types.enums import HttpsMethods
 from pyservicenow.types.models import ServiceNowEntry
 from pyservicenow.types.exceptions import UnexpectedReturnType

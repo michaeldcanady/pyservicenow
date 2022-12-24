@@ -1,12 +1,12 @@
 import typing
-from pyrestwrapperbase import AbstractServiceClient
+from pyrestsdk import AbstractServiceClient
 from logging import getLogger
 from requests import Session, Response
 
 # internal imports
-from ..requests.builder._now_request_builder import NowRequestBuilder
-from ..types.enums import APIVersion
-from ._client_factory import HTTPClientFactory
+from pyservicenow.builder._now_request_builder import NowRequestBuilder
+from pyservicenow.types.enums import APIVersion
+from pyservicenow.core._client_factory import HTTPClientFactory
 
 Logger = getLogger(__name__)
 

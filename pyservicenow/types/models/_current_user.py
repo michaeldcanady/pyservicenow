@@ -1,14 +1,13 @@
 from typing import Dict, Optional
-from pyrestwrapperbase import AbstractServiceClient
 
 # internal imports
 from ._servicenow_entry import ServiceNowEntry
 
 class CurrentUser(ServiceNowEntry):
 
-    _client: Optional[AbstractServiceClient]
+    #_client
 
-    def __init__(self, _value: ServiceNowEntry = ServiceNowEntry(), client: Optional[AbstractServiceClient] = None) -> None:
+    def __init__(self, _value: ServiceNowEntry = ServiceNowEntry(), client = None) -> None:
         super().__init__(_value)
         self._client = client
 
@@ -68,7 +67,7 @@ class CurrentUser(ServiceNowEntry):
         return self["user_initials"].Value
 
     @classmethod
-    def fromJson(cls, entry: Dict, client: AbstractServiceClient) -> 'CurrentUser':
+    def fromJson(cls, entry: Dict, client) -> 'CurrentUser':
         """Converts entry from dictionary to new CurrentUser.
 
         Args:

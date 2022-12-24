@@ -1,10 +1,16 @@
-from ._entity_request_builder import EntityRequestBuilder
-from ._table_request_builder import TableRequestBuilder
-from ._ui_request_builder import UIRequestBuilder
+from __future__ import annotations
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from pyservicenow.core import ServiceNowClient
+from pyrestsdk.requestbuilder import EntityRequestBuilder
+
+# internal imports
+from pyservicenow.builder._table_request_builder import TableRequestBuilder
+from pyservicenow.builder._ui_request_builder import UIRequestBuilder
 
 class NowRequestBuilder(EntityRequestBuilder):
 
-    def __init__(self, request_url: str, client) -> None:
+    def __init__(self, request_url: str, client: ServiceNowClient) -> None:
         super().__init__(request_url, client)
 
     def Table(self, table_name: str) -> TableRequestBuilder:

@@ -1,11 +1,11 @@
 from requests import Session
 import typing
 from logging import getLogger
-from pyrestwrapperbase.middleware import AuthorizationHandler, BaseMiddleware
+from pyrestsdk.middleware import BasicAuthorizationHandler, BaseMiddleware
 
 # internal imports
-from ._username_password_credential import UsernamePasswordCredential
-from .middleware.middleware import MiddlewarePipeline
+from pyservicenow.core.credential._username_password_credential import UsernamePasswordCredential
+from pyservicenow.core.middleware.middleware import MiddlewarePipeline
 
 Logger = getLogger(__name__)
 
@@ -26,7 +26,7 @@ class HTTPClientFactory:
         """Applies the default middleware chain to the HTTP Client
         """
         middleware = [
-            AuthorizationHandler(credential, **kwargs),
+            BasicAuthorizationHandler(credential, **kwargs),
         ]
         self._register(middleware)
         return self.session

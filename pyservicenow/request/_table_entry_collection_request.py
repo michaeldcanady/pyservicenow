@@ -6,8 +6,8 @@ if TYPE_CHECKING:
 
 # Interal Imports
 from pyservicenow.types.enums import HttpsMethods, Header, MimeTypeNames
-from pyservicenow.types.models import ServiceNowEntry
-from pyservicenow.requests.request._base_table_request import BaseTableRequest
+from pyservicenow.types.models import ServiceNowEntry, ServiceNowHeaderOption
+from pyservicenow.request._base_table_request import BaseTableRequest
 from pyservicenow.types.exceptions import UnexpectedReturnType
 
 S = TypeVar("S", bound=ServiceNowEntry)
@@ -26,7 +26,7 @@ class TableEntryCollectionRequest(BaseTableRequest):
             typing.List[ServiceNowEntry]: List of Service-Now table entries
         """
 
-        self._headers.update({Header.Accept: MimeTypeNames.Application.Json})
+        self._headers.append(ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json))
         self.Method = HttpsMethods.GET
 
         return self.Send(ServiceNowEntry, None)

@@ -1,13 +1,17 @@
 import json
 import ssl
-from typing import Optional
+from typing import Optional, TypeVar
 from requests import PreparedRequest, Response
 
 from requests.adapters import HTTPAdapter
 from urllib3 import PoolManager
 
-from .request_context import RequestContext
+from pyrestsdk.middleware import BaseMiddleware
 
+# internal imports
+from pyservicenow.core.middleware.request_context import RequestContext
+
+B = TypeVar("B", bound=BaseMiddleware)
 
 class MiddlewarePipeline(HTTPAdapter):
     """MiddlewarePipeline, entry point of middleware
@@ -15,8 +19,8 @@ class MiddlewarePipeline(HTTPAdapter):
     it here https://buffered.dev/middleware-python-requests/
     """
 
-    _current_middleware: Optional['BaseMiddleware']
-    _first_middleware: Optional['BaseMiddleware']
+    _current_middleware: Optional[B]
+    _first_middleware: Optional[B]
 
     def __init__(self) -> None:
         super().__init__()
@@ -24,7 +28,7 @@ class MiddlewarePipeline(HTTPAdapter):
         self._first_middleware = None
         self.poolmanager = PoolManager(ssl_version=ssl.PROTOCOL_TLSv1_2)
 
-    def add_middleware(self, middleware: 'BaseMiddleware') -> None:
+    def add_middleware(self, middleware: B) -> None:
         if self._current_middleware is not None:
             self._current_middleware.next = middleware
             self._current_middleware = middleware

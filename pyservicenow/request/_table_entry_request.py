@@ -1,9 +1,9 @@
 from typing import Union, TypeVar, Type, List, Optional, Generic
 
 # Interal Imports
-from pyservicenow.requests.request._base_table_request import BaseTableRequest
+from pyservicenow.request._base_table_request import BaseTableRequest
 from pyservicenow.types.enums import HttpsMethods, Header, MimeTypeNames
-from pyservicenow.types.models import ServiceNowEntry
+from pyservicenow.types.models import ServiceNowEntry, ServiceNowHeaderOption
 from pyservicenow.types.exceptions import UnexpectedReturnType
 
 S = TypeVar("S", bound=ServiceNowEntry)
@@ -20,7 +20,7 @@ class TableEntryRequest(BaseTableRequest):
             ServiceNowEntry: The Service-Now Entry
         """
 
-        self._headers.update({Header.Accept: MimeTypeNames.Application.Json})
+        self._headers.append(ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json))
         self.Method = HttpsMethods.GET
 
         if (_return := self.Send(ServiceNowEntry, None)) is None:
@@ -41,7 +41,7 @@ class TableEntryRequest(BaseTableRequest):
 
     def Send(self, obj_type: Type[S], object: Optional[S]) -> Optional[S]:
 
-        if (type(_return := super().Send(obj_type, object, None, None)) is obj_type) or _return is None:
+        if (type(_return := super().Send(obj_type, object)) is obj_type) or _return is None:
             return _return
         else:
             raise UnexpectedReturnType(type(_return), obj_type)
