@@ -19,15 +19,16 @@ class TableEntryCollectionRequest(BaseTableRequest):
     def __init__(self, request_url: str, client: 'ServiceNowClient', options) -> None:
         super().__init__(request_url, client, options)
 
-    def Get(self) -> typing.List[ServiceNowEntry]:
-        """Gets list of Service-Now table entries
-
-        Returns:
-            typing.List[ServiceNowEntry]: List of Service-Now table entries
-        """
+    @property
+    def Get(self) -> TableEntryCollectionRequest:
 
         self._headers.append(ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json))
         self.Method = HttpsMethods.GET
+
+        return self
+
+    @property
+    def Invoke(self) -> List[ServiceNowEntry]:
 
         return self.Send(ServiceNowEntry, None)
     
