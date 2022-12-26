@@ -107,7 +107,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest):
         Returns:
             TableEntryCollectionRequest: The request object to send.
         """
-
+        #TODO: parse str into query builder (check)
         self._query_options.append(ServiceNowQueryOption(QueryParameters.Query, query))
 
         return self
