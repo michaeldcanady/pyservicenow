@@ -1,9 +1,9 @@
-from pyrestsdk.type.model import QueryOption
+from pyrestsdk.type.model import HeaderOption
 
 # internal imports
 from pyservicenow.types.enums import Header
 
-class ServiceNowHeaderOption(QueryOption):
+class ServiceNowHeaderOption(HeaderOption):
 
     name: Header
 
