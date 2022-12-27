@@ -1,6 +1,6 @@
 from __future__ import annotations
 import typing
-from typing import Union, TypeVar, Type, List, Optional, Generic, TYPE_CHECKING, Iterable
+from typing import Union, TypeVar, Type, TYPE_CHECKING, Iterable
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
 
@@ -8,7 +8,7 @@ if TYPE_CHECKING:
 from pyservicenow.types.enums import QueryParameters, DisplayValue, View
 from pyservicenow.request._base_servicenow_request import BaseServiceNowEntryRequest
 from pyservicenow.types.models.querybuilder import QueryBuilder
-from pyservicenow.types.models import ServiceNowQueryOption, ServiceNowEntry
+from pyservicenow.types.models import ServiceNowQueryOption, ServiceNowEntry, ServiceNowHeaderOption
 
 T = TypeVar("T", bound='BaseTableRequest')
 S = TypeVar("S", bound='ServiceNowEntry')
