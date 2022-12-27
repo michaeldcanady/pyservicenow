@@ -69,7 +69,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest):
             TableEntryCollectionRequest: The request object to send.
         """
         
-        self._query_options.update(ServiceNowQueryOption(QueryParameters.Limit, limit))
+        self._query_options.append(ServiceNowQueryOption(QueryParameters.Limit, limit))
         return self
 
     def NoCount(self: T, no_count: bool) -> T:
@@ -109,7 +109,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        self._query_options.update(ServiceNowQueryOption(QueryParameters.Query, query))
+        self._query_options.append(ServiceNowQueryOption(QueryParameters.Query, query))
 
         return self
 
@@ -123,7 +123,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        self._query_options.update(ServiceNowQueryOption(QueryParameters.Category, category))
+        self._query_options.append(ServiceNowQueryOption(QueryParameters.Category, category))
         return self
 
     def NoDomain(self: T, no_domain: bool) -> T:
@@ -136,7 +136,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        self._query_options.update(ServiceNowQueryOption(QueryParameters.NoDomain, no_domain))
+        self._query_options.append(ServiceNowQueryOption(QueryParameters.NoDomain, no_domain))
         return self
 
     def SuppressPaginationHeader(self: T, suppress_pagination_header: bool) -> T:
@@ -150,7 +150,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        self._query_options.update(ServiceNowQueryOption(QueryParameters.SuppressPaginationHeader, suppress_pagination_header))
+        self._query_options.append(ServiceNowQueryOption(QueryParameters.SuppressPaginationHeader, suppress_pagination_header))
         return self
 
     def View(self: T, view: View) -> T:
@@ -163,5 +163,5 @@ class BaseTableRequest(BaseServiceNowEntryRequest):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        self._query_options.update(ServiceNowQueryOption(QueryParameters.View, view))
+        self._query_options.append(ServiceNowQueryOption(QueryParameters.View, view))
         return self

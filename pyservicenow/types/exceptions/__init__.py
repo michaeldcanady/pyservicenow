@@ -1,4 +1,5 @@
 from ._unexpected_return_type import UnexpectedReturnType
+from ._servicenow_service_exception import ServiceNowServiceException
 
 class PysnowException(Exception):
     pass

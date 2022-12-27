@@ -1,8 +1,9 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Iterable
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
 from pyrestsdk.requestbuilder import EntityRequestBuilder
+from pyservicenow.request._batch_servicenow_request import BatchServiceNowRequest
 
 class BatchRequestBuilder(EntityRequestBuilder):
     
@@ -10,5 +11,8 @@ class BatchRequestBuilder(EntityRequestBuilder):
         super().__init__(request_url, client)
 
     @property
-    def request(self):
-        return super().request
+    def request(self) -> BatchServiceNowRequest:
+        return self.Request(None)
+
+    def Request(self, options: Iterable) -> BatchServiceNowRequest:
+        return BatchServiceNowRequest(self.RequestUrl, self.Client, options)

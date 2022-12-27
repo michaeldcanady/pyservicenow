@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import Iterable, Dict
 from pyrestsdk.type.model import HeaderOption
 
 # internal imports
@@ -11,8 +11,11 @@ class ServiceNowHeaderOption(HeaderOption):
     def __init__(self, name: Header, value: str) -> None:
         super().__init__(name, value)
 
-    def __iter__(self) -> Iterable:
-        return iter({
+    def asDict(self) -> Dict:
+        return {
             "name": self.Name,
             "value": self.Value
-            }.items())
+            }
+
+    def __iter__(self) -> Iterable:
+        return iter(self.asDict().items())

@@ -7,6 +7,7 @@ from pyrestsdk.requestbuilder import EntityRequestBuilder
 # internal imports
 from pyservicenow.builder._table_request_builder import TableRequestBuilder
 from pyservicenow.builder._ui_request_builder import UIRequestBuilder
+from pyservicenow.builder._batch_request_builder import BatchRequestBuilder
 
 class NowRequestBuilder(EntityRequestBuilder):
 
@@ -24,6 +25,10 @@ class NowRequestBuilder(EntityRequestBuilder):
         """
 
         return TableRequestBuilder(self.AppendSegmentToRequestUrl(f"/table/{table_name}"), self.Client)
+
+    @property
+    def Batch(self) -> BatchRequestBuilder:
+        return BatchRequestBuilder(self.AppendSegmentToRequestUrl("/batch"), self.Client)
     
     @property
     def UI(self) -> UIRequestBuilder:
