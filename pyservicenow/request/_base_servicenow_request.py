@@ -27,7 +27,7 @@ class BaseServiceNowEntryRequest(BaseRequest):
         self._return_type = _return_type
 
     @property
-    def Headers(self: B) -> HeaderOptionsCollection:
+    def Headers(self) -> HeaderOptionsCollection:
         return self._headers
 
     @property
@@ -42,6 +42,8 @@ class BaseServiceNowEntryRequest(BaseRequest):
         return self
     
     def Post(self: B, input_object: S) -> B:
+        """Sets request to post request
+        """
 
         self._headers.append(ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json))
         self.Method = HttpsMethod.POST
@@ -49,7 +51,9 @@ class BaseServiceNowEntryRequest(BaseRequest):
 
         return self
 
-    def Delete(self: B, sys_id: str) -> B:
+    def Delete(self: B) -> B:
+        """Sets request to delete request
+        """
 
         self._headers.append(ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json))
         self.Method = HttpsMethod.DELETE
@@ -58,6 +62,8 @@ class BaseServiceNowEntryRequest(BaseRequest):
         return self
 
     def Put(self: B, input_object: S) -> B:
+        """Sets request to put request
+        """
 
         self._headers.append(ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json))
         self.Method = HttpsMethod.PUT
@@ -66,11 +72,13 @@ class BaseServiceNowEntryRequest(BaseRequest):
         return self
 
     @property
-    def Invoke(self: B) -> (List[S] | S | None):
+    def Invoke(self: B) -> Union[List[S], S, None]:
 
         return self.Send(self._object)
 
     def asDict(self) -> Dict:
+        """Converts request into a dictionary
+        """
 
         url_parts = list(urlparse.urlparse(self.RequestUrl))
         query = dict(urlparse.parse_qsl(url_parts[4]))
