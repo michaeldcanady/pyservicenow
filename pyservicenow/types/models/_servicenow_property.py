@@ -10,7 +10,7 @@ class ServiceNowProperty(object):
 
     @property
     def DisplayValue(self) -> str:
-        """Gets the display value
+        """Gets/Sets the display value
 
         Returns:
             str: The display value
@@ -24,7 +24,7 @@ class ServiceNowProperty(object):
     
     @property
     def Link(self) -> str:
-        """Gets the link
+        """Gets/Sets the link
 
         Returns:
             str: The link
@@ -38,7 +38,7 @@ class ServiceNowProperty(object):
 
     @property
     def Value(self) -> str:
-        """Gets the value
+        """Gets/Sets the value
 
         Returns:
             str: The value

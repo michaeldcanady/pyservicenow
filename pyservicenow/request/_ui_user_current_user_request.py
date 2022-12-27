@@ -29,12 +29,4 @@ class UIUserCurrentUserRequest(BaseRequest):
 
         return self.Send(CurrentUser, None)
 
-    def Send(self, obj_type: Type[S], object: Optional[S]) -> S:
-
-
-        if type(_return := super().Send(obj_type, object, None, None)) is not obj_type:
-            raise UnexpectedReturnType(type(_return), obj_type)
-        
-        return _return
-
 from pyservicenow.types.models import CurrentUser
