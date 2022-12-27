@@ -1,6 +1,7 @@
 from enum import IntEnum, auto
+from strenum import UppercaseStrEnum
 
-class HttpsMethods(IntEnum):
+class HttpsMethods(UppercaseStrEnum):
     GET = auto()
     POST = auto()
     DELETE = auto()

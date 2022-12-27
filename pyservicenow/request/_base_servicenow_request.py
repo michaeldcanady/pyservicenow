@@ -1,8 +1,9 @@
+
 from __future__ import annotations
-from typing import TYPE_CHECKING, Iterable, Union, TypeVar, Type, Optional
+from typing import TYPE_CHECKING, Iterable, Union, TypeVar, Type, Optional, Dict
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
-
+from json import dumps
 from pyrestsdk.request import BaseRequest
 
 # Interal Imports
@@ -12,7 +13,6 @@ from pyservicenow.types.enums import HttpsMethods, Header, MimeTypeNames
 B = TypeVar("B", bound='BaseServiceNowEntryRequest')
 
 S = TypeVar("S", bound='ServiceNowEntry')
-
 class BaseServiceNowEntryRequest(BaseRequest):
 
     _object: Optional[S] = None
@@ -61,3 +61,13 @@ class BaseServiceNowEntryRequest(BaseRequest):
     def Invoke(self: B) -> S:
 
         return self.Send(self._return_type, self._object)
+
+    def asDict(self) -> Dict:
+        return {
+            "headers": self.Headers,
+            "url": self.RequestUrl,
+            "method": self.Method
+        }
+
+    def __json__(self) -> str:
+        return dumps(self.asDict())
