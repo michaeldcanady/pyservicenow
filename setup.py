@@ -9,12 +9,12 @@ _packages = [x[0].replace("\\",".") for x in os.walk(directory) if "__pycache__"
 setup(
     name = __module_name__,
     version = __version__,
-    author = "dmcanady",
-    author_email = "dmcanady@liberty.edu",
+    author = "michaeldcanady",
+    author_email = "",
     description = ("Service-Now API wrapper"),
     license = "MIT",
     #keywords = "example documentation tutorial",
-    url = "https://bitbucket.os.liberty.edu/projects/DMG/repos/graph_python_module",
+    url = "https://github.com/michaeldcanady/pyservicenow",
     packages=_packages,
     #long_description=read('README'),,
 )
