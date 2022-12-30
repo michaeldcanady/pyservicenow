@@ -1,24 +1,29 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, Iterable, Union, TypeVar, Type, Optional, List, Dict
+from typing import TYPE_CHECKING, Iterable, Union, TypeVar, Type, Optional, Dict, List, Callable, List, Dict
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
     
+import json
+
 from requests import Response
 
 from pyrestsdk.request import BaseRequest
 from pyrestsdk.type.enum import HttpsMethod
 
 # Interal Imports
-from pyservicenow.types.models import ServiceNowQueryOption, ServiceNowHeaderOption, ServiceNowEntry
+from pyservicenow.types.models import ServiceNowQueryOption, ServiceNowHeaderOption, ServiceNowEntry, CollectionPage
 from pyservicenow.types.enums import Header, MimeTypeNames
 
 B = TypeVar("B", bound="BaseServiceNowEntryRequest")
 S = TypeVar("S", bound="ServiceNowEntry")
 
+S = TypeVar("S", bound='CollectionPage')
 
 class BaseServiceNowEntryRequest(BaseRequest):
 
-    def __init__(self, _return_type: Type[S], request_url: str, client: 'ServiceNowClient', options: Optional[Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]]) -> None:
+    _object: Optional[S] = None
+
+    def __init__(self, _return_type: Type[S], request_url: str, client: 'ServiceNowClient', options: Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]) -> None:
         super().__init__(_return_type, request_url, client, options)
 
     @property
@@ -28,6 +33,7 @@ class BaseServiceNowEntryRequest(BaseRequest):
         
         self._headers.append(ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json))
         self.Method = HttpsMethod.GET
+        self.Method = HttpsMethod.GET
         self._object = None
 
         return self
@@ -35,6 +41,7 @@ class BaseServiceNowEntryRequest(BaseRequest):
     def Post(self: B, input_object: S) -> B:
 
         self._headers.append(ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json))
+        self.Method = HttpsMethod.POST
         self.Method = HttpsMethod.POST
         self._object = input_object
 
@@ -44,6 +51,7 @@ class BaseServiceNowEntryRequest(BaseRequest):
 
         self._headers.append(ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json))
         self.Method = HttpsMethod.DELETE
+        self.Method = HttpsMethod.DELETE
         self._object = None
 
         return self
@@ -51,6 +59,7 @@ class BaseServiceNowEntryRequest(BaseRequest):
     def Put(self: B, input_object: S) -> B:
 
         self._headers.append(ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json))
+        self.Method = HttpsMethod.PUT
         self.Method = HttpsMethod.PUT
         self._object = input_object
 
