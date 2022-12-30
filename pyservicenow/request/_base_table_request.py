@@ -7,10 +7,10 @@ if TYPE_CHECKING:
 from pyservicenow.types.enums import QueryParameters, DisplayValue, View
 from pyservicenow.request._base_servicenow_request import BaseServiceNowEntryRequest
 from pyservicenow.types.models.querybuilder import QueryBuilder
-from pyservicenow.types.models import ServiceNowQueryOption, ServiceNowEntry, ServiceNowHeaderOption
+from pyservicenow.types.models import ServiceNowQueryOption, ServiceNowEntry, ServiceNowHeaderOption, CollectionPage
 
 T = TypeVar("T", bound='BaseTableRequest')
-S = TypeVar("S", bound='ServiceNowEntry')
+S = TypeVar("S", bound='CollectionPage')
 
 class BaseTableRequest(BaseServiceNowEntryRequest[S]):
 

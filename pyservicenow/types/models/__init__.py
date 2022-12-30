@@ -1,4 +1,5 @@
 from .querybuilder import QueryBuilder
+from ._attachment_entry import AttachmentEntry
 from ._servicenow_property_collection import ServiceNowPropertyCollection
 from ._servicenow_entry import ServiceNowEntry
 from ._current_user import CurrentUser
@@ -11,7 +12,6 @@ from pyservicenow.types.models._servicenow_table_entries_collection_page import 
 
 __all__ = [
     "AttachmentEntry",
-    "Entity",
     "QueryBuilder",
     "ServiceNowPropertyCollection",
     "ServiceNowEntry",

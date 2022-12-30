@@ -9,11 +9,12 @@ from pyservicenow.types.models import (
     ServiceNowEntry,
     ServiceNowQueryOption,
     ServiceNowHeaderOption,
+    CollectionPage
 )
 from pyservicenow.types.exceptions import UnexpectedReturnType
 from pyservicenow.request._base_table_request import BaseTableRequest
 
-S = TypeVar("S", bound=ServiceNowEntry)
+S = TypeVar("S", bound=CollectionPage)
 B = TypeVar("B", bound="TableEntryCollectionRequest")
 
 class TableEntryCollectionRequest(BaseTableRequest[S]):

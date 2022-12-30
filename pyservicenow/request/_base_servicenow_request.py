@@ -108,10 +108,6 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
             ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json)
         )
 
-        self._headers.append(
-            ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json)
-        )
-
         self._update_request_type(HttpsMethod.PUT, input_object)
 
         return self
