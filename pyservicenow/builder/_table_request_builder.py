@@ -6,7 +6,7 @@ if TYPE_CHECKING:
 from pyrestsdk.requestbuilder import EntityRequestBuilder
 
 # internal imports
-from pyservicenow.types.models import ServiceNowEntry
+from pyservicenow.types.models import ServiceNowEntry, ServiceNowTableEntriesCollectionPage
 from pyservicenow.request._table_entry_collection_request import TableEntryCollectionRequest
 from pyservicenow.request import TableEntryRequest
 
@@ -28,7 +28,7 @@ class TableRequestBuilder(EntityRequestBuilder):
         return self.Request(None)
 
     def Request(self, options: Iterable) -> TableEntryCollectionRequest:
-        return TableEntryCollectionRequest(ServiceNowEntry, self.RequestUrl, self.Client, None)
+        return TableEntryCollectionRequest(ServiceNowTableEntriesCollectionPage, self.RequestUrl, self.Client, None)
     
     def id(self, sys_id: str) -> TableEntryRequest:
         """Constructs a Table Entry Requst using the provided sys_id
