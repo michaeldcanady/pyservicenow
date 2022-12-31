@@ -62,6 +62,9 @@ class ServiceNowClient(AbstractServiceClient):
         :rtype: requests.Response
         """
         Logger.info(f"{type(self).__name__}.get: function called")
+        
+        Logger.debug(f"url: {self._servicenow_url(url)}")
+        Logger.debug(f"kwargs: {kwargs}")
 
         return self.lu_edm_api_session.get(self._servicenow_url(url), **kwargs)
 

@@ -30,7 +30,6 @@ class BaseTableRequest(BaseServiceNowEntryRequest):
         """
 
         self._query_options.append(ServiceNowQueryOption(QueryParameters.ExcludeReferenceLink, exclude_reference_link))
-        self._query_options.append(ServiceNowQueryOption(QueryParameters.ExcludeReferenceLink, exclude_reference_link))
         return self
 
     def DisplayValue(self: T, values: DisplayValue) -> T:
@@ -57,7 +56,6 @@ class BaseTableRequest(BaseServiceNowEntryRequest):
         """
 
         self._query_options.append(ServiceNowQueryOption(QueryParameters.Fields, fields))
-        self._query_options.append(ServiceNowQueryOption(QueryParameters.Fields, fields))
         return self
 
     def Limit(self: T, limit: int) -> T:
@@ -70,7 +68,6 @@ class BaseTableRequest(BaseServiceNowEntryRequest):
             TableEntryCollectionRequest: The request object to send.
         """
         
-        self._query_options.append(ServiceNowQueryOption(QueryParameters.Limit, limit))
         self._query_options.append(ServiceNowQueryOption(QueryParameters.Limit, limit))
         return self
 
@@ -85,7 +82,6 @@ class BaseTableRequest(BaseServiceNowEntryRequest):
         """
 
         self._query_options.append(ServiceNowQueryOption(QueryParameters.NoCount, no_count))
-        self._query_options.append(ServiceNowQueryOption(QueryParameters.NoCount, no_count))
         return self
 
     def Offset(self: T, offset: int) -> T:
@@ -99,7 +95,6 @@ class BaseTableRequest(BaseServiceNowEntryRequest):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        self._query_options.append(ServiceNowQueryOption(QueryParameters.Offset, offset))
         self._query_options.append(ServiceNowQueryOption(QueryParameters.Offset, offset))
         return self
 
@@ -128,7 +123,6 @@ class BaseTableRequest(BaseServiceNowEntryRequest):
         """
 
         self._query_options.append(ServiceNowQueryOption(QueryParameters.Category, category))
-        self._query_options.append(ServiceNowQueryOption(QueryParameters.Category, category))
         return self
 
     def NoDomain(self: T, no_domain: bool) -> T:
@@ -141,7 +135,6 @@ class BaseTableRequest(BaseServiceNowEntryRequest):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        self._query_options.append(ServiceNowQueryOption(QueryParameters.NoDomain, no_domain))
         self._query_options.append(ServiceNowQueryOption(QueryParameters.NoDomain, no_domain))
         return self
 
@@ -157,7 +150,6 @@ class BaseTableRequest(BaseServiceNowEntryRequest):
         """
 
         self._query_options.append(ServiceNowQueryOption(QueryParameters.SuppressPaginationHeader, suppress_pagination_header))
-        self._query_options.append(ServiceNowQueryOption(QueryParameters.SuppressPaginationHeader, suppress_pagination_header))
         return self
 
     def View(self: T, view: View) -> T:
@@ -170,6 +162,5 @@ class BaseTableRequest(BaseServiceNowEntryRequest):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        self._query_options.append(ServiceNowQueryOption(QueryParameters.View, view))
         self._query_options.append(ServiceNowQueryOption(QueryParameters.View, view))
         return self
