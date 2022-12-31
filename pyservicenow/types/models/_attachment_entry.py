@@ -1,57 +1,85 @@
 from __future__ import annotations
-import typing
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
+
+from os.path import exists, join
 
 # internal imports
 from pyservicenow.types.models._servicenow_entry import ServiceNowEntry
 
 class AttachmentEntry(ServiceNowEntry):
 
-    def __init__(self, _value: ServiceNowEntry = ServiceNowEntry(), client: Optional[ServiceNowClient] = None) -> None:
-        super().__init__(_value, client)
+    def __init__(self, client: ServiceNowClient) -> None:
+        super().__init__(client)
 
     @property
     def ContentType(self):
-        raise NotImplementedError("ContentType is not implemented")
+        return self["content_type"].Value
 
     @property
     def FileName(self) -> str:
-        raise NotImplementedError("FileName is not implemented")
-
+        return self["file_name"].Value
+    
     @property
-    def Width(self):
-        raise NotImplementedError("Width is not implemented")
-
-    @property
-    def Height(self):
-        raise NotImplementedError("Height is not implemented")
+    def Tags(self):
+        return self["sys_tags"].Value
 
     @property
     def TableName(self) -> str:
-        raise NotImplementedError("TableName is not implemented")
+        return self["table_name"].Value
 
     @property
     def DownloadLink(self) -> str:
-        raise NotImplementedError("DownloadLink is not implemented")
+        return self["download_link"].Value
+    
+    def Download(self, download_path: str, use_filename: bool = True) -> None:
+        """Downloads attachment to designated filepath
 
-    @property
-    def AverageImageColor(self):
-        raise NotImplementedError("AverageImageColor is not implemented")
+        Args:
+            download_path (str): The path to download the file to.
+            use_filename (bool, optional): whether to use the file name supplied by Service-Now. Defaults to True.
+        """
+        
+        if (not exists(download_path)):
+            raise Exception(f"Invalid download path: {download_path}")
+        
+        if use_filename:
+            download_path = join(download_path, self.FileName)
+        
+        _response = self.Client.get(self.DownloadLink)
+        
+        with open(download_path, "wb") as file:
+            file.write(_response.content)
     
     @property
-    def Size(self):
-        raise NotImplementedError("Size is not implemented")
+    def EncryptionContext(self) -> str:
+        return self["encryption_context"].Value
+    
+    @property
+    def State(self) -> str:
+        return self["state"].Value
+    
+    @property
+    def Size(self) -> int:
+        return int(self["size_bytes"].Value)
 
     @property
-    def CompressedSize(self):
-        raise NotImplementedError("CompressedSize is not implemented")
+    def CompressedSize(self) -> int:
+        return int(self["size_compressed"].Value)
 
     @property
     def TableSysId(self) -> str:
-        raise NotImplementedError("TableSysId is not implemented")
+        return self["table_sys_id"].Value
+    
+    @property
+    def Hash(self) -> str:
+        return self["hash"].Value
+    
+    @property
+    def ChunkSize(self) -> int:
+        return int(self["chunk_size_bytes"].Value)
 
     @property
     def IsCompressed(self) -> bool:
-        raise NotImplementedError("IsCompressed is not implemented")
+        return bool(self["compressed"].Value)
