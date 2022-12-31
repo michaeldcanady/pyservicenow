@@ -1,11 +1,12 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, Iterable
+from typing import TYPE_CHECKING, Iterable, Optional, Union
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
 
 from pyrestsdk.requestbuilder import EntityRequestBuilder
 
 # internal imports
+from pyservicenow.types.models import ServiceNowQueryOption, ServiceNowHeaderOption, AttachmentEntry
 from pyservicenow.request import AttachmentEntryRequest, AttachmentEntryCollectionRequest
 
 class AttachmentRequestBuilder(EntityRequestBuilder):
@@ -25,8 +26,8 @@ class AttachmentRequestBuilder(EntityRequestBuilder):
 
         return self.Request(None)
 
-    def Request(self, options: Iterable) -> AttachmentEntryCollectionRequest:
-        return AttachmentEntryCollectionRequest(self.RequestUrl, self.Client, None)
+    def Request(self, options: Optional[Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]]) -> AttachmentEntryCollectionRequest:
+        return AttachmentEntryCollectionRequest(AttachmentEntry, self.RequestUrl, self.Client, options)
     
     def id(self, sys_id: str) -> AttachmentEntryRequest:
         """Constructs a Table Entry Requst using the provided sys_id
@@ -38,4 +39,4 @@ class AttachmentRequestBuilder(EntityRequestBuilder):
             AttachmentEntryRequest: The constructed Table Entry Request
         """
 
-        return AttachmentEntryRequest(self.AppendSegmentToRequestUrl(sys_id), self.Client, None)
+        return AttachmentEntryRequest(AttachmentEntry, self.AppendSegmentToRequestUrl(sys_id), self.Client, None)
