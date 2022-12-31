@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from pyservicenow.core import _servicenow_client
+    from pyservicenow.core import ServiceNowClient
 
 from typing import overload, Optional, Dict, TypeVar, Type
 from datetime import datetime
@@ -10,19 +10,19 @@ from abc import abstractmethod
 from ._servicenow_property_collection import ServiceNowPropertyCollection
 
 S = TypeVar('S', bound='ServiceNowEntry')
-C = TypeVar('C', bound='_servicenow_client.ServiceNowClient')
+C = TypeVar('C', bound='ServiceNowClient')
 
 
 class ServiceNowEntry(ServiceNowPropertyCollection):
+    
+    __client: ServiceNowClient
 
-    __client: Optional[_servicenow_client.ServiceNowClient] = None
+    def __init__(self, client: ServiceNowClient) -> None:
 
-    def __init__(self, _value: ServiceNowPropertyCollection = ServiceNowPropertyCollection(), client: Optional[_servicenow_client.ServiceNowClient] = None) -> None:
-
-        super().__init__()
+        super().__init__(client)
 
     @property
-    def Client(self) -> Optional[_servicenow_client.ServiceNowClient]:
+    def Client(self) -> Optional[ServiceNowClient]:
         return self.__client
 
     @property

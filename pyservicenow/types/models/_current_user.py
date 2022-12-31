@@ -1,3 +1,8 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from pyservicenow.core import ServiceNowClient
+
 from typing import Dict, Optional
 
 # internal imports
@@ -5,11 +10,8 @@ from ._servicenow_entry import ServiceNowEntry
 
 class CurrentUser(ServiceNowEntry):
 
-    #_client
-
-    def __init__(self, _value: ServiceNowEntry = ServiceNowEntry(), client = None) -> None:
-        super().__init__(_value)
-        self._client = client
+    def __init__(self, client: ServiceNowClient) -> None:
+        super().__init__(client)
 
     @property
     def UserProfile(self) -> bytes:
@@ -19,7 +21,7 @@ class CurrentUser(ServiceNowEntry):
             bytes: The avatar image
         """
 
-        if self._client is None:
+        if self.__client is None:
             raise Exception("'Client' can't be 'None'")
 
         profile_id = self["user_avatar"].Value
@@ -65,21 +67,3 @@ class CurrentUser(ServiceNowEntry):
         """
 
         return self["user_initials"].Value
-
-    @classmethod
-    def fromJson(cls, entry: Dict, client) -> 'CurrentUser':
-        """Converts entry from dictionary to new CurrentUser.
-
-        Args:
-            entry (Dict): The entry to convert
-            client (AbstractServiceClient): The client to be usable by the object
-
-        Returns:
-            CurrentUser: The current user
-        """
-
-        _child = super().fromJson(entry)
-
-        new = cls(_child, client)
-
-        return new

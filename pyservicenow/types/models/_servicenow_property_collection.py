@@ -1,4 +1,9 @@
-from typing import MutableMapping, Dict, Iterator, ItemsView, List, TypeVar, Type
+from __future__ import annotations
+from typing import TYPE_CHECKING, MutableMapping, Dict, Iterator, ItemsView, List, TypeVar, Type
+if TYPE_CHECKING:
+    from pyservicenow.core import ServiceNowClient
+
+from pyrestsdk.type.model import BaseEntity
 
 from pyrestsdk.type.model import BaseEntity
 
@@ -13,8 +18,8 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
     _internaldict: Dict[str, ServiceNowProperty] = dict()
     _changed_keys: List[str] = []
 
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, client: ServiceNowClient) -> None:
+        super().__init__(client)
 
     @property
     def IsNull(self) -> bool:
@@ -68,7 +73,7 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
         return self._internaldict.items()
 
     @classmethod
-    def fromJson(cls: Type[S], entry: Dict) -> S:
+    def fromJson(cls: Type[S], entry: Dict, client: ServiceNowClient) -> S:
         """Converts entry from dictionary to new ServiceNowPropertyCollection.
 
         Args:
@@ -78,7 +83,7 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
             ServiceNowPropertyCollection: The Service-Now Property Collection
         """
 
-        new = cls()
+        new = cls(client)
 
         for key, value in entry.items():
             _value = ServiceNowProperty()
