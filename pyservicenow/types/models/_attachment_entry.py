@@ -16,22 +16,37 @@ class AttachmentEntry(ServiceNowEntry):
 
     @property
     def ContentType(self):
+        """Gets the content type of the associated attachment file.
+        """
+        
         return self["content_type"].Value
 
     @property
     def FileName(self) -> str:
+        """Get the file name of the attachment
+        """
+        
         return self["file_name"].Value
     
     @property
-    def Tags(self):
+    def Tags(self) -> str:
+        """Gets any system tags associated with the attachment file
+        """
+        
         return self["sys_tags"].Value
 
     @property
     def TableName(self) -> str:
+        """Gets the table name it's attached to
+        """
+        
         return self["table_name"].Value
 
     @property
     def DownloadLink(self) -> str:
+        """Gets the download URL of the attachment on the ServiceNow instance
+        """
+        
         return self["download_link"].Value
     
     def GetRecord(self) -> ServiceNowEntry:
@@ -72,14 +87,23 @@ class AttachmentEntry(ServiceNowEntry):
     
     @property
     def Size(self) -> int:
+        """Gets the size of the attachment
+        """
+        
         return int(self["size_bytes"].Value)
 
     @property
     def CompressedSize(self) -> int:
+        """Gets the size of the compressed attachment file. If the file is not compressed, empty.
+        """
+        
         return int(self["size_compressed"].Value)
 
     @property
     def TableSysId(self) -> str:
+        """Gets the sys_id of the table associated with the attachment
+        """
+        
         return self["table_sys_id"].Value
     
     @property
@@ -92,4 +116,7 @@ class AttachmentEntry(ServiceNowEntry):
 
     @property
     def IsCompressed(self) -> bool:
+        """Gets whether the file has been compressed or not
+        """
+        
         return bool(self["compressed"].Value)
