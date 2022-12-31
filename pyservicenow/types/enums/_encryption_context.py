@@ -17,6 +17,9 @@ class EncryptionContext(IntEnum):
             return EncryptionContext.Multiple
         else:
             raise Exception(f"unknown value {value}")
+        
+    def __str__(self) -> str:
+        return self.name
 
 EncryptionContext.Null.__doc__ = """No encryption context set"""
 EncryptionContext.Single.__doc__ = """The field is encrypted with the encryption context defined in the Encryption context field. Users who do not have the encryption context cannot view or update field values."""
