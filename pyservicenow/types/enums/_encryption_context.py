@@ -5,6 +5,18 @@ class EncryptionContext(IntEnum):
     Null = auto()
     Single = auto()
     Multiple = auto()
+    
+    @classmethod
+    def fromString(cls, value: str) -> 'EncryptionContext':
+        
+        if value is "" or value is None:
+            return EncryptionContext.Null
+        elif "single" in value.casefold():
+            return EncryptionContext.Single
+        elif "multiple" in value.casefold():
+            return EncryptionContext.Multiple
+        else:
+            raise Exception(f"unknown value {value}")
 
 EncryptionContext.Null.__doc__ = """No encryption context set"""
 EncryptionContext.Single.__doc__ = """The field is encrypted with the encryption context defined in the Encryption context field. Users who do not have the encryption context cannot view or update field values."""
