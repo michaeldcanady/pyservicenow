@@ -34,6 +34,12 @@ class AttachmentEntry(ServiceNowEntry):
     def DownloadLink(self) -> str:
         return self["download_link"].Value
     
+    def GetRecord(self) -> ServiceNowEntry:
+        """Gets the record the attachment is associated with
+        """
+        
+        return self.Client.Now().Table(self.TableName).id(self.TableSysId).Get.Invoke
+    
     def Download(self, download_path: str, use_filename: bool = True) -> None:
         """Downloads attachment to designated filepath
 
