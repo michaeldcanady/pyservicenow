@@ -1,21 +1,18 @@
 from __future__ import annotations
-import typing
-from typing import Union, TypeVar, Iterable, List, Optional, Generic, TYPE_CHECKING
+from typing import Union, TypeVar, Iterable, TYPE_CHECKING, Optional
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
 
 # Interal Imports
-from pyservicenow.types.enums import QueryParameters, DisplayValue, View
 from pyservicenow.request._base_attachment_request import BaseAttachmentRequest
-from pyservicenow.types.models.querybuilder import QueryBuilder
-from pyservicenow.types.models import ServiceNowQueryOption, ServiceNowHeaderOption
+from pyservicenow.types.models import ServiceNowQueryOption, ServiceNowHeaderOption, AttachmentEntry
 
 T = TypeVar("T", bound='BaseAttachmentRequest')
 
 class AttachmentEntryRequest(BaseAttachmentRequest):
 
-    def __init__(self, request_url: str, client: 'ServiceNowClient', options: Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]) -> None:
-        super().__init__(request_url, client, options)
+    def __init__(self, request_url: str, client: 'ServiceNowClient', options: Optional[Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]]) -> None:
+        super().__init__(AttachmentEntry, request_url, client, options)
 
     def Get(self):
         pass
