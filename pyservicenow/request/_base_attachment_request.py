@@ -1,22 +1,33 @@
 from __future__ import annotations
 from typing import Union, TypeVar, Iterable, TYPE_CHECKING, Type, Optional
+
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
 
 # Interal Imports
-from pyservicenow.types.enums import QueryParameters
 from pyservicenow.request._base_servicenow_request import BaseServiceNowEntryRequest
-from pyservicenow.types.models import ServiceNowQueryOption, ServiceNowHeaderOption, AttachmentEntry, QueryBuilder
+from pyservicenow.types.enums import QueryParameters
+from pyservicenow.types.models import (
+    ServiceNowQueryOption,
+    ServiceNowHeaderOption,
+    AttachmentEntry,
+)
+from pyservicenow.types.models import QueryBuilder
 
-T = TypeVar("T", bound='BaseAttachmentRequest')
-S = TypeVar("S", bound='AttachmentEntry')
+T = TypeVar("T", bound="BaseAttachmentRequest")
+A = TypeVar("A", bound=AttachmentEntry)
+
 
 class BaseAttachmentRequest(BaseServiceNowEntryRequest):
-
-    def __init__(self, return_type: Type[S], request_url: str, client: 'ServiceNowClient', options: Optional[Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]]) -> None:
+    def __init__(
+        self,
+        return_type: Type[A],
+        request_url: str,
+        client: "ServiceNowClient",
+        options: Optional[Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]],
+    ) -> None:
         super().__init__(return_type, request_url, client, options)
 
-    
     def Limit(self: T, limit: int) -> T:
         """Sets the limit
 
@@ -53,7 +64,7 @@ class BaseAttachmentRequest(BaseServiceNowEntryRequest):
         Returns:
             TableEntryCollectionRequest: The request object to send.
         """
-        #TODO: parse str into query builder (check)
+
         self._query_options.append(ServiceNowQueryOption(QueryParameters.Query, query))
 
         return self
