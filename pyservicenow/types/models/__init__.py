@@ -5,5 +5,6 @@ from ._servicenow_entry import ServiceNowEntry
 from ._current_user import CurrentUser
 from pyservicenow.types.models._servicenow_query_options import ServiceNowQueryOption
 from pyservicenow.types.models._servicenow_header_option import ServiceNowHeaderOption
+from pyservicenow.types.models._attachment_entry import AttachmentEntry
 
-__all__ = ["Entity", "QueryBuilder", "ServiceNowPropertyCollection","ServiceNowEntry","CurrentUser", "ServiceNowQueryOption", "ServiceNowHeaderOption"]
+__all__ = ["Entity", "QueryBuilder", "ServiceNowPropertyCollection","ServiceNowEntry","CurrentUser", "ServiceNowQueryOption", "ServiceNowHeaderOption", "AttachmentEntry"]
