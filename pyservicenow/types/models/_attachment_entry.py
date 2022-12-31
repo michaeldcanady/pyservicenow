@@ -7,6 +7,7 @@ from os.path import exists, join
 
 # internal imports
 from pyservicenow.types.models._servicenow_entry import ServiceNowEntry
+from pyservicenow.types.enums import EncryptionContext
 
 class AttachmentEntry(ServiceNowEntry):
 
@@ -53,8 +54,11 @@ class AttachmentEntry(ServiceNowEntry):
             file.write(_response.content)
     
     @property
-    def EncryptionContext(self) -> str:
-        return self["encryption_context"].Value
+    def EncryptionContext(self) -> EncryptionContext:
+        """Gets the encryption context
+        """
+        
+        return EncryptionContext.fromString(self["encryption_context"].Value)
     
     @property
     def State(self) -> str:
