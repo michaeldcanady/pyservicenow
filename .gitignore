@@ -29,3 +29,5 @@ dist/
 pyservicenow.egg-info/
 
 testing.py
+
+.pypirc
