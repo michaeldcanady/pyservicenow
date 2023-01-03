@@ -20,8 +20,6 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
 
     def __init__(self, client: ServiceNowClient) -> None:
         super().__init__(client)
-    def __init__(self, client: ServiceNowClient) -> None:
-        super().__init__(client)
 
     @property
     def IsNull(self) -> bool:
