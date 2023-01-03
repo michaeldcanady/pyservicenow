@@ -1,4 +1,4 @@
-from typing import Union, TypeVar, Type, List, Optional, Generic
+from typing import TypeVar
 
 from pyrestsdk.request import BaseRequest
 from pyrestsdk.type.enum import HttpsMethod
@@ -7,7 +7,6 @@ from pyrestsdk.type.enum import HttpsMethod
 from pyservicenow.types.enums import MimeTypeNames, Header
 from pyservicenow.types.models import ServiceNowEntry
 from pyservicenow.types.models import ServiceNowHeaderOption
-from pyservicenow.types.exceptions import UnexpectedReturnType
 
 T = TypeVar("T", bound=BaseRequest)
 S = TypeVar("S", bound=ServiceNowEntry)

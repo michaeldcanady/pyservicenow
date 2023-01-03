@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Union, TypeVar, Type, TYPE_CHECKING, Iterable, List
+from typing import Union, TypeVar, Type, TYPE_CHECKING, Iterable, List, Optional
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
 
@@ -14,7 +14,7 @@ S = TypeVar("S", bound='ServiceNowEntry')
 
 class BaseTableRequest(BaseServiceNowEntryRequest):
 
-    def __init__(self, _return_type: Type[S], request_url: str, client: 'ServiceNowClient', options: Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]) -> None:
+    def __init__(self, _return_type: Type[S], request_url: str, client: 'ServiceNowClient', options: Optional[Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]]) -> None:
         super().__init__(_return_type, request_url, client, options)
 
     # def SysparmDisplayValue(self, value: str)
@@ -42,7 +42,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        self._query_options.append(ServiceNowQueryOption(QueryParameters.DisplayValue, values))
+        self._query_options.append(ServiceNowQueryOption(QueryParameters.DisplayValue, str(values)))
         return self
 
     def Fields(self: T, fields: List[str]) -> T:
