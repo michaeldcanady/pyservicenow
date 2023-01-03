@@ -74,7 +74,6 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
 
     @classmethod
     def fromJson(cls: Type[S], entry: Dict, client: ServiceNowClient) -> S:
-    def fromJson(cls: Type[S], entry: Dict, client: ServiceNowClient) -> S:
         """Converts entry from dictionary to new ServiceNowPropertyCollection.
 
         Args:
