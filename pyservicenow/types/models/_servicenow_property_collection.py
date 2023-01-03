@@ -20,6 +20,8 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
 
     def __init__(self, client: ServiceNowClient) -> None:
         super().__init__(client)
+    def __init__(self, client: ServiceNowClient) -> None:
+        super().__init__(client)
 
     @property
     def IsNull(self) -> bool:
@@ -74,6 +76,7 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
 
     @classmethod
     def fromJson(cls: Type[S], entry: Dict, client: ServiceNowClient) -> S:
+    def fromJson(cls: Type[S], entry: Dict, client: ServiceNowClient) -> S:
         """Converts entry from dictionary to new ServiceNowPropertyCollection.
 
         Args:
@@ -83,6 +86,7 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
             ServiceNowPropertyCollection: The Service-Now Property Collection
         """
 
+        new = cls(client)
         new = cls(client)
 
         for key, value in entry.items():

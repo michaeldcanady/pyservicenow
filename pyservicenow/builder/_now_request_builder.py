@@ -8,7 +8,6 @@ from pyrestsdk.requestbuilder import EntityRequestBuilder
 from pyservicenow.builder._table_request_builder import TableRequestBuilder
 from pyservicenow.builder._ui_request_builder import UIRequestBuilder
 from pyservicenow.builder._attachment_request_builder import AttachmentRequestBuilder
-from pyservicenow.builder._attachment_request_builder import AttachmentRequestBuilder
 
 class NowRequestBuilder(EntityRequestBuilder):
 
