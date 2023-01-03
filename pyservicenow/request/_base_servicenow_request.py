@@ -18,7 +18,7 @@ S = TypeVar("S", bound="ServiceNowEntry")
 
 class BaseServiceNowEntryRequest(BaseRequest):
 
-    def __init__(self, _return_type: Type[S], request_url: str, client: 'ServiceNowClient', options: Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]) -> None:
+    def __init__(self, _return_type: Type[S], request_url: str, client: 'ServiceNowClient', options: Optional[Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]]) -> None:
         super().__init__(_return_type, request_url, client, options)
 
     @property
