@@ -1,3 +1,4 @@
+from typing import Any
 from pyrestsdk.type.model import QueryOption
 
 # internal imports
@@ -7,5 +8,5 @@ class ServiceNowQueryOption(QueryOption):
 
     name: QueryParameters
 
-    def __init__(self, name: QueryParameters, value: str) -> None:
+    def __init__(self, name: QueryParameters, value: Any) -> None:
         super().__init__(name, value)
