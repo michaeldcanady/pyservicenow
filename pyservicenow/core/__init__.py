@@ -1,5 +1,4 @@
-__all__ = ["ServiceNowClient", "UsernamePasswordCredential", "AbstractServiceNowClient"]
+__all__ = ["ServiceNowClient", "UsernamePasswordCredential"]
 
-from ._abstract_servicenow_client import AbstractServiceNowClient
-from ._servicenow_client import ServiceNowClient
-from ._username_password_credential import UsernamePasswordCredential
+from pyservicenow.core._servicenow_client import ServiceNowClient
+from pyservicenow.core.credential._username_password_credential import UsernamePasswordCredential

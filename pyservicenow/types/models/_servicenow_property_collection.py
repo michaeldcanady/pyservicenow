@@ -1,8 +1,9 @@
 from typing import MutableMapping, Dict, Iterator, ItemsView, List, TypeVar, Type
 
+from pyrestsdk.type.model import BaseEntity
+
 # internal imports
 from ._servicenow_property import ServiceNowProperty
-from pyservicenow.types.models._base_entity import BaseEntity
 
 S = TypeVar('S', bound='ServiceNowPropertyCollection')
 

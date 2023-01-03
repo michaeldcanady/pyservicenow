@@ -1,5 +1,5 @@
 import uuid
-from pyrestwrapperbase import FeatureUsageFlag
+from pyrestsdk import FeatureUsageFlag
 
 
 class RequestContext:

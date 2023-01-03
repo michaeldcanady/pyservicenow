@@ -1,6 +1,6 @@
 from base64 import b64encode
 from typing import Union
-from pyrestwrapperbase.credential import AbstractBasicCredential
+from pyrestsdk.credential import AbstractBasicCredential
 
 
 class UsernamePasswordCredential(AbstractBasicCredential):
