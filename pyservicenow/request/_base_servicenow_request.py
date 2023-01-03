@@ -78,7 +78,7 @@ class BaseServiceNowEntryRequest(BaseRequest):
         return _func(self._return_type, _result, self.Client)
         
     @property
-    def Invoke(self: B) -> S:
+    def Invoke(self: B) -> Optional[Union[List[S], S]]:
 
         return self.Send(self._object)
     
