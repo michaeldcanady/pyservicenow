@@ -20,7 +20,7 @@ from pyservicenow.types.models.querybuilder import QueryBuilder
 
 credential = UsernamePasswordCredential("", "")
 
-client = ServiceNowClient(credential=credential, instance="libertydev")
+client = ServiceNowClient(credential=credential, instance="instance")
 
 query = QueryBuilder().field("serial_number").equals("92XWKW2")
 
