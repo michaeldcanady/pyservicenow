@@ -8,7 +8,7 @@ class ServiceNowQueryOption(QueryOption):
 
     name: QueryParameters
 
-    def __init__(self, name: QueryParameters, value: str) -> None:
+    def __init__(self, name: QueryParameters, value: Any) -> None:
         super().__init__(name, value)
 
     def __iter__(self) -> Iterable:

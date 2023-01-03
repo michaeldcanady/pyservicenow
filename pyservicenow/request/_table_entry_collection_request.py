@@ -1,6 +1,5 @@
 from __future__ import annotations
-import typing
-from typing import TypeVar, Type, List, Optional, Generic, TYPE_CHECKING, Iterable, Union
+from typing import TypeVar, Type, TYPE_CHECKING, Iterable, Union
 
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient

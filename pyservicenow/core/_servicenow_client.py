@@ -12,20 +12,13 @@ Logger = getLogger(__name__)
 
 
 class ServiceNowClient(AbstractServiceClient):
+    @typing.overload
+    def __init__(self, credential, instance: str, session: Session = Session()) -> None:
+        ...
 
     @typing.overload
-    def __init__(self,
-                 credential,
-                 instance: str,
-                 session: Session = Session()
-                 ) -> None: ...
-
-    @typing.overload
-    def __init__(self,
-                 middleware,
-                 instance: str,
-                 session: Session = Session()
-                 ) -> None: ...
+    def __init__(self, middleware, instance: str, session: Session = Session()) -> None:
+        ...
 
     def __init__(self, *args, **kwargs) -> None:
         Logger.info("getting LUEDMAPI session")
@@ -36,19 +29,18 @@ class ServiceNowClient(AbstractServiceClient):
         if instance is None:
             raise Exception("instance is required")
 
-        self.lu_edm_api_session: Session = self._get_session(instance, session, **kwargs)
+        self.lu_edm_api_session: Session = self._get_session(
+            instance, session, **kwargs
+        )
 
+    def Now(self, version: APIVersion = APIVersion.Null) -> NowRequestBuilder:
 
-    def Now(self, version: APIVersion=APIVersion.Null) -> NowRequestBuilder:
-
-        base_url = self.lu_edm_api_session.base_url+"/now" # type: ignore
+        base_url = self.base_url + "/now"
 
         if version == APIVersion.V1:
-            base_url+="/v1"
+            base_url += "/v1"
         elif version == APIVersion.V2:
-            base_url+="/v2"
-
-
+            base_url += "/v2"
 
         return NowRequestBuilder(base_url, self)
 
@@ -57,12 +49,12 @@ class ServiceNowClient(AbstractServiceClient):
 
     @property
     def base_url(self) -> str:
-        return self.lu_edm_api_session.base_url
+        return self.lu_edm_api_session.base_url # type: ignore
 
     @base_url.setter
     def base_url(self, base: str) -> None:
-        self.lu_edm_api_session.base_url = base
-
+        self.lu_edm_api_session.base_url = base # type: ignore
+ 
     def get(self, url: str, **kwargs) -> Response:
         r"""Sends a GET request. Returns :class:`Response` object.
         :param url: URL for the new :class:`Request` object.
@@ -100,7 +92,9 @@ class ServiceNowClient(AbstractServiceClient):
         :param \*\*kwargs: Optional arguments that ``request`` takes.
         :rtype: requests.Response
         """
-        return self.lu_edm_api_session.post(self._servicenow_url(url), data=data, json=json, **kwargs)
+        return self.lu_edm_api_session.post(
+            self._servicenow_url(url), data=data, json=json, **kwargs
+        )
 
     def put(self, url: str, data=None, **kwargs) -> Response:
         r"""Sends a PUT request. Returns :class:`Response` object.
@@ -111,7 +105,9 @@ class ServiceNowClient(AbstractServiceClient):
         :rtype: requests.Response
         """
 
-        return self.lu_edm_api_session.put(self._servicenow_url(url), data=data, **kwargs)
+        return self.lu_edm_api_session.put(
+            self._servicenow_url(url), data=data, **kwargs
+        )
 
     def patch(self, url: str, data=None, **kwargs) -> Response:
         r"""Sends a PATCH request. Returns :class:`Response` object.
@@ -121,7 +117,9 @@ class ServiceNowClient(AbstractServiceClient):
         :param \*\*kwargs: Optional arguments that ``request`` takes.
         :rtype: requests.Response
         """
-        return self.lu_edm_api_session.patch(self._servicenow_url(url), data=data, **kwargs)
+        return self.lu_edm_api_session.patch(
+            self._servicenow_url(url), data=data, **kwargs
+        )
 
     def delete(self, url: str, **kwargs) -> Response:
         r"""Sends a DELETE request. Returns :class:`Response` object.
@@ -136,20 +134,19 @@ class ServiceNowClient(AbstractServiceClient):
         :param url: user provided path
         :return: graph_url
         """
-        return self.lu_edm_api_session.base_url + url if (url[0] == '/') else url
-    
+        return self.base_url + url if (url[0] == "/") else url
+
     @staticmethod
     def _get_session(instance: str, session: Session, **kwargs) -> Session:
         """Method to always retrun a single instance of an HTTP Client"""
 
-        Logger.info(
-            f"LUEDMServiceClient._get_luedmapi_session: function called")
+        Logger.info(f"LUEDMServiceClient._get_luedmapi_session: function called")
 
-        credential = kwargs.pop('credential', None)
+        credential = kwargs.pop("credential", None)
 
         Logger.debug(f"credential: {credential}")
 
-        middleware = kwargs.pop('middleware', None)
+        middleware = kwargs.pop("middleware", None)
 
         Logger.debug(f"middleware: {middleware}")
 
@@ -159,9 +156,14 @@ class ServiceNowClient(AbstractServiceClient):
             )
         if not credential and not middleware:
             raise ValueError(
-                "Invalid parameters!. Missing TokenCredential or middleware")
+                "Invalid parameters!. Missing TokenCredential or middleware"
+            )
 
         if credential is not None:
             Logger.debug("Creating with default middleware")
-            return HTTPClientFactory(instance, session).create_with_default_middleware(credential, **kwargs)
-        return HTTPClientFactory(instance, session).create_with_custom_middleware(middleware)
+            return HTTPClientFactory(instance, session).create_with_default_middleware(
+                credential, **kwargs
+            )
+        return HTTPClientFactory(instance, session).create_with_custom_middleware(
+            middleware
+        )
