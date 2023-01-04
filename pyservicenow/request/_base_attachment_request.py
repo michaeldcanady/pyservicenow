@@ -18,15 +18,14 @@ T = TypeVar("T", bound="BaseAttachmentRequest")
 A = TypeVar("A", bound=AttachmentEntry)
 
 
-class BaseAttachmentRequest(BaseServiceNowEntryRequest):
+class BaseAttachmentRequest(BaseServiceNowEntryRequest[A]):
     def __init__(
         self,
-        return_type: Type[A],
         request_url: str,
         client: "ServiceNowClient",
         options: Optional[Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]],
     ) -> None:
-        super().__init__(return_type, request_url, client, options)
+        super().__init__(request_url, client, options)
 
     def Limit(self: T, limit: int) -> T:
         """Sets the limit

@@ -28,7 +28,7 @@ class AttachmentRequestBuilder(EntityRequestBuilder):
         return self.Request(None)
 
     def Request(self, options: Optional[Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]]) -> AttachmentEntryCollectionRequest:
-        return AttachmentEntryCollectionRequest(AttachmentEntry, self.RequestUrl, self.Client, options)
+        return AttachmentEntryCollectionRequest(self.RequestUrl, self.Client, options)
     
     def id(self, sys_id: str) -> AttachmentEntryRequest:
         """Constructs a Table Entry Requst using the provided sys_id
@@ -40,4 +40,4 @@ class AttachmentRequestBuilder(EntityRequestBuilder):
             AttachmentEntryRequest: The constructed Table Entry Request
         """
 
-        return AttachmentEntryRequest(AttachmentEntry, self.AppendSegmentToRequestUrl(sys_id), self.Client, None)
+        return AttachmentEntryRequest(self.AppendSegmentToRequestUrl(sys_id), self.Client, None)

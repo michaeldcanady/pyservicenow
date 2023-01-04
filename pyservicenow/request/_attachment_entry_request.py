@@ -11,17 +11,28 @@ from pyservicenow.types.models import (
     ServiceNowHeaderOption,
     AttachmentEntry,
 )
+from pyservicenow.types.exceptions import UnexpectedReturnType
 
-T = TypeVar("T", bound="BaseAttachmentRequest")
 A = TypeVar("A", bound=AttachmentEntry)
+B = TypeVar("B", bound="AttachmentEntryRequest")
 
 
-class AttachmentEntryRequest(BaseAttachmentRequest):
+class AttachmentEntryRequest(BaseAttachmentRequest[AttachmentEntry]):
     def __init__(
         self,
-        return_type: Type[A],
         request_url: str,
         client: "ServiceNowClient",
         options: Optional[Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]],
     ) -> None:
-        super().__init__(return_type, request_url, client, options)
+        super().__init__(request_url, client, options)
+
+
+    @property
+    def Invoke(self: B) -> AttachmentEntry:
+        
+        _return = super().Invoke
+        
+        if type(_return) is not self.GenericType:
+            raise UnexpectedReturnType(type(_return), self.GenericType)
+        
+        return _return
