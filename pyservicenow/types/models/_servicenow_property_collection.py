@@ -4,20 +4,26 @@ if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
 
 from pyrestsdk.type.model._base_entity import BaseEntity
+from json import dumps
 
 # internal imports
 from ._servicenow_property import ServiceNowProperty
 
 S = TypeVar('S', bound='ServiceNowPropertyCollection')
+C = TypeVar('C', bound="ServiceNowClient")
 
 class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], BaseEntity):
 
-    is_null: bool = True
-    _internaldict: Dict[str, ServiceNowProperty] = dict()
-    _changed_keys: List[str] = []
-
-    def __init__(self, client: ServiceNowClient) -> None:
+    def __init__(self, client: C) -> None:
         super().__init__(client)
+        
+        self.is_null: bool = True
+        self._internaldict: Dict[str, ServiceNowProperty] = dict()
+        self._changed_keys: List[str] = list()
+        
+    @property
+    def Client(self) -> C:
+        return super().Client
 
     @property
     def IsNull(self) -> bool:
@@ -69,6 +75,27 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
         """
 
         return self._internaldict.items()
+    
+    def _changed_dict(self) -> Dict[str, Any]:
+        
+        changed_dict: Dict[str, Any] = dict()
+        
+        for key in self._changed_keys:
+            changed_dict[key] = self[key].Value
+            
+        return changed_dict
+    
+    def asDict(self) -> Dict:
+        
+        _dict: Dict[str, Any] = dict()
+        
+        for key, value in self._internaldict.items():
+            _dict[key] = value.asdict()
+        
+        return _dict
+    
+    def __json__(self) -> str:
+        return dumps(self.asDict())
 
     @classmethod
     def fromJson(cls: Type[S], entry: Dict[str, Any], client: ServiceNowClient) -> S:

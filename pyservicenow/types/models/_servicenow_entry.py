@@ -1,13 +1,13 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, TypeVar
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
 
-from typing import overload, Optional, Dict, TypeVar, Type
 from datetime import datetime
-from abc import abstractmethod
+
 # internal import
 from ._servicenow_property_collection import ServiceNowPropertyCollection
+from pyservicenow.types.constants import DATETIME
 
 S = TypeVar('S', bound='ServiceNowEntry')
 C = TypeVar('C', bound='ServiceNowClient')
@@ -41,7 +41,7 @@ class ServiceNowEntry(ServiceNowPropertyCollection):
 
         raw_date = self["sys_updated_on"].Value
 
-        return datetime.strptime(raw_date, "%Y-%m-%d %H:%M:%S")
+        return datetime.strptime(raw_date, DATETIME)
 
     @property
     def UpdatedBy(self) -> str:
@@ -63,7 +63,7 @@ class ServiceNowEntry(ServiceNowPropertyCollection):
 
         raw_date = self["sys_created_on"].Value
 
-        return datetime.strptime(raw_date, "%Y-%m-%d %H:%M:%S")
+        return datetime.strptime(raw_date, DATETIME)
 
     def Update(self) -> bool:
         raise NotImplementedError("Update is not implemented")
