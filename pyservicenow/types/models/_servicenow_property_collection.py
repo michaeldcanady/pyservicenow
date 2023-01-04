@@ -3,9 +3,7 @@ from typing import TYPE_CHECKING, MutableMapping, Dict, Iterator, ItemsView, Lis
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
 
-from pyrestsdk.type.model import BaseEntity
-
-from pyrestsdk.type.model import BaseEntity
+from pyrestsdk.type.model._base_entity import BaseEntity
 
 # internal imports
 from ._servicenow_property import ServiceNowProperty

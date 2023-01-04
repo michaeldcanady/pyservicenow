@@ -13,6 +13,8 @@ from typing import (
     Tuple,
 )
 
+from logging import getLogger
+
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
 
@@ -32,6 +34,7 @@ from pyservicenow.types.enums import Header, MimeTypeNames
 B = TypeVar("B", bound="BaseServiceNowEntryRequest")
 S = TypeVar("S", bound="ServiceNowEntry")
 
+Logger = getLogger(__name__)
 
 class BaseServiceNowEntryRequest(BaseRequest[S]):
     def __init__(
@@ -43,6 +46,23 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         ],
     ) -> None:
         super().__init__(request_url, client, options)
+        
+        self._object = None
+        
+    @property
+    def Object(self: B) -> Optional[S]:
+        """Gets/Sets object
+        """
+        
+        return self._object
+    
+    @Object.setter
+    def Object(self: B, value: Optional[S]) -> None:
+        Logger.info(f"{type(self).__name__}.Object: function called")
+        
+        self._object = value
+        
+        Logger.info(f"{type(self).__name__}.Object: object changed")
 
     @property
     def Get(self: B) -> B:
@@ -51,8 +71,8 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         self._headers.append(
             ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json)
         )
-        self.Method = HttpsMethod.GET
-        self._object = None
+        
+        self._update_request_type(HttpsMethod.GET, None)
 
         return self
 
@@ -61,8 +81,8 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         self._headers.append(
             ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json)
         )
-        self.Method = HttpsMethod.POST
-        self._object = input_object
+        
+        self._update_request_type(HttpsMethod.POST, input_object)
 
         return self
 
@@ -72,8 +92,8 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         self._headers.append(
             ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json)
         )
-        self.Method = HttpsMethod.DELETE
-        self._object = None
+        
+        self._update_request_type(HttpsMethod.DELETE, None)
 
         return self
 
@@ -82,10 +102,17 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         self._headers.append(
             ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json)
         )
-        self.Method = HttpsMethod.PUT
-        self._object = input_object
+        
+        self._update_request_type(HttpsMethod.PUT, input_object)
 
         return self
+    
+    def _update_request_type(self: B, method: HttpsMethod, input_object: Optional[S]) -> None:
+
+        Logger.info(f"{type(self).__name__}._update_request_type: function called")
+        
+        self.Method = method
+        self.Object = input_object
 
     def parse_response(
         self, _response: Optional[Response]
@@ -102,6 +129,8 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
 
     @property
     def Invoke(self: B) -> Optional[Union[List[S], S]]:
+        """Invokes the specified method
+        """
 
         return self.Send(self._object)
 

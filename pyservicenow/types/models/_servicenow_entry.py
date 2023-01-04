@@ -22,10 +22,6 @@ class ServiceNowEntry(ServiceNowPropertyCollection):
         super().__init__(client)
 
     @property
-    def Client(self) -> Optional[ServiceNowClient]:
-        return self.__client
-
-    @property
     def SysId(self) -> str:
         """Gets the sys id
 
