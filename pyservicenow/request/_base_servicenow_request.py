@@ -33,7 +33,6 @@ class BaseServiceNowEntryRequest(BaseRequest):
         
         self._headers.append(ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json))
         self.Method = HttpsMethod.GET
-        self.Method = HttpsMethod.GET
         self._object = None
 
         return self
@@ -41,7 +40,6 @@ class BaseServiceNowEntryRequest(BaseRequest):
     def Post(self: B, input_object: S) -> B:
 
         self._headers.append(ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json))
-        self.Method = HttpsMethod.POST
         self.Method = HttpsMethod.POST
         self._object = input_object
 
@@ -51,7 +49,6 @@ class BaseServiceNowEntryRequest(BaseRequest):
 
         self._headers.append(ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json))
         self.Method = HttpsMethod.DELETE
-        self.Method = HttpsMethod.DELETE
         self._object = None
 
         return self
@@ -59,7 +56,6 @@ class BaseServiceNowEntryRequest(BaseRequest):
     def Put(self: B, input_object: S) -> B:
 
         self._headers.append(ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json))
-        self.Method = HttpsMethod.PUT
         self.Method = HttpsMethod.PUT
         self._object = input_object
 
