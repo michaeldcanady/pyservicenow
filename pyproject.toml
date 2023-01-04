@@ -1,0 +1,32 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "pyservicenow"
+authors = [{name = "michaeldcanady"}]
+readme = "Readme.md"
+license = {file = "LICENSE"}
+classifiers = ["License :: OSI Approved :: MIT License"]
+dynamic = ["version", "description", "dependencies"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[project.urls]
+homepage = "https://github.com/michaeldcanady/pyservicenow#readme"
+repository = "https://github.com/michaeldcanady/pyservicenow"
+
+[tool.flit.module]
+name = "pyservicenow"
+
+[tool.mypy]
+warn_unused_configs = true
+files = "pyservicenow"
+ignore_missing_imports = true
+
+[tool.yapf]
+based_on_style = "pep8"
+dedent_closing_brackets = true
+each_dict_entry_on_separate_line = true
+column_limit = 100
