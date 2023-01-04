@@ -12,8 +12,8 @@ from pyservicenow.types.models._servicenow_entry import ServiceNowEntry
 
 class ServiceNowTableEntriesCollectionPage(CollectionPage[ServiceNowEntry]):
 
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, client) -> None:
+        super().__init__(client)
 
     def InitializeNextPageRequest(self, client: ServiceNowClient, next_page_link_string: str) -> None:
         """Initializes the NextPageRequest property
