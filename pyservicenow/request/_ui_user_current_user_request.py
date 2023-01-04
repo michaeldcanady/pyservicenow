@@ -1,34 +1,40 @@
-from typing import TypeVar
+from __future__ import annotations
+from typing import TYPE_CHECKING, Optional, Iterable, Union, TypeVar
 
-from pyrestsdk.request import BaseRequest
-from pyrestsdk.type.enum import HttpsMethod
+if TYPE_CHECKING:
+    from pyservicenow.core import ServiceNowClient
 
 # Interal Imports
-from pyservicenow.types.enums import MimeTypeNames, Header
-from pyservicenow.types.models import ServiceNowEntry
-from pyservicenow.types.models import ServiceNowHeaderOption
+from pyservicenow.request._base_servicenow_request import BaseServiceNowEntryRequest
+from pyservicenow.types.models import (
+    CurrentUser,
+    ServiceNowHeaderOption,
+    ServiceNowQueryOption,
+)
+from pyservicenow.types.exceptions import UnexpectedReturnType
 
-T = TypeVar("T", bound=BaseRequest)
-S = TypeVar("S", bound=ServiceNowEntry)
+B = TypeVar("B", bound="UIUserCurrentUserRequest")
 
 
-class UIUserCurrentUserRequest(BaseRequest):
+class UIUserCurrentUserRequest(BaseServiceNowEntryRequest[CurrentUser]):
     """The Table Entry Collection Request"""
 
-    def Get(self) -> "CurrentUser":
-        """Gets a single Service-Now Entry
+    def __init__(
+        self,
+        request_url: str,
+        client: "ServiceNowClient",
+        options: Optional[
+            Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]
+        ],
+    ) -> None:
+        super().__init__(request_url, client, options)
 
-        Returns:
-            ServiceNowEntry: The Service-Now Entry
-        """
+    @property
+    def Invoke(self: B) -> CurrentUser:
 
-        # MimeTypeNames.Application.JSON
-        self._headers.append(
-            ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json)
-        )
-        self.Method = HttpsMethod.GET
+        _return = super().Invoke
 
-        return self.Send(CurrentUser, None)
+        if type(_return) is not self.GenericType:
+            raise UnexpectedReturnType(type(_return), self.GenericType)
 
-
-from pyservicenow.types.models import CurrentUser
+        return _return

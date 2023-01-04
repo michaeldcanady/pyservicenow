@@ -12,10 +12,10 @@ from pyservicenow.types.models import ServiceNowQueryOption, ServiceNowEntry, Se
 T = TypeVar("T", bound='BaseTableRequest')
 S = TypeVar("S", bound='ServiceNowEntry')
 
-class BaseTableRequest(BaseServiceNowEntryRequest):
+class BaseTableRequest(BaseServiceNowEntryRequest[S]):
 
-    def __init__(self, _return_type: Type[S], request_url: str, client: 'ServiceNowClient', options: Optional[Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]]) -> None:
-        super().__init__(_return_type, request_url, client, options)
+    def __init__(self, request_url: str, client: 'ServiceNowClient', options: Optional[Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]]) -> None:
+        super().__init__(request_url, client, options)
 
     # def SysparmDisplayValue(self, value: str)
 

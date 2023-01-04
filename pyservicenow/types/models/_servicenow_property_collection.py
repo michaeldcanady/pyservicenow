@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, MutableMapping, Dict, Iterator, ItemsView, List, TypeVar, Type
+from typing import TYPE_CHECKING, MutableMapping, Dict, Iterator, ItemsView, List, TypeVar, Type, Any
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
 
@@ -73,7 +73,7 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
         return self._internaldict.items()
 
     @classmethod
-    def fromJson(cls: Type[S], entry: Dict, client: ServiceNowClient) -> S:
+    def fromJson(cls: Type[S], entry: Dict[str, Any], client: ServiceNowClient) -> S:
         """Converts entry from dictionary to new ServiceNowPropertyCollection.
 
         Args:
@@ -83,7 +83,6 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
             ServiceNowPropertyCollection: The Service-Now Property Collection
         """
 
-        new = cls(client)
         new = cls(client)
 
         for key, value in entry.items():

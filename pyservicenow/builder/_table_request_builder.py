@@ -1,12 +1,12 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, Iterable
+from typing import TYPE_CHECKING, Iterable, Optional, Union
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
 
 from pyrestsdk.requestbuilder import EntityRequestBuilder
 
 # internal imports
-from pyservicenow.types.models import ServiceNowEntry
+from pyservicenow.types.models import ServiceNowEntry, ServiceNowHeaderOption, ServiceNowQueryOption
 from pyservicenow.request._table_entry_collection_request import TableEntryCollectionRequest
 from pyservicenow.request import TableEntryRequest
 
@@ -27,8 +27,8 @@ class TableRequestBuilder(EntityRequestBuilder):
 
         return self.Request(None)
 
-    def Request(self, options: Iterable) -> TableEntryCollectionRequest:
-        return TableEntryCollectionRequest(ServiceNowEntry, self.RequestUrl, self.Client, None)
+    def Request(self, options: Optional[Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]]) -> TableEntryCollectionRequest:
+        return TableEntryCollectionRequest[ServiceNowEntry](self.RequestUrl, self.Client, None)
     
     def id(self, sys_id: str) -> TableEntryRequest:
         """Constructs a Table Entry Requst using the provided sys_id
@@ -40,4 +40,4 @@ class TableRequestBuilder(EntityRequestBuilder):
             TableEntryRequest: The constructed Table Entry Request
         """
 
-        return TableEntryRequest(ServiceNowEntry, self.AppendSegmentToRequestUrl(sys_id), self.Client, None)
+        return TableEntryRequest[ServiceNowEntry](self.AppendSegmentToRequestUrl(sys_id), self.Client, None)
