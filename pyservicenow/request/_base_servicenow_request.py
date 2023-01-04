@@ -15,9 +15,7 @@ from pyservicenow.types.models import ServiceNowQueryOption, ServiceNowHeaderOpt
 from pyservicenow.types.enums import Header, MimeTypeNames
 
 B = TypeVar("B", bound="BaseServiceNowEntryRequest")
-S = TypeVar("S", bound="ServiceNowEntry")
-
-S = TypeVar("S", bound='CollectionPage')
+S = TypeVar("S", ServiceNowEntry, CollectionPage)
 
 class BaseServiceNowEntryRequest(BaseRequest):
 
@@ -65,22 +63,12 @@ class BaseServiceNowEntryRequest(BaseRequest):
         
         if _response is None:
             return None
-        
-        _parse_dict = {
-            list: parse_result_list,
-            dict: parse_result
-        }
-        
+
         _json = _response.json()
         _result = _json["result"]
         del _json
         
-        _func = _parse_dict.get(type(_result), None)
-        
-        if _func is None:
-            raise Exception(f"Unknown type {type(_result)}")
-        
-        return _func(self._return_type, _result, self.Client)
+        return self._return_type.fromJson(_result, self.Client)
         
     @property
     def Invoke(self: B) -> Optional[Union[List[S], S]]:

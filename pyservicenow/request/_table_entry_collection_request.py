@@ -9,7 +9,10 @@ from pyservicenow.types.models import (
     ServiceNowEntry,
     ServiceNowQueryOption,
     ServiceNowHeaderOption,
+    
 )
+
+
 from pyservicenow.request._base_table_request import BaseTableRequest
 
 S = TypeVar("S", bound=ServiceNowEntry)

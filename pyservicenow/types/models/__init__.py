@@ -7,5 +7,6 @@ from pyservicenow.types.models._servicenow_query_options import ServiceNowQueryO
 from pyservicenow.types.models._servicenow_header_option import ServiceNowHeaderOption
 from pyservicenow.types.models._collection_page import CollectionPage
 from pyservicenow.types.models._servicenow_table_entries_collection_page import ServiceNowTableEntriesCollectionPage
+from pyservicenow.types.models._attachment_entry import AttachmentEntry
 
-__all__ = ["Entity", "QueryBuilder", "ServiceNowPropertyCollection","ServiceNowEntry","CurrentUser", "ServiceNowQueryOption", "ServiceNowHeaderOption", "CollectionPage", "ServiceNowTableEntriesCollectionPage"]
+__all__ = ["AttachmentEntry", "Entity", "QueryBuilder", "ServiceNowPropertyCollection","ServiceNowEntry","CurrentUser", "ServiceNowQueryOption", "ServiceNowHeaderOption", "CollectionPage", "ServiceNowTableEntriesCollectionPage"]
