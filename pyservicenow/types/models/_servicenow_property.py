@@ -1,3 +1,5 @@
+from json import dumps
+from typing import Dict, Any
 
 class ServiceNowProperty(object):
 
@@ -45,6 +47,17 @@ class ServiceNowProperty(object):
         """
 
         return self._value
+    
+    def asdict(self) -> Dict[str, Any]:
+        
+        return {
+                "display_value": self.DisplayValue,
+                "value": self.Value,
+                "link": self.Link
+            }
+        
+    def __json__(self) -> str:
+        return dumps(self.asdict())
 
     @Value.setter
     def Value(self, value: str) -> None:
