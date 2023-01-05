@@ -18,7 +18,7 @@ jobs:
     - name: get version number
       id: get_version
       run: |
-        export VERSION=$(cat VERSION)
+        echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
         echo $VERSION
         echo ${{github.event.pull_request.head.ref}}
     - name: Increment Semantic Version
