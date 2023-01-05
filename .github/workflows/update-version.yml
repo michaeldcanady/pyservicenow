@@ -30,7 +30,6 @@ jobs:
       run: |
         echo ${{ steps.bump_version.outputs.next-version }} > VERSION
     - name: Update github
-      uses: actions/checkout@v2
       run: |
         git config --global user.name 'Michael Canady'
         git config --global user.email 'michaeldcanady@users.noreply.github.com'
