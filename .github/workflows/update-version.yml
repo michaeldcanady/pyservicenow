@@ -18,14 +18,14 @@ jobs:
     - name: get version number
       id: get_version
       run: |
-        export VERSION=cat VERSION
+        export VERSION=$(cat VERSION)
         echo $VERSION
     - name: Increment Semantic Version
       if: github.event.pull_request.base.ref == 'feature'
       id: bump_version
       uses: christian-draeger/increment-semantic-version@1.0.3
       with:
-        current-version: ${{ $VERSION }}
+        current-version: $VERSION
         version-fragment: 'feature'
     - name: Create/Update VERSION file
       run: |
