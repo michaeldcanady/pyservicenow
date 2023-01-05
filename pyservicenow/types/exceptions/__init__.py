@@ -1,5 +1,6 @@
 from ._unexpected_return_type import UnexpectedReturnType
 
+
 class PysnowException(Exception):
     pass
 

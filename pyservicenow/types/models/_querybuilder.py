@@ -4,7 +4,7 @@ from typing import Union, List
 import inspect
 
 # internal imports
-from ...exceptions import (
+from ..exceptions import (
     QueryEmpty,
     QueryExpressionError,
     QueryMissingField,
@@ -31,11 +31,9 @@ class LogicalOperator(StrEnum):
     NewQuery = "^NQ"
 
 
-class QueryBuilder():
-
+class QueryBuilder:
     def __init__(self) -> None:
-        """Constructs a new query builder
-        """
+        """Constructs a new query builder"""
 
         self._query = []
         self.current_field = None
@@ -43,7 +41,7 @@ class QueryBuilder():
         self.l_oper = None
 
     @classmethod
-    def parse(cls, query: str) -> 'QueryBuilder':
+    def parse(cls, query: str) -> "QueryBuilder":
         """Parses query into new QueryBuilder
 
         Args:
@@ -63,15 +61,19 @@ class QueryBuilder():
 
         while i < n:
 
-            if (query[i] == Operators.Equals) or (query[i:i+1] == Operators.In) or (query[i:i+4] == Operators.Contains):  # get the operator
+            if (
+                (query[i] == Operators.Equals)
+                or (query[i : i + 1] == Operators.In)
+                or (query[i : i + 4] == Operators.Contains)
+            ):  # get the operator
                 query_builder.field(field)
                 if query[i] == Operators.Equals:
                     operator = Operators.Equals
-                elif query[i:i+2] == Operators.In:
+                elif query[i : i + 2] == Operators.In:
                     i += 2
                     operator = Operators.In
                     continue
-                elif query[i:i+4] == Operators.Contains:
+                elif query[i : i + 4] == Operators.Contains:
                     i += 4
                     operator = Operators.Contains
                     continue
@@ -81,18 +83,18 @@ class QueryBuilder():
                 oper_dict = {
                     Operators.Equals: query_builder.equals,
                     Operators.In: query_builder.IN,
-                    Operators.Contains: query_builder.contains
+                    Operators.Contains: query_builder.contains,
                 }
 
                 oper = oper_dict[operator]
 
                 oper(value)
 
-                if query[i:i+4] == LogicalOperator.NewQuery:
+                if query[i : i + 4] == LogicalOperator.NewQuery:
                     query_builder.NQ
                     i += 4
                     continue
-                elif query[i:i+4] == LogicalOperator.Or:
+                elif query[i : i + 4] == LogicalOperator.Or:
                     query_builder.OR
                     i += 4
                     continue
@@ -104,11 +106,11 @@ class QueryBuilder():
 
             elif operator != Operators.Null:  # get the value
                 value += query[i]
-                if i == n-1:
+                if i == n - 1:
                     oper_dict = {
                         Operators.Equals: query_builder.equals,
                         Operators.In: query_builder.IN,
-                        Operators.Contains: query_builder.contains
+                        Operators.Contains: query_builder.contains,
                     }
 
                     oper = oper_dict[operator]
@@ -122,7 +124,7 @@ class QueryBuilder():
 
         return query_builder
 
-    def field(self, field: str) -> 'QueryBuilder':
+    def field(self, field: str) -> "QueryBuilder":
         """Sets the field to operate on
 
         Args:
@@ -136,7 +138,7 @@ class QueryBuilder():
 
         return self
 
-    def orderBy(self, direction: OrderBy) -> 'QueryBuilder':
+    def orderBy(self, direction: OrderBy) -> "QueryBuilder":
         """Sets the order by direction
 
         Args:
@@ -165,11 +167,11 @@ class QueryBuilder():
 
         return self
 
-    def equals(self, data: Union[str, int]) -> 'QueryBuilder':
+    def equals(self, data: Union[str, int]) -> "QueryBuilder":
 
         return self._add_condition(Operators.Equals, data, types=[int, str])
 
-    def IN(self, data: List) -> 'QueryBuilder':
+    def IN(self, data: List) -> "QueryBuilder":
         return self._add_condition("IN", ",".join(map(str, data)), types=[str])
 
     def contains(self, contains):
@@ -180,17 +182,17 @@ class QueryBuilder():
         return self._add_condition("LIKE", contains, types=[str])
 
     @property
-    def AND(self) -> 'QueryBuilder':
+    def AND(self) -> "QueryBuilder":
         """Adds an and-operator"""
         return self._add_logical_operator(LogicalOperator.And)
 
     @property
-    def OR(self) -> 'QueryBuilder':
+    def OR(self) -> "QueryBuilder":
         """Adds an or-operator"""
         return self._add_logical_operator(LogicalOperator.Or)
 
     @property
-    def NQ(self) -> 'QueryBuilder':
+    def NQ(self) -> "QueryBuilder":
         """Adds a NQ-operator (new query)"""
         return self._add_logical_operator(LogicalOperator.NewQuery)
 
@@ -213,7 +215,7 @@ class QueryBuilder():
 
         return str().join(self._query)
 
-    def _add_logical_operator(self, operator: LogicalOperator) -> 'QueryBuilder':
+    def _add_logical_operator(self, operator: LogicalOperator) -> "QueryBuilder":
         """Adds a logical operator in query
         :param operator: logical operator (str)
         :raise:
@@ -239,7 +241,7 @@ class QueryBuilder():
         self._query.append(operator)
         return self
 
-    def _add_condition(self, operator, operand, types) -> 'QueryBuilder':
+    def _add_condition(self, operator, operand, types) -> "QueryBuilder":
         """Appends condition to self._query after performing validation
         :param operator: operator (str)
         :param operand: operand
@@ -260,8 +262,7 @@ class QueryBuilder():
         #    )
 
         elif self.c_oper:
-            raise QueryMultipleExpressions(
-                "Expected logical operator after expression")
+            raise QueryMultipleExpressions("Expected logical operator after expression")
 
         if (_currentframe := inspect.currentframe()) is None:
             raise Exception("Current Frame is None")

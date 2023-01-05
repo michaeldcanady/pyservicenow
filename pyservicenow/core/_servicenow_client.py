@@ -49,12 +49,12 @@ class ServiceNowClient(AbstractServiceClient):
 
     @property
     def base_url(self) -> str:
-        return self.lu_edm_api_session.base_url # type: ignore
+        return self.lu_edm_api_session.base_url  # type: ignore
 
     @base_url.setter
     def base_url(self, base: str) -> None:
-        self.lu_edm_api_session.base_url = base # type: ignore
- 
+        self.lu_edm_api_session.base_url = base  # type: ignore
+
     def get(self, url: str, **kwargs) -> Response:
         r"""Sends a GET request. Returns :class:`Response` object.
         :param url: URL for the new :class:`Request` object.
@@ -62,7 +62,7 @@ class ServiceNowClient(AbstractServiceClient):
         :rtype: requests.Response
         """
         Logger.info(f"{type(self).__name__}.get: function called")
-        
+
         Logger.debug(f"url: {self._servicenow_url(url)}")
         Logger.debug(f"kwargs: {kwargs}")
 

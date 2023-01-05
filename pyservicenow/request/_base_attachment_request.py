@@ -23,7 +23,9 @@ class BaseAttachmentRequest(BaseServiceNowEntryRequest[A]):
         self,
         request_url: str,
         client: "ServiceNowClient",
-        options: Optional[Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]],
+        options: Optional[
+            Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]
+        ],
     ) -> None:
         super().__init__(request_url, client, options)
 
@@ -36,10 +38,10 @@ class BaseAttachmentRequest(BaseServiceNowEntryRequest[A]):
         Returns:
             TableEntryCollectionRequest: The request object to send.
         """
-        
+
         self._query_options.append(ServiceNowQueryOption(QueryParameters.Limit, limit))
         return self
-    
+
     def Offset(self: T, offset: int) -> T:
         """Starting record index for which to begin retrieving records. Use this value to paginate record retrieval.
         This functionality enables the retrieval of all records, regardless of the number of records, in small manageable chunks.
@@ -51,7 +53,9 @@ class BaseAttachmentRequest(BaseServiceNowEntryRequest[A]):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        self._query_options.append(ServiceNowQueryOption(QueryParameters.Offset, offset))
+        self._query_options.append(
+            ServiceNowQueryOption(QueryParameters.Offset, offset)
+        )
         return self
 
     def Query(self: T, query: Union[str, QueryBuilder]) -> T:
