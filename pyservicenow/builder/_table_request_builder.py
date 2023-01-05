@@ -1,12 +1,6 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, Iterable, Optional, Union
-
-if TYPE_CHECKING:
-    from pyservicenow.core import ServiceNowClient
-
 from pyrestsdk.requestbuilder import EntityRequestBuilder
-
-# internal imports
 from pyservicenow.types.models import (
     ServiceNowEntry,
     ServiceNowHeaderOption,
@@ -17,12 +11,12 @@ from pyservicenow.request._table_entry_collection_request import (
 )
 from pyservicenow.request import TableEntryRequest
 
+if TYPE_CHECKING:
+    from pyservicenow.core import ServiceNowClient
+
 
 class TableRequestBuilder(EntityRequestBuilder):
     """The Table Request Builder type"""
-
-    def __init__(self, request_url: str, client: ServiceNowClient) -> None:
-        super().__init__(request_url, client)
 
     @property
     def request(self) -> TableEntryCollectionRequest:
@@ -40,8 +34,17 @@ class TableRequestBuilder(EntityRequestBuilder):
             Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]
         ],
     ) -> TableEntryCollectionRequest:
+        """Constructs a Table Entry Collection Request
+
+        Args:
+            options (Optional[ Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]] ]): query or header options to include in the request
+
+        Returns:
+            AttachmentEntryCollectionRequest: The constructed Table Entry Collection Request
+        """
+
         return TableEntryCollectionRequest[ServiceNowEntry](
-            self.RequestUrl, self.Client, None
+            self.RequestUrl, self.Client, options
         )
 
     def id(self, sys_id: str) -> TableEntryRequest:

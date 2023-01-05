@@ -1,5 +1,6 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, TypeVar
+
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
 
@@ -9,12 +10,12 @@ from datetime import datetime
 from ._servicenow_property_collection import ServiceNowPropertyCollection
 from pyservicenow.types.constants import DATETIME
 
-S = TypeVar('S', bound='ServiceNowEntry')
-C = TypeVar('C', bound='ServiceNowClient')
+S = TypeVar("S", bound="ServiceNowEntry")
+C = TypeVar("C", bound="ServiceNowClient")
 
 
 class ServiceNowEntry(ServiceNowPropertyCollection):
-    
+
     __client: ServiceNowClient
 
     def __init__(self, client: ServiceNowClient) -> None:

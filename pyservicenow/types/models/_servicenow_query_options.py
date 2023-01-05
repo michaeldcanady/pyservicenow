@@ -4,6 +4,7 @@ from pyrestsdk.type.model import QueryOption
 # internal imports
 from pyservicenow.types.enums import QueryParameters
 
+
 class ServiceNowQueryOption(QueryOption):
 
     name: QueryParameters

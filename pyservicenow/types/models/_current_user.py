@@ -1,5 +1,6 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
+
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
 
@@ -8,8 +9,8 @@ from typing import Dict, Optional
 # internal imports
 from ._servicenow_entry import ServiceNowEntry
 
-class CurrentUser(ServiceNowEntry):
 
+class CurrentUser(ServiceNowEntry):
     def __init__(self, client: ServiceNowClient) -> None:
         super().__init__(client)
 
@@ -26,7 +27,7 @@ class CurrentUser(ServiceNowEntry):
 
         profile_id = self["user_avatar"].Value
 
-        return self._client.CustomEndpoint(profile_id).content # type: ignore
+        return self._client.CustomEndpoint(profile_id).content  # type: ignore
 
     @property
     def SysId(self) -> str:
