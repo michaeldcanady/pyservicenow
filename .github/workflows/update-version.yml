@@ -20,6 +20,7 @@ jobs:
       run: |
         export VERSION=$(cat VERSION)
         echo $VERSION
+        echo ${{github.event.pull_request.base.head_ref}}
     - name: Increment Semantic Version
       if: github.event.pull_request.base.head_ref == 'feature'
       id: bump_version
