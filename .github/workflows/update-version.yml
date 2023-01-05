@@ -19,8 +19,6 @@ jobs:
       id: get_version
       run: |
         echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
-        echo $VERSION
-        echo ${{github.event.pull_request.head.ref}}
     - name: Increment Semantic Version
       if: startsWith(github.event.pull_request.head.ref, 'feature/')
       id: bump_version
@@ -31,3 +29,9 @@ jobs:
     - name: Create/Update VERSION file
       run: |
         echo ${{ steps.bump_version.outputs.next-version }} > VERSION
+    - name: Update github
+      run: |
+
+        git add .
+        git commit -am "Update version to ${{env.VERSION}}"
+        git push
