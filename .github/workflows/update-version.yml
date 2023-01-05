@@ -3,13 +3,13 @@ name: Update version
 on:
   pull_request:
     types:
-      - main
+      - closed
 
 env:
   VERSION: "0.1.0"
 
 jobs:
-  publish:
+  if_merged:
     name: Update VERSION file properly
     runs-on: ubuntu-latest
     steps:
