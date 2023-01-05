@@ -1,7 +1,8 @@
 from strenum import StrEnum
 
+
 class QueryParameters(StrEnum):
-    
+
     ExcludeReferenceLink = "sysparm_exclude_reference_link"
     Fields = "sysparm_fields"
     Limit = "sysparm_limit"

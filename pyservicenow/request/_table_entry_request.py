@@ -1,5 +1,6 @@
 from __future__ import annotations
 from typing import TypeVar, TYPE_CHECKING, Iterable, Union, Optional
+
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
 
@@ -31,7 +32,7 @@ class TableEntryRequest(BaseTableRequest[S]):
 
     @property
     def Invoke(self: B) -> S:
-        
+
         _return = super().Invoke
 
         if type(_return) is not self.GenericType:

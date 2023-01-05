@@ -16,6 +16,7 @@ from pyservicenow.request._base_table_request import BaseTableRequest
 S = TypeVar("S", bound=ServiceNowEntry)
 B = TypeVar("B", bound="TableEntryCollectionRequest")
 
+
 class TableEntryCollectionRequest(BaseTableRequest[S]):
     """The Table Entry Collection Request"""
 
@@ -29,11 +30,10 @@ class TableEntryCollectionRequest(BaseTableRequest[S]):
     ) -> None:
         super().__init__(request_url, client, options)
 
-    
     def Invoke(self: B) -> List[S]:
-        
+
         _return = super().Invoke
-        
+
         _type = self.GenericType
 
         if type(_return) is not List:

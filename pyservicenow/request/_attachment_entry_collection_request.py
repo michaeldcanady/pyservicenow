@@ -24,16 +24,18 @@ class AttachmentEntryCollectionRequest(BaseAttachmentRequest[AttachmentEntry]):
         self,
         request_url: str,
         client: "ServiceNowClient",
-        options: Optional[Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]],
+        options: Optional[
+            Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]
+        ],
     ) -> None:
         super().__init__(request_url, client, options)
-    
+
     @property
     def Invoke(self: B) -> List[AttachmentEntry]:
-        
+
         _return = super().Invoke
-        
+
         if type(_return) is not List:
             raise UnexpectedReturnType(type(_return), List[AttachmentEntry])
-        
+
         return _return
