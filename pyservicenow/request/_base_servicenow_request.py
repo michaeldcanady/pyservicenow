@@ -20,9 +20,7 @@ from logging import getLogger
 
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
-
-import json
-
+    
 from requests import Response
 
 from pyrestsdk.request import BaseRequest
@@ -128,12 +126,13 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         if _response is None:
             return None
 
+
         _json = _response.json()
         _result = _json["result"]
         del _json
-
+        
         return parse_result(self.GenericType, _result, self.Client)
-
+        
     @property
     def Invoke(self: B) -> Optional[Union[List[S], S]]:
         """Invokes the specified method"""
