@@ -4,6 +4,7 @@ on:
   pull:
     types:
       - main
+   workflow_dispatch:
 
 env:
   VERSION: "0.1.0"
