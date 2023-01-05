@@ -1,0 +1,31 @@
+name: Update version
+
+on:
+  pull:
+    types:
+      - main
+
+env:
+  VERSION: "0.1.0"
+
+jobs:
+  publish:
+    name: Update VERSION file properly
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout repo
+      uses: actions/checkout@v1
+    - name: get version number
+      id: get_version
+      run: |
+        export VERSION = cat VERSION
+    - name: Increment Semantic Version
+      if: github.event.pull_request.base.ref == 'feature'
+      id: bump_version
+      uses: christian-draeger/increment-semantic-version@1.0.3
+      with:
+        current-version: $VERSION
+        version-fragment: 'feature'
+    - name: Create/Update VERSION file
+      run: |
+        echo ${{ steps.bump_version.outputs.next-version }} > VERSION
