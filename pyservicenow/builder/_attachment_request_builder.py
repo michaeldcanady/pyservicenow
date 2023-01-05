@@ -1,28 +1,24 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, Iterable, Optional, Union, Union, Optional
+from typing import TYPE_CHECKING, Iterable, Optional, Union
 
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
 
 from pyrestsdk.requestbuilder import EntityRequestBuilder
 
-# internal imports
 from pyservicenow.types.models import (
     ServiceNowQueryOption,
     ServiceNowHeaderOption,
 )
+
 from pyservicenow.request import (
     AttachmentEntryRequest,
     AttachmentEntryCollectionRequest,
 )
-from pyservicenow.types.models import ServiceNowQueryOption, ServiceNowHeaderOption
 
 
 class AttachmentRequestBuilder(EntityRequestBuilder):
     """The Table Request Builder type"""
-
-    def __init__(self, request_url: str, client: ServiceNowClient) -> None:
-        super().__init__(request_url, client)
 
     @property
     def request(self) -> AttachmentEntryCollectionRequest:
