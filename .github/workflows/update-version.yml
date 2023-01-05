@@ -25,7 +25,7 @@ jobs:
       id: bump_version
       uses: christian-draeger/increment-semantic-version@1.0.3
       with:
-        current-version: $VERSION
+        current-version: ${{env.VERSION}}
         version-fragment: 'feature'
     - name: Create/Update VERSION file
       run: |
