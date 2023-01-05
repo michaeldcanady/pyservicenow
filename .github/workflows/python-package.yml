@@ -22,8 +22,8 @@ jobs:
     - name: install requirements
       run: |
         sudo apt-get install gcc
-        sudo apt-get install libkrb5-dev
         sudo apt-get install libkrb5
+        sudo apt-get install libkrb5-dev
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
