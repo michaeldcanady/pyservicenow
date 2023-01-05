@@ -8,7 +8,7 @@ authors = [{name = "michaeldcanady"}]
 readme = "Readme.md"
 license = {file = "LICENSE"}
 classifiers = ["License :: OSI Approved :: MIT License"]
-dynamic = ["version", "description", "dependencies"]
+dynamic = ["version", "description"]
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
