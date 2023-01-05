@@ -21,7 +21,7 @@ jobs:
         export VERSION=$(cat VERSION)
         echo $VERSION
     - name: Increment Semantic Version
-      if: github.event.pull_request.base.ref == 'feature'
+      if: github.event.pull_request.base.head_ref == 'feature'
       id: bump_version
       uses: christian-draeger/increment-semantic-version@1.0.3
       with:
