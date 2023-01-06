@@ -42,6 +42,6 @@ jobs:
         pip install .
         pytest
       env:
-        USERNAME: ${{ secrets.USERNAME }} 
-        PASSWORD: ${{ secrets.PASSWORD }} 
-        INSTANCE: ${{ secrets.INSTANCE }} 
+        USERNAME: '${{secrets.USERNAME}}'
+        PASSWORD: '${{secrets.PASSWORD}}'
+        INSTANCE: '${{secrets.INSTANCE}}'
