@@ -9,7 +9,7 @@ class EncryptionContext(IntEnum):
     @classmethod
     def fromString(cls, value: str) -> "EncryptionContext":
 
-        if value is "" or value is None:
+        if value == "" or value is None:
             return EncryptionContext.Null
         elif "single" in value.casefold():
             return EncryptionContext.Single
