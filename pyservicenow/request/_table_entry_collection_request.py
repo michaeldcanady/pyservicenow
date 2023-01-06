@@ -36,7 +36,7 @@ class TableEntryCollectionRequest(BaseTableRequest[S]):
 
         _type = self.GenericType
 
-        if type(_return) is not List:
+        if type(_return) is not list:
             raise UnexpectedReturnType(type(_return), List[Type[_type]])
 
         return _return
