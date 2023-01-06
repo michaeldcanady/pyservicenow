@@ -10,9 +10,7 @@ if TYPE_CHECKING:
 
 
 class UIUserRequestBuilder(EntityRequestBuilder):
-    
-    def __init__(self, request_url: str, client: ServiceNowClient) -> None:
-        super().__init__(request_url, client)
+    """The UI User Request Builder type"""
 
     @property
     def CurrentUser(self) -> UIUserCurrentUserRequestBuilder:

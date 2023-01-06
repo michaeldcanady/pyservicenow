@@ -19,9 +19,6 @@ if TYPE_CHECKING:
 
 class AttachmentRequestBuilder(EntityRequestBuilder):
     """The Attachment Request Builder type"""
-    
-    def __init__(self, request_url: str, client: ServiceNowClient) -> None:
-        super().__init__(request_url, client)
 
     @property
     def request(self) -> AttachmentEntryCollectionRequest:
@@ -42,7 +39,8 @@ class AttachmentRequestBuilder(EntityRequestBuilder):
         """Constructs an Attachment Entry Collection Request
 
         Args:
-            options (Optional[ Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]] ]): query or header options to include in the request
+            options (Optional[Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]]):
+            query or header options to include in the request
 
         Returns:
             AttachmentEntryCollectionRequest: The constructed Table Entry Collection Request

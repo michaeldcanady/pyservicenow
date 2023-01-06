@@ -13,9 +13,6 @@ if TYPE_CHECKING:
 
 class NowRequestBuilder(EntityRequestBuilder):
     """The Now Request Builder type"""
-    
-    def __init__(self, request_url: str, client: ServiceNowClient) -> None:
-        super().__init__(request_url, client)
 
     def Table(self, table_name: str) -> TableRequestBuilder:
         """Get a specified serviceNow table

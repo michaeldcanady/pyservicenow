@@ -1,9 +1,9 @@
+"""Houses Service-Now Client"""
+
 import typing
-from pyrestsdk import AbstractServiceClient
 from logging import getLogger
 from requests import Session, Response
-
-# internal imports
+from pyrestsdk import AbstractServiceClient
 from pyservicenow.builder._now_request_builder import NowRequestBuilder
 from pyservicenow.types.enums import APIVersion
 from pyservicenow.core._client_factory import HTTPClientFactory
@@ -12,6 +12,8 @@ Logger = getLogger(__name__)
 
 
 class ServiceNowClient(AbstractServiceClient):
+    """Service-Now Client type"""
+
     @typing.overload
     def __init__(self, credential, instance: str, session: Session = Session()) -> None:
         ...

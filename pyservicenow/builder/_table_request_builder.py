@@ -19,9 +19,6 @@ if TYPE_CHECKING:
 
 class TableRequestBuilder(EntityRequestBuilder):
     """The Table Request Builder type"""
-    
-    def __init__(self, request_url: str, client: ServiceNowClient) -> None:
-        super().__init__(request_url, client)
 
     @property
     def request(self) -> TableEntryCollectionRequest:
@@ -42,7 +39,8 @@ class TableRequestBuilder(EntityRequestBuilder):
         """Constructs a Table Entry Collection Request
 
         Args:
-            options (Optional[ Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]] ]): query or header options to include in the request
+            options (Optional[Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]] \]):
+            query or header options to include in the request
 
         Returns:
             AttachmentEntryCollectionRequest: The constructed Table Entry Collection Request

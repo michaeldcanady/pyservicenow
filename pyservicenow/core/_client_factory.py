@@ -1,5 +1,7 @@
-from requests import Session
+"""Houses HTTPClientFactory"""
+
 from logging import getLogger
+from requests import Session
 from pyrestsdk.middleware.authorizationhandler import BasicAuthorizationHandler
 from pyrestsdk.clientfactory import AbstractHTTPClientFactory
 
@@ -36,6 +38,8 @@ class HTTPClientFactory(AbstractHTTPClientFactory):
         return self.session
 
     def create_with_custom_middleware(self, *args, **kwargs) -> Session:
+        """Applies custom middleware chain to the HTTP Client"""
+
         raise NotImplementedError("create_with_custom_middleware is not implemented")
 
     def _set_base_url(self) -> None:
@@ -44,8 +48,8 @@ class HTTPClientFactory(AbstractHTTPClientFactory):
         Logger.info(f"{type(self)}._set_base_url(): method called")
 
         # TODO subclass session or find new way to store base_url
-        self.session.base_url = f"https://{self.api_url}.service-now.com/api"
+        self.session.base_url = f"https://{self.api_url}.service-now.com/api"  # type: ignore
 
         Logger.debug(
-            f"{type(self)}._set_base_url() : base url set to: {self.session.base_url}"
+            f"{type(self)}._set_base_url() : base url set to: {self.session.base_url}"  # type: ignore
         )
