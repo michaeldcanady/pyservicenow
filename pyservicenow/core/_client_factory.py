@@ -4,8 +4,6 @@ from logging import getLogger
 from requests import Session
 from pyrestsdk.middleware.authorizationhandler import BasicAuthorizationHandler
 from pyrestsdk.clientfactory import AbstractHTTPClientFactory
-
-# internal imports
 from pyservicenow.core.credential._username_password_credential import (
     UsernamePasswordCredential,
 )
@@ -51,5 +49,5 @@ class HTTPClientFactory(AbstractHTTPClientFactory):
         self.session.base_url = f"https://{self.api_url}.service-now.com/api"  # type: ignore
 
         Logger.debug(
-            f"{type(self)}._set_base_url() : base url set to: {self.session.base_url}"  # type: ignore
+            f"{type(self)}._set_base_url() : base url set to: {self.session.base_url}"
         )

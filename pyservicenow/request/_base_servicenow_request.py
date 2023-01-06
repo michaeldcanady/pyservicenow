@@ -10,28 +10,23 @@ from typing import (
     Dict,
     Any,
     Callable,
-    Tuple,
 )
 
 import json
 
 from logging import getLogger
-
-if TYPE_CHECKING:
-    from pyservicenow.core import ServiceNowClient
-
 from requests import Response
-
 from pyrestsdk.request import BaseRequest
 from pyrestsdk.type.enum import HttpsMethod
-
-# Interal Imports
 from pyservicenow.types.models import (
     ServiceNowQueryOption,
     ServiceNowHeaderOption,
     ServiceNowEntry,
 )
-from pyservicenow.types.enums import Header, MimeTypeNames
+from pyservicenow.types.enums import Header, MimeTypeName
+
+if TYPE_CHECKING:
+    from pyservicenow.core import ServiceNowClient
 
 B = TypeVar("B", bound="BaseServiceNowEntryRequest")
 S = TypeVar("S", bound="ServiceNowEntry")
@@ -40,6 +35,8 @@ Logger = getLogger(__name__)
 
 
 class BaseServiceNowEntryRequest(BaseRequest[S]):
+    """Base Service-Now Entry Request"""
+    
     def __init__(
         self,
         request_url: str,
@@ -90,6 +87,7 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
 
     @property
     def Delete(self: B) -> B:
+        """Sets request to delete request"""
 
         self.header_options.append(
             ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json)
@@ -100,6 +98,7 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         return self
 
     def Put(self: B, input_object: S) -> B:
+        """Sets request to put request"""
 
         self.header_options.append(
             ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json)
@@ -112,6 +111,7 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
     def _update_request_type(
         self: B, method: HttpsMethod, input_object: Optional[S]
     ) -> None:
+        """Updates the request type, sSets the method and object to the provided values"""
 
         Logger.info(f"{type(self).__name__}._update_request_type: function called")
 
@@ -121,6 +121,8 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
     def parse_response(
         self, _response: Optional[Response]
     ) -> Optional[Union[List[S], S]]:
+        """Parses response into expected return type, list of generic type,
+        single generic type or None"""
 
         if _response is None:
             return None

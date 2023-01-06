@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from pyrestsdk.requestbuilder import EntityRequestBuilder
+from pyrestsdk.requestbuilder import EntityRequestBuilder, BaseRequestBuilder
 from pyservicenow.builder._table_request_builder import TableRequestBuilder
 from pyservicenow.builder._ui_request_builder import UIRequestBuilder
 from pyservicenow.builder._attachment_request_builder import AttachmentRequestBuilder
@@ -11,7 +11,7 @@ if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
 
 
-class NowRequestBuilder(EntityRequestBuilder):
+class NowRequestBuilder(BaseRequestBuilder):
     """The Now Request Builder type"""
 
     def Table(self, table_name: str) -> TableRequestBuilder:

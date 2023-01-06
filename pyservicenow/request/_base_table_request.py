@@ -1,17 +1,13 @@
+"""Houses Base Table Request"""
+
 from __future__ import annotations
-from typing import Union, TypeVar, Type, TYPE_CHECKING, Iterable, List, Optional
-
-if TYPE_CHECKING:
-    from pyservicenow.core import ServiceNowClient
-
-# Interal Imports
+from typing import Union, TypeVar, List
 from pyservicenow.types.enums import QueryParameters, DisplayValue, View
 from pyservicenow.request._base_servicenow_request import BaseServiceNowEntryRequest
 from pyservicenow.types.models._querybuilder import QueryBuilder
 from pyservicenow.types.models import (
     ServiceNowQueryOption,
     ServiceNowEntry,
-    ServiceNowHeaderOption,
 )
 
 T = TypeVar("T", bound="BaseTableRequest")
@@ -19,15 +15,7 @@ S = TypeVar("S", bound="ServiceNowEntry")
 
 
 class BaseTableRequest(BaseServiceNowEntryRequest[S]):
-    def __init__(
-        self,
-        request_url: str,
-        client: "ServiceNowClient",
-        options: Optional[
-            Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]
-        ],
-    ) -> None:
-        super().__init__(request_url, client, options)
+    """Base Table Request types"""
 
     # def SysparmDisplayValue(self, value: str)
 
@@ -43,7 +31,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
 
         self._query_options.append(
             ServiceNowQueryOption(
-                QueryParameters.ExcludeReferenceLink, exclude_reference_link
+                QueryParameters.EXCLUDEREFERENCELINK, exclude_reference_link
             )
         )
         return self
@@ -59,7 +47,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
         """
 
         self._query_options.append(
-            ServiceNowQueryOption(QueryParameters.DisplayValue, str(values))
+            ServiceNowQueryOption(QueryParameters.DISPLAYVALUE, str(values))
         )
         return self
 
@@ -74,7 +62,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
         """
 
         self._query_options.append(
-            ServiceNowQueryOption(QueryParameters.Fields, fields)
+            ServiceNowQueryOption(QueryParameters.FIELDS, fields)
         )
         return self
 
@@ -88,11 +76,12 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        self._query_options.append(ServiceNowQueryOption(QueryParameters.Limit, limit))
+        self._query_options.append(ServiceNowQueryOption(QueryParameters.LIMIT, limit))
         return self
 
     def NoCount(self: T, no_count: bool) -> T:
-        """Flag that indicates whether to execute a select count(*) query on the table to return the number of rows in the associated table.
+        """Flag that indicates whether to execute a select count(*)
+        query on the table to return the number of rows in the associated table.
 
         Args:
             no_count (bool): The number of records limit
@@ -102,7 +91,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
         """
 
         self._query_options.append(
-            ServiceNowQueryOption(QueryParameters.NoCount, no_count)
+            ServiceNowQueryOption(QueryParameters.NOCOUNT, no_count)
         )
         return self
 
@@ -118,12 +107,13 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
         """
 
         self._query_options.append(
-            ServiceNowQueryOption(QueryParameters.Offset, offset)
+            ServiceNowQueryOption(QueryParameters.OFFSET, offset)
         )
         return self
 
     def Query(self: T, query: Union[str, QueryBuilder]) -> T:
-        """Encoded query used to filter the result set. You can use a UI filter to obtain a properly encoded query.
+        """Encoded query used to filter the result set.
+        You can use a UI filter to obtain a properly encoded query.
 
         Args:
             query (str): Encoded query used to filter the result set.
@@ -132,7 +122,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        self._query_options.append(ServiceNowQueryOption(QueryParameters.Query, query))
+        self._query_options.append(ServiceNowQueryOption(QueryParameters.QUERY, query))
 
         return self
 
@@ -147,7 +137,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
         """
 
         self._query_options.append(
-            ServiceNowQueryOption(QueryParameters.Category, category)
+            ServiceNowQueryOption(QueryParameters.CATEGORY, category)
         )
         return self
 
@@ -162,7 +152,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
         """
 
         self._query_options.append(
-            ServiceNowQueryOption(QueryParameters.NoDomain, no_domain)
+            ServiceNowQueryOption(QueryParameters.NODOMAIN, no_domain)
         )
         return self
 
@@ -179,7 +169,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
 
         self._query_options.append(
             ServiceNowQueryOption(
-                QueryParameters.SuppressPaginationHeader, suppress_pagination_header
+                QueryParameters.SUPPRESSPAGINATIONHEADER, suppress_pagination_header
             )
         )
         return self
@@ -194,5 +184,5 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        self._query_options.append(ServiceNowQueryOption(QueryParameters.View, view))
+        self._query_options.append(ServiceNowQueryOption(QueryParameters.VIEW, view))
         return self
