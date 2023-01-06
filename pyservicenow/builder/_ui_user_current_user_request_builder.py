@@ -1,3 +1,5 @@
+"""Houses UI User Current User Request Builder"""
+
 from __future__ import annotations
 from typing import TYPE_CHECKING, Iterable, Optional, Union
 from pyrestsdk.requestbuilder import EntityRequestBuilder
@@ -6,6 +8,7 @@ from pyservicenow.types.models import ServiceNowHeaderOption, ServiceNowQueryOpt
 
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
+
 
 class UIUserCurrentUserRequestBuilder(EntityRequestBuilder):
     """The UI User Current User Request Builder type"""
@@ -29,10 +32,11 @@ class UIUserCurrentUserRequestBuilder(EntityRequestBuilder):
         """Constructs a UI User CurrentUser Request
 
         Args:
-            options (Optional[ Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]] ]): query or header options to include in the request
+            options (Optional[Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]]):
+            query or header options to include in the request
 
         Returns:
             UIUserCurrentUserRequest: The constructed UI User CurrentUser Request
         """
-        
+
         return UIUserCurrentUserRequest(self.RequestUrl, self.Client, options)

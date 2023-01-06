@@ -1,16 +1,9 @@
+"""Houses the UI User Current User Request"""
+
 from __future__ import annotations
-from typing import TYPE_CHECKING, Optional, Iterable, Union, TypeVar
-
-if TYPE_CHECKING:
-    from pyservicenow.core import ServiceNowClient
-
-# Interal Imports
+from typing import TypeVar
 from pyservicenow.request._base_servicenow_request import BaseServiceNowEntryRequest
-from pyservicenow.types.models import (
-    CurrentUser,
-    ServiceNowHeaderOption,
-    ServiceNowQueryOption,
-)
+from pyservicenow.types.models import CurrentUser
 from pyservicenow.types.exceptions import UnexpectedReturnType
 
 B = TypeVar("B", bound="UIUserCurrentUserRequest")
@@ -19,22 +12,13 @@ B = TypeVar("B", bound="UIUserCurrentUserRequest")
 class UIUserCurrentUserRequest(BaseServiceNowEntryRequest[CurrentUser]):
     """The Table Entry Collection Request"""
 
-    def __init__(
-        self,
-        request_url: str,
-        client: "ServiceNowClient",
-        options: Optional[
-            Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]
-        ],
-    ) -> None:
-        super().__init__(request_url, client, options)
-
     @property
     def Invoke(self: B) -> CurrentUser:
+        """Invokes the specified method"""
 
         _return = super().Invoke
 
-        if type(_return) is not self.GenericType:
+        if not isinstance(_return, self.GenericType):
             raise UnexpectedReturnType(type(_return), self.GenericType)
 
         return _return
