@@ -1,3 +1,5 @@
+"""Houses attachment request builder"""
+
 from __future__ import annotations
 from typing import TYPE_CHECKING, Iterable, Optional, Union
 from pyrestsdk.requestbuilder import EntityRequestBuilder
@@ -17,6 +19,9 @@ if TYPE_CHECKING:
 
 class TableRequestBuilder(EntityRequestBuilder):
     """The Table Request Builder type"""
+    
+    def __init__(self, request_url: str, client: ServiceNowClient) -> None:
+        super().__init__(request_url, client)
 
     @property
     def request(self) -> TableEntryCollectionRequest:

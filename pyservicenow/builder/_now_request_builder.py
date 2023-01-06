@@ -1,3 +1,5 @@
+"""Houses the Now Request Builder"""
+
 from __future__ import annotations
 from typing import TYPE_CHECKING
 from pyrestsdk.requestbuilder import EntityRequestBuilder
@@ -10,6 +12,10 @@ if TYPE_CHECKING:
 
 
 class NowRequestBuilder(EntityRequestBuilder):
+    """The Now Request Builder type"""
+    
+    def __init__(self, request_url: str, client: ServiceNowClient) -> None:
+        super().__init__(request_url, client)
 
     def Table(self, table_name: str) -> TableRequestBuilder:
         """Get a specified serviceNow table

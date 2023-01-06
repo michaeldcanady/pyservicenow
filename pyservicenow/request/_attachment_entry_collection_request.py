@@ -35,7 +35,7 @@ class AttachmentEntryCollectionRequest(BaseAttachmentRequest[AttachmentEntry]):
 
         _return = super().Invoke
 
-        if type(_return) is not List:
+        if type(_return) is not list:
             raise UnexpectedReturnType(type(_return), List[AttachmentEntry])
 
         return _return
