@@ -16,6 +16,8 @@ class TableEntryCollectionRequest(BaseTableRequest[S]):
     @property
     def Invoke(self: B) -> List[S]:
         """Invokes the specified method"""
+        
+        print(self.GenericType)
 
         _return = super().Invoke
 

@@ -51,14 +51,19 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         super().__init__(request_url, client, options)
 
         self._object = None
-        
+
+    # fix until https://github.com/michaeldcanady/pyrestsdk/issues/6 is resolved
     @property
-    def GenericType(self: B) -> S:
+    def GenericType(self: B) -> Type[S]:
         """Gets the the type argument provided
         """
-        # Overriding until 
         
-        _type: S = get_args(self.__orig_bases__[0])[0]
+        orig_classes = getattr(self, "__orig_class__", None)
+        
+        if orig_classes:
+            return get_args(orig_classes)[0]
+        
+        _type: Type[S] = get_args(self.__orig_bases__[0])[0]
               
         return _type
 
@@ -153,22 +158,23 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
 
         return self.Send(self._object)
 
-    def parse_result(
-        self,
-        result: Union[Dict[str, Any], List[Dict[str, Any]]],
-    ) -> Union[List[S], S]:
-        """parses return into expected return type"""
+def parse_result(
+    obj_type: Type[S],
+    result: Union[Dict[str, Any], List[Dict[str, Any]]],
+    client
+) -> Union[List[S], S]:
+    """parses return into expected return type"""
 
-        _operation_dict: Dict[
-            Type, Callable[[Union[Dict, List], ServiceNowClient], Union[List[S], S]]
-        ] = {
-            dict: lambda x, y: self.GenericType.fromJson(x, y),  # type: ignore
-            list: lambda x, y: [
-                self.generic_type.fromJson(raw_result, y) for raw_result in x
-            ],
-        }
+    _operation_dict: Dict[
+        Type, Callable[[Union[Dict, List], ServiceNowClient], Union[List[S], S]]
+    ] = {
+        dict: lambda x, y: obj_type.fromJson(x, y),  # type: ignore
+        list: lambda x, y: [
+            obj_type.fromJson(raw_result, y) for raw_result in x
+        ],
+    }
 
-        if (_func := _operation_dict.get(type(result), None)) is None:
-            raise Exception(f"unexpected type: {type(result)}")
+    if (_func := _operation_dict.get(type(result), None)) is None:
+        raise Exception(f"unexpected type: {type(result)}")
 
-        return _func(result, self.Client)
+    return _func(result, client)
