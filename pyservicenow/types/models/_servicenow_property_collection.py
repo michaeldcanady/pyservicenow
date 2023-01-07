@@ -1,3 +1,4 @@
+"""Houses Service-Now Property Collection"""
 from __future__ import annotations
 from typing import (
     TYPE_CHECKING,
@@ -10,8 +11,8 @@ from typing import (
     Type,
     Any,
 )
-from pyrestsdk.type.model._base_entity import BaseEntity
 from json import dumps
+from pyrestsdk.type.model._base_entity import BaseEntity
 from pyservicenow.types.models._servicenow_property import ServiceNowProperty
 
 if TYPE_CHECKING:
@@ -22,6 +23,8 @@ C = TypeVar("C", bound="ServiceNowClient")
 
 
 class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], BaseEntity):
+    """Service-Now Property Collection"""
+    
     def __init__(self, client: C) -> None:
         super().__init__(client)
 
@@ -32,7 +35,6 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
     @property
     def Client(self) -> C:
         """Gets the client"""
-        
         return super().Client
 
     @property
@@ -42,12 +44,10 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
         Returns:
             bool: If the collection is null
         """
-
         return self._is_null
 
     def _check_is_null(self) -> None:
         """checks if the object is empty"""
-        
         self._is_null = len(self.keys()) == 0
 
     def __setitem__(self, key: str, value: ServiceNowProperty) -> None:
@@ -89,18 +89,20 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
         return self._internaldict.items()
 
     def _changed_dict(self) -> Dict[str, Any]:
+        """Gets a dictionary of the changed keys and their values"""
 
-        changed_dict: Dict[str, Any] = dict()
+        changed_dict: Dict[str, Any] = {}
 
         for key in self._changed_keys:
             changed_dict[key] = self[key].actual_value
 
         return changed_dict
 
+    @property
     def asDict(self) -> Dict:
         """Gets the object as it's dict representation"""
 
-        _dict: Dict[str, Any] = dict()
+        _dict: Dict[str, Any] = {}
 
         for key, value in self._internaldict.items():
             _dict[key] = value.as_dict()
@@ -109,7 +111,12 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
 
     @property
     def __json__(self) -> str:
-        return dumps(self.asDict())
+        return dumps(self.asDict)
+    
+    @property
+    def Json(self) -> Dict:
+        """Gets the object as it's dict representation"""
+        return self.asDict
 
     @classmethod
     def fromJson(cls: Type[S], entry: Dict[str, Any], client: ServiceNowClient) -> S:
@@ -132,7 +139,7 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
                 if value is not None:
                     _value.display_value = value.get("display_value")
                     _value.actual_value = value.get("value")
-                    _value.Link = value.get("link")
+                    _value.value_link = value.get("link")
 
             new[key] = _value
 

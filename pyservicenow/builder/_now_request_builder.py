@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from pyrestsdk.requestbuilder import EntityRequestBuilder, BaseRequestBuilder
+from pyrestsdk.requestbuilder import BaseRequestBuilder
 from pyservicenow.builder._table_request_builder import TableRequestBuilder
 from pyservicenow.builder._ui_request_builder import UIRequestBuilder
 from pyservicenow.builder._attachment_request_builder import AttachmentRequestBuilder

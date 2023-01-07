@@ -7,10 +7,9 @@ from pyservicenow import __version__, __module_name__
 
 def get_dependancies() -> List[str]:
     """Gets dependancies from requirements.txt"""
-    
     dependancies = []
 
-    with open("./requirements.txt","r") as file:
+    with open("./requirements.txt","r", encoding="UTF-8") as file:
         dependancies = file.read().split("\n")
         dependancies = filter(None, dependancies)
         dependancies = filter(bool, dependancies)
@@ -21,7 +20,6 @@ def get_dependancies() -> List[str]:
 
 def get_packages() -> List[str]:
     """Gets all subpackages"""
-    
     directory = os.path.join(".","pyservicenow")
 
     _packages = [x[0].replace("\\",".") for x in os.walk(directory) if "__pycache__" not in x[0]]
