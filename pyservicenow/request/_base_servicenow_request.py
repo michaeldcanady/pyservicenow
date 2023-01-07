@@ -38,6 +38,7 @@ Logger = getLogger(__name__)
 
 class BaseServiceNowEntryRequest(BaseRequest[S]):
     """Base Service-Now Entry Request"""
+
     def __init__(
         self,
         request_url: str,
@@ -141,22 +142,22 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
 
         return self.Send(self._object)
 
+    def parse_result(
+        self,
+        result: Union[Dict[str, Any], List[Dict[str, Any]]],
+    ) -> Union[List[S], S]:
+        """parses return into expected return type"""
 
-def parse_result(
-    obj_type: Type[S],
-    result: Union[Dict[str, Any], List[Dict[str, Any]]],
-    client: ServiceNowClient,
-) -> Union[List[S], S]:
-    """parses return into expected return type"""
+        _operation_dict: Dict[
+            Type, Callable[[Union[Dict, List], ServiceNowClient], Union[List[S], S]]
+        ] = {
+            dict: lambda x, y: self.GenericType.fromJson(x, y),  # type: ignore
+            list: lambda x, y: [
+                self.generic_type.fromJson(raw_result, y) for raw_result in x
+            ],
+        }
 
-    _operation_dict: Dict[
-        Type, Callable[[Union[Dict, List], ServiceNowClient], Union[List[S], S]]
-    ] = {
-        dict: lambda x, y: obj_type.fromJson(x, y),  # type: ignore
-        list: lambda x, y: [obj_type.fromJson(raw_result, y) for raw_result in x],
-    }
+        if (_func := _operation_dict.get(type(result), None)) is None:
+            raise Exception(f"unexpected type: {type(result)}")
 
-    if (_func := _operation_dict.get(type(result), None)) is None:
-        raise Exception(f"unexpected type: {type(result)}")
-
-    return _func(result, client)
+        return _func(result, self.Client)
