@@ -49,5 +49,5 @@ class HTTPClientFactory(AbstractHTTPClientFactory):
         self.session.base_url = f"https://{self.api_url}.service-now.com/api"  # type: ignore
 
         Logger.debug(
-            f"{type(self)}._set_base_url() : base url set to: {self.session.base_url}"
+            "%s._set_base_url() : base url set to: %s", type(self), self.session.base_url
         )

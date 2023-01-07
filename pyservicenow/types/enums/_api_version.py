@@ -5,7 +5,6 @@ from enum import IntEnum, auto
 
 class APIVersion(IntEnum):
     """Version of the Service-Now API"""
-    
     NULL = auto()
     V1 = auto()
     V2 = auto()

@@ -13,6 +13,7 @@ B = TypeVar("B", bound="TableEntryCollectionRequest")
 class TableEntryCollectionRequest(BaseTableRequest[S]):
     """The Table Entry Collection Request"""
 
+    @property
     def Invoke(self: B) -> List[S]:
         """Invokes the specified method"""
 

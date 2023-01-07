@@ -1,9 +1,13 @@
-from setuptools import setup
-from typing import List
-from pyservicenow import __version__, __module_name__
+"""Used to compile module"""
+
 import os
+from typing import List
+from setuptools import setup
+from pyservicenow import __version__, __module_name__
 
 def get_dependancies() -> List[str]:
+    """Gets dependancies from requirements.txt"""
+    
     dependancies = []
 
     with open("./requirements.txt","r") as file:
@@ -16,6 +20,8 @@ def get_dependancies() -> List[str]:
     return dependancies
 
 def get_packages() -> List[str]:
+    """Gets all subpackages"""
+    
     directory = os.path.join(".","pyservicenow")
 
     _packages = [x[0].replace("\\",".") for x in os.walk(directory) if "__pycache__" not in x[0]]

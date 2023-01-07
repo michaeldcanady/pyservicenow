@@ -10,15 +10,12 @@ from typing import (
     Type,
     Any,
 )
+from pyrestsdk.type.model._base_entity import BaseEntity
+from json import dumps
+from pyservicenow.types.models._servicenow_property import ServiceNowProperty
 
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
-
-from pyrestsdk.type.model._base_entity import BaseEntity
-from json import dumps
-
-# internal imports
-from ._servicenow_property import ServiceNowProperty
 
 S = TypeVar("S", bound="ServiceNowPropertyCollection")
 C = TypeVar("C", bound="ServiceNowClient")
@@ -28,26 +25,30 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
     def __init__(self, client: C) -> None:
         super().__init__(client)
 
-        self.is_null: bool = True
-        self._internaldict: Dict[str, ServiceNowProperty] = dict()
-        self._changed_keys: List[str] = list()
+        self._is_null: bool = True
+        self._internaldict: Dict[str, ServiceNowProperty] = {}
+        self._changed_keys: List[str] = []
 
     @property
     def Client(self) -> C:
+        """Gets the client"""
+        
         return super().Client
 
     @property
-    def IsNull(self) -> bool:
+    def is_null(self) -> bool:
         """Gets if the collection is null, contains no key/value pairs
 
         Returns:
             bool: If the collection is null
         """
 
-        return self.is_null
+        return self._is_null
 
     def _check_is_null(self) -> None:
-        self.is_null = len(self.keys()) == 0
+        """checks if the object is empty"""
+        
+        self._is_null = len(self.keys()) == 0
 
     def __setitem__(self, key: str, value: ServiceNowProperty) -> None:
 
@@ -92,19 +93,21 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
         changed_dict: Dict[str, Any] = dict()
 
         for key in self._changed_keys:
-            changed_dict[key] = self[key].Value
+            changed_dict[key] = self[key].actual_value
 
         return changed_dict
 
     def asDict(self) -> Dict:
+        """Gets the object as it's dict representation"""
 
         _dict: Dict[str, Any] = dict()
 
         for key, value in self._internaldict.items():
-            _dict[key] = value.asdict()
+            _dict[key] = value.as_dict()
 
         return _dict
 
+    @property
     def __json__(self) -> str:
         return dumps(self.asDict())
 
@@ -124,15 +127,16 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
         for key, value in entry.items():
             _value = ServiceNowProperty()
             if isinstance(value, str):
-                _value.Value = value
+                _value.actual_value = value
             else:
                 if value is not None:
-                    _value.DisplayValue = value.get("display_value")
-                    _value.Value = value.get("value")
+                    _value.display_value = value.get("display_value")
+                    _value.actual_value = value.get("value")
                     _value.Link = value.get("link")
 
             new[key] = _value
 
+        new._check_is_null()
         new._changed_keys = []
 
         return new

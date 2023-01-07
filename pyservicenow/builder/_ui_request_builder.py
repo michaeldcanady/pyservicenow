@@ -19,5 +19,4 @@ class UIRequestBuilder(BaseRequestBuilder):
         Returns:
             UIUserRequestBuilder: UI User request builder
         """
-
         return UIUserRequestBuilder(self.AppendSegmentToRequestUrl("user"), self.Client)

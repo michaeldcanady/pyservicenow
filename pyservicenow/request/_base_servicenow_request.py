@@ -1,3 +1,5 @@
+"""Houses Base Service-Now Entry Request"""
+
 from __future__ import annotations
 from typing import (
     TYPE_CHECKING,
@@ -26,14 +28,13 @@ if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
 
 B = TypeVar("B", bound="BaseServiceNowEntryRequest")
-S = TypeVar("S", bound="ServiceNowEntry")
+S = TypeVar("S", bound=ServiceNowEntry)
 
 Logger = getLogger(__name__)
 
 
 class BaseServiceNowEntryRequest(BaseRequest[S]):
     """Base Service-Now Entry Request"""
-    
     def __init__(
         self,
         request_url: str,
@@ -73,6 +74,7 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         return self
 
     def Post(self: B, input_object: S) -> B:
+        """Sets request to post request"""
 
         self._headers.append(
             ServiceNowHeaderOption(Header.ACCEPT, MimeTypeName.Application.JSON)
@@ -110,7 +112,7 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
     ) -> None:
         """Updates the request type, sSets the method and object to the provided values"""
 
-        Logger.info(f"{type(self).__name__}._update_request_type: function called")
+        Logger.info("%s._update_request_type: function called", type(self).__name__)
 
         self.Method = method
         self.Object = input_object

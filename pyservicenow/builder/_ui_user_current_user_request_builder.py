@@ -20,7 +20,6 @@ class UIUserCurrentUserRequestBuilder(EntityRequestBuilder):
         Returns:
             UIUserCurrentUserRequest: The constructed UI User CurrentUser Request
         """
-        
         return self.Request(None)
 
     def Request(
@@ -38,5 +37,4 @@ class UIUserCurrentUserRequestBuilder(EntityRequestBuilder):
         Returns:
             UIUserCurrentUserRequest: The constructed UI User CurrentUser Request
         """
-
         return UIUserCurrentUserRequest(self.RequestUrl, self.Client, options)
