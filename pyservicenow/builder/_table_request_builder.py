@@ -45,6 +45,7 @@ class TableRequestBuilder(EntityRequestBuilder):
         Returns:
             AttachmentEntryCollectionRequest: The constructed Table Entry Collection Request
         """
+        
         return TableEntryCollectionRequest[ServiceNowEntry](
             self.RequestUrl, self.Client, options
         )

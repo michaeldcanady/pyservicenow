@@ -24,7 +24,7 @@ C = TypeVar("C", bound="ServiceNowClient")
 
 class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], BaseEntity):
     """Service-Now Property Collection"""
-    
+
     def __init__(self, client: C) -> None:
         super().__init__(client)
 
@@ -112,7 +112,7 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
     @property
     def __json__(self) -> str:
         return dumps(self.asDict)
-    
+
     @property
     def Json(self) -> Dict:
         """Gets the object as it's dict representation"""
