@@ -50,6 +50,16 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         super().__init__(request_url, client, options)
 
         self._object = None
+        
+    @property
+    def GenericType(self: B) -> S:
+        """Gets the the type argument provided
+        """
+        # Overriding until 
+        
+        _type: S = get_args(self.__orig_bases__[0])[0] # type: ignore  
+              
+        return _type
 
     @property
     def input_object(self: B) -> Optional[S]:
