@@ -144,6 +144,7 @@ def parse_result(
     result: Union[Dict[str, Any], List[Dict[str, Any]]],
     client: ServiceNowClient,
 ) -> Union[List[S], S]:
+    """parses return into expected return type"""
 
     _operation_dict: Dict[
         Type, Callable[[Union[Dict, List], ServiceNowClient], Union[List[S], S]]
