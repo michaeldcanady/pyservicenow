@@ -55,7 +55,7 @@ class ServiceNowClient(AbstractServiceClient):
     @base_url.setter
     def base_url(self, base: str) -> None:
         self.lu_edm_api_session.base_url = base  # type: ignore
-        
+
     def custom_endpoint(self, endpoint: str) -> Response:
         """Construct request to non-standard endpoint"""
         return self.get(endpoint)
@@ -110,7 +110,7 @@ class ServiceNowClient(AbstractServiceClient):
         Logger.debug("kwargs: %s", kwargs)
         Logger.debug("data: %s", data)
         Logger.debug("json: %s", json)
-        
+
         return self.lu_edm_api_session.post(
             self._instance_url(url), data=data, json=json, **kwargs
         )
@@ -144,7 +144,7 @@ class ServiceNowClient(AbstractServiceClient):
         Logger.debug("url: %s", self._instance_url(url))
         Logger.debug("kwargs: %s", kwargs)
         Logger.debug("data: %s", data)
-        
+
         return self.lu_edm_api_session.patch(
             self._instance_url(url), data=data, **kwargs
         )
