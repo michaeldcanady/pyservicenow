@@ -55,7 +55,7 @@ class ServiceNowClient(AbstractServiceClient):
     @base_url.setter
     def base_url(self, base: str) -> None:
         self.lu_edm_api_session.base_url = base  # type: ignore
-        
+
     def custom_endpoint(self, endpoint: str) -> Response:
         """Construct request to non-standard endpoint"""
         return self.get(endpoint)
@@ -110,7 +110,7 @@ class ServiceNowClient(AbstractServiceClient):
         Logger.debug("kwargs: %s", kwargs)
         Logger.debug("data: %s", data)
         Logger.debug("json: %s", json)
-        
+
         return self.lu_edm_api_session.post(
             self._servicenow_url(url), data=data, json=json, **kwargs
         )
@@ -144,7 +144,7 @@ class ServiceNowClient(AbstractServiceClient):
         Logger.debug("url: %s", self._servicenow_url(url))
         Logger.debug("kwargs: %s", kwargs)
         Logger.debug("data: %s", data)
-        
+
         return self.lu_edm_api_session.patch(
             self._servicenow_url(url), data=data, **kwargs
         )
@@ -158,7 +158,7 @@ class ServiceNowClient(AbstractServiceClient):
         Logger.info("%s.delete: function called", type(self).__name__)
         Logger.debug("url: %s", self._servicenow_url(url))
         Logger.debug("kwargs: %s", kwargs)
-        
+
         return self.lu_edm_api_session.delete(self._servicenow_url(url), **kwargs)
 
     def _servicenow_url(self, url: str) -> str:
@@ -167,8 +167,8 @@ class ServiceNowClient(AbstractServiceClient):
         :return: graph_url
         """
         Logger.info("%s._servicenow_url: function called", type(self).__name__)
-        Logger.debug("url: %s", self._servicenow_url(url))
-        
+        Logger.debug("url: %s", url)
+
         return self.base_url + url if (url[0] == "/") else url
 
     @staticmethod
