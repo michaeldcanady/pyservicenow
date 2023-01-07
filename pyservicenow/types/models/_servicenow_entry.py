@@ -60,6 +60,6 @@ class ServiceNowEntry(ServiceNowPropertyCollection):
 
         return datetime.strptime(raw_date, DATETIME)
 
-    def Update(self) -> bool:
+    def update_object(self) -> bool:
         """updates the object in Service-Now"""
         raise NotImplementedError("Update is not implemented")

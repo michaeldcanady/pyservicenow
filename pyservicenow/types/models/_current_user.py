@@ -55,6 +55,7 @@ class CurrentUser(ServiceNowEntry):
         """
         return self["user_initials"].actual_value
 
+    @property
     def asDict(self) -> Dict:
         """Gets the object as it's dict representation"""
         return {
@@ -67,9 +68,9 @@ class CurrentUser(ServiceNowEntry):
     @property
     def Json(self) -> Dict:
         """Gets the object as it's dict representation"""
-        return self.asDict()
+        return self.asDict
 
-    def Update(self) -> bool:
+    def update_object(self) -> bool:
         """Current User cannot be updated"""
-        
+
         return False

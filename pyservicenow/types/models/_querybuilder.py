@@ -1,7 +1,7 @@
-from enum import IntEnum, auto
-from strenum import StrEnum
 from typing import Union, List
 import inspect
+from enum import IntEnum, auto
+from strenum import StrEnum
 
 # internal imports
 from ..exceptions import (
@@ -9,29 +9,46 @@ from ..exceptions import (
     QueryExpressionError,
     QueryMissingField,
     QueryMultipleExpressions,
-    QueryTypeError,
 )
 
 
 class OrderBy(IntEnum):
+    """Order By Enum"""    
+
     ASC = auto()
     DESC = auto()
 
+OrderBy.ASC.__doc__ = """Orders results ascendingly"""
+
 
 class Operators(StrEnum):
-    Null = ""
-    Equals = "="
-    In = "IN"
-    Contains = "LIKE"
+    """Operators Enum"""
 
+    NULL = ""
+    EQUALS = "="
+    IN = "IN"
+    LIKE = "LIKE"
+
+Operators.NULL.__doc__ = """No operator selected"""
+Operators.EQUALS.__doc__ = """Equals Operator"""
+Operators.IN.__doc__ = """In operator"""
+Operators.LIKE.__doc__ = """Like operator"""
 
 class LogicalOperator(StrEnum):
-    And = "^"
-    Or = "^OR"
-    NewQuery = "^NQ"
+    """Logical Operator Enum"""
+
+    AND = "^"
+    OR = "^OR"
+    NEWQUERY = "^NQ"
+
+LogicalOperator.AND.__doc__ = """And operator"""
+LogicalOperator.OR.__doc__ = """Or operator"""
+LogicalOperator.NEWQUERY.__doc__ = """New Query Operator"""
 
 
 class QueryBuilder:
+    """Query Builder type"""
+
     def __init__(self) -> None:
         """Constructs a new query builder"""
 
@@ -54,7 +71,7 @@ class QueryBuilder:
         query_builder = cls()
 
         field = ""
-        operator = Operators.Null
+        operator = Operators.NULL
         value = ""
 
         i, n = 0, len(query)
@@ -62,39 +79,39 @@ class QueryBuilder:
         while i < n:
 
             if (
-                (query[i] == Operators.Equals)
-                or (query[i : i + 1] == Operators.In)
-                or (query[i : i + 4] == Operators.Contains)
+                (query[i] == Operators.EQUALS)
+                or (query[i : i + 1] == Operators.IN)
+                or (query[i : i + 4] == Operators.LIKE)
             ):  # get the operator
                 query_builder.field(field)
-                if query[i] == Operators.Equals:
-                    operator = Operators.Equals
-                elif query[i : i + 2] == Operators.In:
+                if query[i] == Operators.EQUALS:
+                    operator = Operators.EQUALS
+                elif query[i : i + 2] == Operators.IN:
                     i += 2
-                    operator = Operators.In
+                    operator = Operators.IN
                     continue
-                elif query[i : i + 4] == Operators.Contains:
+                elif query[i : i + 4] == Operators.LIKE:
                     i += 4
-                    operator = Operators.Contains
+                    operator = Operators.LIKE
                     continue
                 field = ""
             elif query[i] == "^":
 
                 oper_dict = {
-                    Operators.Equals: query_builder.equals,
-                    Operators.In: query_builder.IN,
-                    Operators.Contains: query_builder.contains,
+                    Operators.EQUALS: query_builder.equals,
+                    Operators.IN: query_builder.IN,
+                    Operators.LIKE: query_builder.contains,
                 }
 
                 oper = oper_dict[operator]
 
                 oper(value)
 
-                if query[i : i + 4] == LogicalOperator.NewQuery:
+                if query[i : i + 4] == LogicalOperator.NEWQUERY:
                     query_builder.NQ
                     i += 4
                     continue
-                elif query[i : i + 4] == LogicalOperator.Or:
+                elif query[i : i + 4] == LogicalOperator.OR:
                     query_builder.OR
                     i += 4
                     continue
@@ -102,15 +119,15 @@ class QueryBuilder:
                     query_builder.AND
 
                 value = ""
-                operator = Operators.Null
+                operator = Operators.NULL
 
-            elif operator != Operators.Null:  # get the value
+            elif operator != Operators.NULL:  # get the value
                 value += query[i]
                 if i == n - 1:
                     oper_dict = {
-                        Operators.Equals: query_builder.equals,
-                        Operators.In: query_builder.IN,
-                        Operators.Contains: query_builder.contains,
+                        Operators.EQUALS: query_builder.equals,
+                        Operators.IN: query_builder.IN,
+                        Operators.LIKE: query_builder.contains,
                     }
 
                     oper = oper_dict[operator]
@@ -138,7 +155,7 @@ class QueryBuilder:
 
         return self
 
-    def orderBy(self, direction: OrderBy) -> "QueryBuilder":
+    def order_by(self, direction: OrderBy) -> "QueryBuilder":
         """Sets the order by direction
 
         Args:
@@ -169,7 +186,7 @@ class QueryBuilder:
 
     def equals(self, data: Union[str, int]) -> "QueryBuilder":
 
-        return self._add_condition(Operators.Equals, data, types=[int, str])
+        return self._add_condition(Operators.EQUALS, data, types=[int, str])
 
     def IN(self, data: List) -> "QueryBuilder":
         return self._add_condition("IN", ",".join(map(str, data)), types=[str])
@@ -184,17 +201,17 @@ class QueryBuilder:
     @property
     def AND(self) -> "QueryBuilder":
         """Adds an and-operator"""
-        return self._add_logical_operator(LogicalOperator.And)
+        return self._add_logical_operator(LogicalOperator.AND)
 
     @property
     def OR(self) -> "QueryBuilder":
         """Adds an or-operator"""
-        return self._add_logical_operator(LogicalOperator.Or)
+        return self._add_logical_operator(LogicalOperator.OR)
 
     @property
     def NQ(self) -> "QueryBuilder":
         """Adds a NQ-operator (new query)"""
-        return self._add_logical_operator(LogicalOperator.NewQuery)
+        return self._add_logical_operator(LogicalOperator.NEWQUERY)
 
     def __str__(self) -> str:
         """String representation of the query object

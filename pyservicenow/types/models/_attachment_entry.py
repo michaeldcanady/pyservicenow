@@ -70,7 +70,7 @@ class AttachmentEntry(ServiceNowEntry):
         return EncryptionContext.from_string(self["encryption_context"].actual_value)
 
     @property
-    def State(self) -> str:
+    def file_state(self) -> str:
         """Gets the state of the attachment"""
         return self["state"].actual_value
 
@@ -107,5 +107,8 @@ class AttachmentEntry(ServiceNowEntry):
     @property
     def Json(self) -> Dict:
         """Gets the object as it's dict representation"""
-        
         return super().Json
+
+    def update_object(self) -> bool:
+        """updates the object in Service-Now"""
+        return super().update_object()
