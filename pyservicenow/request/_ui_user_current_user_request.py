@@ -18,7 +18,7 @@ class UIUserCurrentUserRequest(BaseServiceNowEntryRequest[CurrentUser]):
 
         _return = super().Invoke
 
-        if not isinstance(_return, self.GenericType):
-            raise UnexpectedReturnType(type(_return), self.GenericType)
+        if not isinstance(_return, type(self.GenericType)):
+            raise UnexpectedReturnType(type(_return), type(self.GenericType))
 
         return _return
