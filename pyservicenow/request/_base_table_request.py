@@ -11,7 +11,7 @@ from pyservicenow.types.models import (
 )
 
 T = TypeVar("T", bound="BaseTableRequest")
-S = TypeVar("S", bound="ServiceNowEntry")
+S = TypeVar("S", bound=ServiceNowEntry)
 
 
 class BaseTableRequest(BaseServiceNowEntryRequest[S]):
@@ -19,7 +19,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
 
     # def SysparmDisplayValue(self, value: str)
 
-    def ExcludeReferenceLink(self: T, exclude_reference_link: bool) -> T:
+    def exclude_reference_link(self: T, exclude_reference_link: bool) -> T:
         """Adds if to exclude reference links
 
         Args:
@@ -36,7 +36,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
         )
         return self
 
-    def DisplayValue(self: T, values: DisplayValue) -> T:
+    def display_value(self: T, values: DisplayValue) -> T:
         """Sets the sysparm_display_value
 
         Args:
@@ -79,7 +79,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
         self._query_options.append(ServiceNowQueryOption(QueryParameters.LIMIT, limit))
         return self
 
-    def NoCount(self: T, no_count: bool) -> T:
+    def no_count(self: T, no_count: bool) -> T:
         """Flag that indicates whether to execute a select count(*)
         query on the table to return the number of rows in the associated table.
 
@@ -96,8 +96,11 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
         return self
 
     def Offset(self: T, offset: int) -> T:
-        """Starting record index for which to begin retrieving records. Use this value to paginate record retrieval.
-        This functionality enables the retrieval of all records, regardless of the number of records, in small manageable chunks.
+        """Starting record index for which to begin retrieving records.
+        Use this value to paginate record retrieval.
+        This functionality enables the retrieval of all records,
+        regardless of the number of records,
+        in small manageable chunks.
 
         Args:
             offset (int): Starting record index for which to begin retrieving records
@@ -141,11 +144,13 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
         )
         return self
 
-    def NoDomain(self: T, no_domain: bool) -> T:
-        """Flag that indicates whether to restrict the record search to only the domains for which the logged in user is configured.
+    def no_domain(self: T, no_domain: bool) -> T:
+        """Flag that indicates whether to restrict the record
+        search to only the domains for which the logged in user is configured.
 
         Args:
-            no_domain (bool): whether to restrict the record search to only the domains for which the logged in user is configured.
+            no_domain (bool): whether to restrict the record search to only
+            the domains for which the logged in user is configured.
 
         Returns:
             TableEntryCollectionRequest: The request object to send.
@@ -156,9 +161,10 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
         )
         return self
 
-    def SuppressPaginationHeader(self: T, suppress_pagination_header: bool) -> T:
+    def suppress_pagination_header(self: T, suppress_pagination_header: bool) -> T:
         """Flag that indicates whether to remove the Link header from the response.
-        The Link header provides various URLs to relative pages in the record set which you can use to paginate the returned record set.
+        The Link header provides various URLs to relative pages in the
+        record set which you can use to paginate the returned record set.
 
         Args:
             suppress_pagination_header (bool): whether to remove the Link header from the response.

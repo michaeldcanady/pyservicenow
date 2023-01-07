@@ -1,3 +1,5 @@
+"""Houses table entry request"""
+
 from __future__ import annotations
 from typing import TypeVar
 from pyservicenow.request._base_table_request import BaseTableRequest

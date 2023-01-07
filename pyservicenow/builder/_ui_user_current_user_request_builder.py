@@ -20,7 +20,6 @@ class UIUserCurrentUserRequestBuilder(EntityRequestBuilder):
         Returns:
             UIUserCurrentUserRequest: The constructed UI User CurrentUser Request
         """
-        
         return self.Request(None)
 
     def Request(

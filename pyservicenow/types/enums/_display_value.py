@@ -8,8 +8,7 @@ class DisplayValue(StrEnum):
     either the actual values from the database or the display values of the fields.
     Display values are manipulated based on the actual value in the database and
     user or system settings and preferences.
-    
-    If returning display values, the value that is returned is dependent on the field type.
+     If returning display values, the value that is returned is dependent on the field type.
     """
     TRUE = "true"
     FALSE = "false"
