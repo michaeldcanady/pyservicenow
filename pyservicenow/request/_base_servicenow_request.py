@@ -12,6 +12,7 @@ from typing import (
     Dict,
     Any,
     Callable,
+    get_args,
 )
 
 import json
@@ -57,7 +58,7 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         """
         # Overriding until 
         
-        _type: S = get_args(self.__orig_bases__[0])[0] # type: ignore  
+        _type: S = get_args(self.__orig_bases__[0])[0]
               
         return _type
 
