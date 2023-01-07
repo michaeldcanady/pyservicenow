@@ -51,7 +51,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
         )
         return self
 
-    def Fields(self: T, fields: List[str]) -> T:
+    def sysparam_fields(self: T, fields: List[str]) -> T:
         """Adds the listed fields
 
         Args:
@@ -66,7 +66,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
         )
         return self
 
-    def Limit(self: T, limit: int) -> T:
+    def sysparam_limit(self: T, limit: int) -> T:
         """Sets the limit
 
         Args:
@@ -95,7 +95,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
         )
         return self
 
-    def Offset(self: T, offset: int) -> T:
+    def sysparam_offset(self: T, offset: int) -> T:
         """Starting record index for which to begin retrieving records.
         Use this value to paginate record retrieval.
         This functionality enables the retrieval of all records,
@@ -114,7 +114,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
         )
         return self
 
-    def Query(self: T, query: Union[str, QueryBuilder]) -> T:
+    def sysparam_query(self: T, query: Union[str, QueryBuilder]) -> T:
         """Encoded query used to filter the result set.
         You can use a UI filter to obtain a properly encoded query.
 
@@ -124,12 +124,14 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
         Returns:
             TableEntryCollectionRequest: The request object to send.
         """
+        if isinstance(query, str):
+            query = QueryBuilder.parse(query)
 
         self._query_options.append(ServiceNowQueryOption(QueryParameters.QUERY, query))
 
         return self
 
-    def Category(self: T, category: str) -> T:
+    def sysparam_category(self: T, category: str) -> T:
         """Name of the category to use for queries.
 
         Args:
@@ -180,7 +182,7 @@ class BaseTableRequest(BaseServiceNowEntryRequest[S]):
         )
         return self
 
-    def View(self: T, view: View) -> T:
+    def sysparam_view(self: T, view: View) -> T:
         """UI view for which to render the data. Determines the fields returned in the response.
 
         Args:

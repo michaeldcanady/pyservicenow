@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from os.path import exists, join
+from typing import Dict
 from pyservicenow.types.models._servicenow_entry import ServiceNowEntry
 from pyservicenow.types.enums import EncryptionContext
 
@@ -102,3 +103,9 @@ class AttachmentEntry(ServiceNowEntry):
     def is_compressed(self) -> bool:
         """Gets whether the file has been compressed or not"""
         return bool(self["compressed"].actual_value)
+
+    @property
+    def Json(self) -> Dict:
+        """Gets the object as it's dict representation"""
+        
+        return super().Json

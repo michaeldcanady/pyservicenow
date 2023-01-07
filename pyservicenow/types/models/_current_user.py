@@ -15,7 +15,7 @@ class CurrentUser(ServiceNowEntry):
         Returns:
             bytes: The avatar image
         """
-        profile_id = self["user_avatar"]._value
+        profile_id = self["user_avatar"].actual_value
 
         return self.Client.CustomEndpoint(profile_id).content  # type: ignore
 
@@ -26,7 +26,6 @@ class CurrentUser(ServiceNowEntry):
         Returns:
             str: The sys id
         """
-
         return self["user_sys_id"].actual_value
 
     @property
@@ -36,7 +35,6 @@ class CurrentUser(ServiceNowEntry):
         Returns:
             str: The username
         """
-
         return self["user_name"].actual_value
 
     @property
@@ -46,8 +44,7 @@ class CurrentUser(ServiceNowEntry):
         Returns:
             str: The display name
         """
-
-        return self["user_display_name"]._value
+        return self["user_display_name"].actual_value
 
     @property
     def user_initials(self) -> str:
@@ -56,9 +53,8 @@ class CurrentUser(ServiceNowEntry):
         Returns:
             str: The initials
         """
+        return self["user_initials"].actual_value
 
-        return self["user_initials"]._value
-    
     def asDict(self) -> Dict:
         """Gets the object as it's dict representation"""
         return {
@@ -68,10 +64,11 @@ class CurrentUser(ServiceNowEntry):
             "user_sys_id": self["user_sys_id"].as_dict(),
         }
 
+    @property
     def Json(self) -> Dict:
         """Gets the object as it's dict representation"""
         return self.asDict()
-    
+
     def Update(self) -> bool:
         """Current User cannot be updated"""
         

@@ -51,18 +51,18 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         self._object = None
 
     @property
-    def Object(self: B) -> Optional[S]:
+    def input_object(self: B) -> Optional[S]:
         """Gets/Sets object"""
 
         return self._object
 
-    @Object.setter
-    def Object(self: B, value: Optional[S]) -> None:
-        Logger.info(f"{type(self).__name__}.Object: function called")
+    @input_object.setter
+    def input_object(self: B, value: Optional[S]) -> None:
+        Logger.info("%s.Object: function called", type(self).__name__)
 
         self._object = value
 
-        Logger.info(f"{type(self).__name__}.Object: object changed")
+        Logger.info("%s.Object: object changed", type(self).__name__)
 
     @property
     def Get(self: B) -> B:
@@ -118,7 +118,7 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         Logger.info("%s._update_request_type: function called", type(self).__name__)
 
         self.Method = method
-        self.Object = input_object
+        self.input_object = input_object
 
     def parse_response(
         self, _response: Optional[Response]

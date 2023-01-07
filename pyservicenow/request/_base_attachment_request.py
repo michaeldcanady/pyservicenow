@@ -17,7 +17,7 @@ A = TypeVar("A", bound=AttachmentEntry)
 class BaseAttachmentRequest(BaseServiceNowEntryRequest[A]):
     """Base Attachment Request type"""
 
-    def Limit(self: T, limit: int) -> T:
+    def sysparam_limit(self: T, limit: int) -> T:
         """Sets the limit
 
         Args:
@@ -30,7 +30,7 @@ class BaseAttachmentRequest(BaseServiceNowEntryRequest[A]):
         self._query_options.append(ServiceNowQueryOption(QueryParameters.LIMIT, limit))
         return self
 
-    def Offset(self: T, offset: int) -> T:
+    def sysparam_offset(self: T, offset: int) -> T:
         """Starting record index for which to begin retrieving records.
         Use this value to paginate record retrieval.
         This functionality enables the retrieval of all records,
@@ -49,7 +49,7 @@ class BaseAttachmentRequest(BaseServiceNowEntryRequest[A]):
         )
         return self
 
-    def Query(self: T, query: Union[str, QueryBuilder]) -> T:
+    def sysparam_query(self: T, query: Union[str, QueryBuilder]) -> T:
         """Encoded query used to filter the result set.
         You can use a UI filter to obtain a properly encoded query.
 

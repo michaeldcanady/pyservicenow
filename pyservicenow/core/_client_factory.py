@@ -12,12 +12,13 @@ Logger = getLogger(__name__)
 
 
 class HTTPClientFactory(AbstractHTTPClientFactory):
+    """HTTP Client Factory type"""
     def __init__(self, api_url: str, session: Session) -> None:
 
         super().__init__(session=session)
 
         self.api_url = api_url
-        Logger.debug(f"api url: {self.api_url}")
+        Logger.debug("api url: %s", self.api_url)
 
         self._set_base_url()
         # self._set_default_timeout()
@@ -27,7 +28,7 @@ class HTTPClientFactory(AbstractHTTPClientFactory):
     ) -> Session:
         """Applies the default middleware chain to the HTTP Client"""
 
-        Logger.info(f"{type(self)}.create_with_default_middleware(): method called")
+        Logger.info("%s.create_with_default_middleware(): method called", type(self).__name__)
 
         middleware = [
             BasicAuthorizationHandler(credential, **kwargs),
@@ -43,7 +44,7 @@ class HTTPClientFactory(AbstractHTTPClientFactory):
     def _set_base_url(self) -> None:
         """Helper method to set the base url"""
 
-        Logger.info(f"{type(self)}._set_base_url(): method called")
+        Logger.info("%s._set_base_url(): method called", type(self).__name__)
 
         # TODO subclass session or find new way to store base_url
         self.session.base_url = f"https://{self.api_url}.service-now.com/api"  # type: ignore

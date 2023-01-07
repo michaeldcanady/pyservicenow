@@ -62,5 +62,4 @@ class ServiceNowEntry(ServiceNowPropertyCollection):
 
     def Update(self) -> bool:
         """updates the object in Service-Now"""
-        
         raise NotImplementedError("Update is not implemented")

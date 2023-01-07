@@ -10,7 +10,7 @@ def test_attachment_url():
     
     table_name = "alm_hardware"
 
-    hardware_request = client.Now().Table(table_name).request.Limit(1).Get
+    hardware_request = client.Now().Table(table_name).request.sysparam_limit(1).Get
     
     assert hardware_request.request_url == client.base_url+"/now/table/"+table_name
     

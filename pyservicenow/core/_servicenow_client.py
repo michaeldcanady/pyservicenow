@@ -50,16 +50,14 @@ class ServiceNowClient(AbstractServiceClient):
     @property
     def base_url(self) -> str:
         """Gets/Sets the request's base URL"""
-        
         return self.lu_edm_api_session.base_url  # type: ignore
 
     @base_url.setter
     def base_url(self, base: str) -> None:
         self.lu_edm_api_session.base_url = base  # type: ignore
         
-    def CustomEndpoint(self, endpoint: str) -> Response:
+    def custom_endpoint(self, endpoint: str) -> Response:
         """Construct request to non-standard endpoint"""
-    
         return self.get(endpoint)
 
     def get(self, url: str, **kwargs) -> Response:
