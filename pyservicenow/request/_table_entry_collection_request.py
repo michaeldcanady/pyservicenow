@@ -16,14 +16,12 @@ class TableEntryCollectionRequest(BaseTableRequest[S]):
     @property
     def Invoke(self: B) -> List[S]:
         """Invokes the specified method"""
-        
-        print(self.GenericType)
 
         _return = super().Invoke
 
         _type = self.generic_type
 
-        if not isinstance(_return, list):
+        if not isinstance(_return, list) or _return is None:
             raise UnexpectedReturnType(type(_return), List[Type[_type]])
 
         return _return

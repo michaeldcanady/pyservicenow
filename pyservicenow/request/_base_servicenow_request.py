@@ -50,21 +50,6 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
 
         self._object = None
 
-    # fix until https://github.com/michaeldcanady/pyrestsdk/issues/6 is resolved
-    @property
-    def GenericType(self: B) -> Type[S]:
-        """Gets the the type argument provided
-        """
-        
-        orig_classes = getattr(self, "__orig_class__", None)
-        
-        if orig_classes:
-            return get_args(orig_classes)[0]
-        
-        _type: Type[S] = get_args(self.__orig_bases__[0])[0]
-              
-        return _type
-
     @property
     def input_object(self: B) -> Optional[S]:
         """Gets/Sets object"""
