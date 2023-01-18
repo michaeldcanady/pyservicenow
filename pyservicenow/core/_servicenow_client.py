@@ -123,10 +123,6 @@ class ServiceNowClient(AbstractServiceClient):
         :param \*\*kwargs: Optional arguments that ``request`` takes.
         :rtype: requests.Response
         """
-        Logger.info("%s.put: function called", type(self).__name__)
-        Logger.debug("url: %s", self._instance_url(url))
-        Logger.debug("kwargs: %s", kwargs)
-        Logger.debug("data: %s", data)
 
         return self.lu_edm_api_session.put(
             self._instance_url(url), data=data, **kwargs

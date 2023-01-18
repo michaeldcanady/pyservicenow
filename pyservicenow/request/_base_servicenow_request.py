@@ -15,8 +15,6 @@ from typing import (
     get_args,
 )
 
-import json
-
 from logging import getLogger
 from requests import Response
 from pyrestsdk.request import BaseRequest
@@ -86,7 +84,7 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         """Sets request to get request"""
 
         self.header_options.append(
-            ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json)
+            ServiceNowHeaderOption(Header.ACCEPT, MimeTypeName.Application.JSON)
         )
 
         self._update_request_type(HttpsMethod.GET, None)
@@ -97,7 +95,7 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         """Sets request to post request"""
 
         self.header_options.append(
-            ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json)
+            ServiceNowHeaderOption(Header.ACCEPT, MimeTypeName.Application.JSON)
         )
 
         self._update_request_type(HttpsMethod.POST, input_object)
@@ -109,7 +107,7 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         """Sets request to delete request"""
 
         self.header_options.append(
-            ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json)
+            ServiceNowHeaderOption(Header.ACCEPT, MimeTypeName.Application.JSON)
         )
 
         self._update_request_type(HttpsMethod.DELETE, None)
@@ -120,7 +118,7 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         """Sets request to put request"""
 
         self.header_options.append(
-            ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json)
+            ServiceNowHeaderOption(Header.ACCEPT, MimeTypeName.Application.JSON)
         )
 
         self._update_request_type(HttpsMethod.PUT, input_object)

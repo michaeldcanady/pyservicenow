@@ -19,7 +19,7 @@ class TableEntryRequest(BaseTableRequest[S]):
 
         _return = super().Invoke
 
-        if type(_return) is not self.generic_type:
+        if not isinstance(_return, self.generic_type):
             raise UnexpectedReturnType(type(_return), self.generic_type)
 
         return _return
