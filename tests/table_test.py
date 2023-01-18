@@ -15,7 +15,7 @@ def test_attachment_url():
 
     hardware_request = client.Now().Table(table_name).request.sysparam_limit(1).Get
 
-    assert hardware_request.RequestUrl == client.base_url+"/now/table/"+table_name
+    assert hardware_request.request_url == client.base_url+"/now/table/"+table_name
 
 
 def test_get_first_attachment():
