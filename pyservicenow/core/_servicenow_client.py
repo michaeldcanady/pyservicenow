@@ -162,10 +162,13 @@ class ServiceNowClient(AbstractServiceClient):
         :param url: user provided path
         :return: graph_url
         """
-        Logger.info("%s._servicenow_url: function called", type(self).__name__)
-        Logger.debug("url: %s", self._instance_url(url))
         
-        return self.base_url + url if (url[0] == "/") else url
+        _url = self.base_url + url if (url[0] == "/") else url
+        
+        Logger.info("%s._servicenow_url: function called", type(self).__name__)
+        Logger.debug("url: %s", _url)
+        
+        return _url
 
     @staticmethod
     def _get_session(instance: str, session: Session, **kwargs) -> Session:
