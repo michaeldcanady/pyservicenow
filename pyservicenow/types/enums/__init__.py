@@ -8,6 +8,7 @@ from pyservicenow.types.enums._view import View
 from pyservicenow.types.enums._header import Header
 from pyservicenow.types.enums._encryption_context import EncryptionContext
 from pyservicenow.types.enums._order_by import OrderBy
+from pyservicenow.types.enums._operators import Operators
 
 __all__ = [
     "MimeTypeName",
@@ -18,4 +19,5 @@ __all__ = [
     "Header",
     "EncryptionContext",
     "OrderBy",
+    "Operators",
 ]

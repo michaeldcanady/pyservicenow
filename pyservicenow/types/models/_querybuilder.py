@@ -1,8 +1,6 @@
 from typing import Union, List
 import inspect
-from enum import IntEnum, auto
-from strenum import StrEnum
-from pyservicenow.types.enums import OrderBy
+from pyservicenow.types.enums import OrderBy, Operators
 
 # internal imports
 from ..exceptions import (
@@ -13,33 +11,15 @@ from ..exceptions import (
 )
 
 
-class Operators(StrEnum):
-    """Operators Enum"""
-
-    NULL = ""
-    EQUALS = "="
-    IN = "IN"
-    LIKE = "LIKE"
-
-Operators.NULL.__doc__ = """No operator selected"""
-Operators.EQUALS.__doc__ = """Equals Operator"""
-Operators.IN.__doc__ = """In operator"""
-Operators.LIKE.__doc__ = """Like operator"""
-
-class LogicalOperator(StrEnum):
-    """Logical Operator Enum"""
-
-    AND = "^"
-    OR = "^OR"
-    NEWQUERY = "^NQ"
-
-LogicalOperator.AND.__doc__ = """And operator"""
-LogicalOperator.OR.__doc__ = """Or operator"""
-LogicalOperator.NEWQUERY.__doc__ = """New Query Operator"""
-
-
 class QueryBuilder:
     """Query Builder type"""
+
+    __slots__ = ["_query", "current_field", "c_oper", "l_oper"]
+
+    _query: List
+    current_field: str
+    c_oper: Operators.Comparison
+    l_oper: Operators.Logical
 
     def __init__(self) -> None:
         """Constructs a new query builder"""
@@ -63,7 +43,7 @@ class QueryBuilder:
         query_builder = cls()
 
         field = ""
-        operator = Operators.NULL
+        operator = Operators.Comparison.NULL
         value = ""
 
         i, n = 0, len(query)
@@ -71,39 +51,39 @@ class QueryBuilder:
         while i < n:
 
             if (
-                (query[i] == Operators.EQUALS)
-                or (query[i : i + 1] == Operators.IN)
-                or (query[i : i + 4] == Operators.LIKE)
+                (query[i] == Operators.Comparison.EQUALS)
+                or (query[i : i + 1] == Operators.Comparison.IN)
+                or (query[i : i + 4] == Operators.Comparison.LIKE)
             ):  # get the operator
                 query_builder.field(field)
-                if query[i] == Operators.EQUALS:
-                    operator = Operators.EQUALS
-                elif query[i : i + 2] == Operators.IN:
+                if query[i] == Operators.Comparison.EQUALS:
+                    operator = Operators.Comparison.EQUALS
+                elif query[i : i + 2] == Operators.Comparison.IN:
                     i += 2
-                    operator = Operators.IN
+                    operator = Operators.Comparison.IN
                     continue
-                elif query[i : i + 4] == Operators.LIKE:
+                elif query[i : i + 4] == Operators.Comparison.LIKE:
                     i += 4
-                    operator = Operators.LIKE
+                    operator = Operators.Comparison.LIKE
                     continue
                 field = ""
             elif query[i] == "^":
 
                 oper_dict = {
-                    Operators.EQUALS: query_builder.equals,
-                    Operators.IN: query_builder.IN,
-                    Operators.LIKE: query_builder.contains,
+                    Operators.Comparison.EQUALS: query_builder.equals,
+                    Operators.Comparison.IN: query_builder.IN,
+                    Operators.Comparison.LIKE: query_builder.contains,
                 }
 
                 oper = oper_dict[operator]
 
                 oper(value)
 
-                if query[i : i + 4] == LogicalOperator.NEWQUERY:
+                if query[i : i + 4] == Operators.Logical.NEWQUERY:
                     query_builder.NQ
                     i += 4
                     continue
-                elif query[i : i + 4] == LogicalOperator.OR:
+                elif query[i : i + 4] == Operators.Logical.OR:
                     query_builder.OR
                     i += 4
                     continue
@@ -111,15 +91,15 @@ class QueryBuilder:
                     query_builder.AND
 
                 value = ""
-                operator = Operators.NULL
+                operator = Operators.Comparison.NULL
 
-            elif operator != Operators.NULL:  # get the value
+            elif operator != Operators.Comparison.NULL:  # get the value
                 value += query[i]
                 if i == n - 1:
                     oper_dict = {
-                        Operators.EQUALS: query_builder.equals,
-                        Operators.IN: query_builder.IN,
-                        Operators.LIKE: query_builder.contains,
+                        Operators.Comparison.EQUALS: query_builder.equals,
+                        Operators.Comparison.IN: query_builder.IN,
+                        Operators.Comparison.LIKE: query_builder.contains,
                     }
 
                     oper = oper_dict[operator]
@@ -177,33 +157,35 @@ class QueryBuilder:
         return self
 
     def equals(self, data: Union[str, int]) -> "QueryBuilder":
+        """Adds new `=` condition"""
 
-        return self._add_condition(Operators.EQUALS, data, types=[int, str])
+        return self._add_condition(Operators.Comparison.EQUALS, data, types=[int, str])
 
     def IN(self, data: List) -> "QueryBuilder":
-        return self._add_condition("IN", ",".join(map(str, data)), types=[str])
+        """Adds new `IN` condition"""
 
-    def contains(self, contains):
+        return self._add_condition(Operators.Comparison.IN, ",".join(map(str, data)), types=[str])
+
+    def contains(self, contains: str):
         """Adds new `LIKE` condition
-        :param contains: Match field containing the provided value
         """
 
-        return self._add_condition("LIKE", contains, types=[str])
+        return self._add_condition(Operators.Comparison.LIKE, contains, types=[str])
 
     @property
     def AND(self) -> "QueryBuilder":
         """Adds an and-operator"""
-        return self._add_logical_operator(LogicalOperator.AND)
+        return self._add_logical_operator(Operators.Logical.AND)
 
     @property
     def OR(self) -> "QueryBuilder":
         """Adds an or-operator"""
-        return self._add_logical_operator(LogicalOperator.OR)
+        return self._add_logical_operator(Operators.Logical.OR)
 
     @property
     def NQ(self) -> "QueryBuilder":
         """Adds a NQ-operator (new query)"""
-        return self._add_logical_operator(LogicalOperator.NEWQUERY)
+        return self._add_logical_operator(Operators.Logical.NEWQUERY)
 
     def __str__(self) -> str:
         """String representation of the query object
@@ -224,7 +206,7 @@ class QueryBuilder:
 
         return str().join(self._query)
 
-    def _add_logical_operator(self, operator: LogicalOperator) -> "QueryBuilder":
+    def _add_logical_operator(self, operator: Operators.Logical) -> "QueryBuilder":
         """Adds a logical operator in query
         :param operator: logical operator (str)
         :raise:

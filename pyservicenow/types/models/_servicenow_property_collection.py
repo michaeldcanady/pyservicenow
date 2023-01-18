@@ -101,7 +101,7 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
         return changed_dict
 
     @property
-    def asDict(self) -> Dict:
+    def as_dict(self) -> Dict:
         """Gets the object as it's dict representation"""
 
         _dict: Dict[str, Any] = {}
@@ -113,12 +113,12 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
 
     @property
     def __json__(self) -> str:
-        return dumps(self.asDict)
+        return dumps(self.as_dict)
 
     @property
-    def Json(self) -> Dict:
+    def as_json(self) -> Dict:
         """Gets the object as it's dict representation"""
-        return self.asDict
+        return self.as_dict
 
     @classmethod
     def fromJson(cls: Type[S], entry: Dict[str, Any], client: ServiceNowClient) -> S:
