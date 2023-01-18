@@ -1,3 +1,5 @@
+"""Houses Supports Exclude Reference Link"""
+
 from sys import version_info
 
 
@@ -14,6 +16,8 @@ else:
 
 
 class SupportsExcludeReferenceLink(SupportsQueryOptions):
+    """Supports Exclude Reference Link Type"""
+
     def exclude_reference_link(self, exclude_reference_link: bool) -> Self:
         """Adds if to exclude reference links
 

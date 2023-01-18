@@ -5,6 +5,7 @@ from enum import IntEnum, auto
 # https://docs.servicenow.com/bundle/rome-platform-security/page/administer/encryption/concept/c_EncryptionSupport.html
 class EncryptionContext(IntEnum):
     """Encryption Context Enum"""
+
     NULL = auto()
     SINGLE = auto()
     MULTIPLE = auto()
@@ -13,14 +14,26 @@ class EncryptionContext(IntEnum):
     def from_string(cls, value: str) -> "EncryptionContext":
         """Converts string to encryption context"""
 
-        if value == "" or value is None:
-            return EncryptionContext.NULL
-        elif "single" in value.casefold():
-            return EncryptionContext.SINGLE
-        elif "multiple" in value.casefold():
-            return EncryptionContext.MULTIPLE
-        else:
-            raise Exception(f"unknown value {value}")
+        match (value.casefold()):
+
+            case n if n == "" or n is None:
+                return EncryptionContext.NULL
+            case "single":
+                return EncryptionContext.SINGLE
+            case "multiple":
+                return EncryptionContext.MULTIPLE
+            case other:
+                raise Exception(f"unknown value {value}")
+
+    # python <3.10
+    #        if value == "" or value is None:
+    #            return EncryptionContext.NULL
+    #        elif "single" in value.casefold():
+    #            return EncryptionContext.SINGLE
+    #        elif "multiple" in value.casefold():
+    #            return EncryptionContext.MULTIPLE
+    #        else:
+    #            raise Exception(f"unknown value {value}")
 
     def __str__(self) -> str:
         return self.name

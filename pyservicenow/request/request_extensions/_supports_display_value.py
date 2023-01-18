@@ -1,3 +1,5 @@
+"""Houses Supports Display Value"""
+
 from sys import version_info
 
 
@@ -14,6 +16,8 @@ else:
 
 
 class SupportsDisplayValue(SupportsQueryOptions):
+    """Supports Display Value Type"""
+
     def display_value(self, values: DisplayValue) -> Self:
         """Sets the sysparm_display_value
 

@@ -1,4 +1,5 @@
-from typing import List
+"""Houses Supports Sysparam Category"""
+
 from sys import version_info
 
 
@@ -15,7 +16,8 @@ else:
 
 
 class SupportsSysparamCategory(SupportsQueryOptions):
-    
+    """Supports Sysparam Category Type"""
+
     def sysparam_category(self, category: str) -> Self:
         """Name of the category to use for queries.
 

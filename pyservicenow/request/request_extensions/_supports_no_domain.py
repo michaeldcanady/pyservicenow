@@ -1,4 +1,5 @@
-from typing import List
+"""Houses Supports No Domain"""
+
 from sys import version_info
 
 
@@ -15,7 +16,8 @@ else:
 
 
 class SupportsNoDomain(SupportsQueryOptions):
-    
+    """Supports No Domain type"""
+
     def no_domain(self, no_domain: bool) -> Self:
         """Flag that indicates whether to restrict the record
         search to only the domains for which the logged in user is configured.

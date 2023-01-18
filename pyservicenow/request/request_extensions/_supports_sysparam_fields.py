@@ -1,3 +1,5 @@
+"""Houses Supports Sysparam Fields"""
+
 from typing import List
 from sys import version_info
 
@@ -15,6 +17,8 @@ else:
 
 
 class SupportsSysparamFields(SupportsQueryOptions):
+    """Supports Sysparam Fields Type"""
+
     def sysparam_fields(self, fields: List[str]) -> Self:
         """Adds the listed fields
 

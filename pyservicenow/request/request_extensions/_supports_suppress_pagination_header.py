@@ -1,4 +1,5 @@
-from typing import List
+"""Houses Supports Suppress Pagination Header"""
+
 from sys import version_info
 
 
@@ -15,7 +16,8 @@ else:
 
 
 class SupportsSuppressPaginationHeader(SupportsQueryOptions):
-    
+    """Supports Suppress Pagination Header Type"""
+
     def suppress_pagination_header(self, suppress_pagination_header: bool) -> Self:
         """Flag that indicates whether to remove the Link header from the response.
         The Link header provides various URLs to relative pages in the

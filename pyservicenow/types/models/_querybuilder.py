@@ -2,6 +2,7 @@ from typing import Union, List
 import inspect
 from enum import IntEnum, auto
 from strenum import StrEnum
+from pyservicenow.types.enums import OrderBy
 
 # internal imports
 from ..exceptions import (
@@ -10,15 +11,6 @@ from ..exceptions import (
     QueryMissingField,
     QueryMultipleExpressions,
 )
-
-
-class OrderBy(IntEnum):
-    """Order By Enum"""    
-
-    ASC = auto()
-    DESC = auto()
-
-OrderBy.ASC.__doc__ = """Orders results ascendingly"""
 
 
 class Operators(StrEnum):

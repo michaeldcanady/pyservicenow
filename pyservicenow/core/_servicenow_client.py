@@ -124,9 +124,7 @@ class ServiceNowClient(AbstractServiceClient):
         :rtype: requests.Response
         """
 
-        return self.lu_edm_api_session.put(
-            self._instance_url(url), data=data, **kwargs
-        )
+        return self.lu_edm_api_session.put(self._instance_url(url), data=data, **kwargs)
 
     def patch(self, url: str, data=None, **kwargs) -> Response:
         r"""Sends a PATCH request. Returns :class:`Response` object.
@@ -154,7 +152,7 @@ class ServiceNowClient(AbstractServiceClient):
         Logger.info("%s.delete: function called", type(self).__name__)
         Logger.debug("url: %s", self._instance_url(url))
         Logger.debug("kwargs: %s", kwargs)
-        
+
         return self.lu_edm_api_session.delete(self._instance_url(url), **kwargs)
 
     def _instance_url(self, url: str) -> str:
@@ -162,12 +160,12 @@ class ServiceNowClient(AbstractServiceClient):
         :param url: user provided path
         :return: graph_url
         """
-        
+
         _url = self.base_url + url if (url[0] == "/") else url
-        
+
         Logger.info("%s._servicenow_url: function called", type(self).__name__)
         Logger.debug("url: %s", _url)
-        
+
         return _url
 
     @staticmethod

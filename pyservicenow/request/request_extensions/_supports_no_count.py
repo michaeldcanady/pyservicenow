@@ -1,4 +1,5 @@
-from typing import List
+"""Houses Supports No Count"""
+
 from sys import version_info
 
 
@@ -15,7 +16,8 @@ else:
 
 
 class SupportsNoCount(SupportsQueryOptions):
-    
+    """Supports No Count Type"""
+
     def no_count(self, no_count: bool) -> Self:
         """Flag that indicates whether to execute a select count(*)
         query on the table to return the number of rows in the associated table.
