@@ -65,10 +65,10 @@ class ServiceNowClient(AbstractServiceClient):
         """
         Logger.info(f"{type(self).__name__}.get: function called")
 
-        Logger.debug(f"url: {self._servicenow_url(url)}")
+        Logger.debug(f"url: {self._instance_url(url)}")
         Logger.debug(f"kwargs: {kwargs}")
 
-        return self.lu_edm_api_session.get(self._servicenow_url(url), **kwargs)
+        return self.lu_edm_api_session.get(self._instance_url(url), **kwargs)
 
     def options(self, url: str, **kwargs) -> Response:
         r"""Sends a OPTIONS request. Returns :class:`Response` object.
@@ -77,7 +77,7 @@ class ServiceNowClient(AbstractServiceClient):
         :rtype: requests.Response
         """
 
-        return self.lu_edm_api_session.options(self._servicenow_url(url), **kwargs)
+        return self.lu_edm_api_session.options(self._instance_url(url), **kwargs)
 
     def head(self, url: str, **kwargs) -> Response:
         r"""Sends a HEAD request. Returns :class:`Response` object.
@@ -86,7 +86,7 @@ class ServiceNowClient(AbstractServiceClient):
         :rtype: requests.Response
         """
 
-        return self.lu_edm_api_session.head(self._servicenow_url(url), **kwargs)
+        return self.lu_edm_api_session.head(self._instance_url(url), **kwargs)
 
     def post(self, url: str, data=None, json=None, **kwargs) -> Response:
         r"""Sends a POST request. Returns :class:`Response` object.
@@ -98,7 +98,7 @@ class ServiceNowClient(AbstractServiceClient):
         :rtype: requests.Response
         """
         return self.lu_edm_api_session.post(
-            self._servicenow_url(url), data=data, json=json, **kwargs
+            self._instance_url(url), data=data, json=json, **kwargs
         )
 
     def put(self, url: str, data=None, **kwargs) -> Response:
@@ -111,7 +111,7 @@ class ServiceNowClient(AbstractServiceClient):
         """
 
         return self.lu_edm_api_session.put(
-            self._servicenow_url(url), data=data, **kwargs
+            self._instance_url(url), data=data, **kwargs
         )
 
     def patch(self, url: str, data=None, **kwargs) -> Response:
@@ -123,7 +123,7 @@ class ServiceNowClient(AbstractServiceClient):
         :rtype: requests.Response
         """
         return self.lu_edm_api_session.patch(
-            self._servicenow_url(url), data=data, **kwargs
+            self._instance_url(url), data=data, **kwargs
         )
 
     def delete(self, url: str, **kwargs) -> Response:
@@ -132,9 +132,9 @@ class ServiceNowClient(AbstractServiceClient):
         :param \*\*kwargs: Optional arguments that ``request`` takes.
         :rtype: requests.Response
         """
-        return self.lu_edm_api_session.delete(self._servicenow_url(url), **kwargs)
+        return self.lu_edm_api_session.delete(self._instance_url(url), **kwargs)
 
-    def _servicenow_url(self, url: str) -> str:
+    def _instance_url(self, url: str) -> str:
         """Appends BASE_URL to user provided path
         :param url: user provided path
         :return: graph_url

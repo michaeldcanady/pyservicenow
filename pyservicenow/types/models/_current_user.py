@@ -11,8 +11,6 @@ from ._servicenow_entry import ServiceNowEntry
 
 
 class CurrentUser(ServiceNowEntry):
-    def __init__(self, client: ServiceNowClient) -> None:
-        super().__init__(client)
 
     @property
     def UserProfile(self) -> bytes:

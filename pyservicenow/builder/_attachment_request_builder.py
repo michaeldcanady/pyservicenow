@@ -46,7 +46,7 @@ class AttachmentRequestBuilder(EntityRequestBuilder):
             AttachmentEntryCollectionRequest: The constructed Table Entry Collection Request
         """
 
-        return AttachmentEntryCollectionRequest(self.RequestUrl, self.Client, options)
+        return AttachmentEntryCollectionRequest(self.request_url, self.Client, options)
 
     def id(self, sys_id: str) -> AttachmentEntryRequest:
         """Constructs a Table Entry Requst using the provided sys_id
@@ -59,5 +59,5 @@ class AttachmentRequestBuilder(EntityRequestBuilder):
         """
 
         return AttachmentEntryRequest(
-            self.AppendSegmentToRequestUrl(sys_id), self.Client, None
+            self.append_segment_to_request_url(sys_id), self.Client, None
         )

@@ -10,7 +10,7 @@ def test_attachment_url():
 
     attachment_request = client.Now().Attachment.request.Get
     
-    assert attachment_request.RequestUrl == client.base_url+"/now/attachments"
+    assert attachment_request.request_url == client.base_url+"/now/attachment"
     
 
 def test_get_first_attachment():

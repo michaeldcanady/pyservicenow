@@ -16,12 +16,6 @@ C = TypeVar("C", bound="ServiceNowClient")
 
 class ServiceNowEntry(ServiceNowPropertyCollection):
 
-    __client: ServiceNowClient
-
-    def __init__(self, client: ServiceNowClient) -> None:
-
-        super().__init__(client)
-
     @property
     def SysId(self) -> str:
         """Gets the sys id

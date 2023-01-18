@@ -18,4 +18,4 @@ class UIRequestBuilder(EntityRequestBuilder):
             UIUserRequestBuilder: UI User request builder
         """
 
-        return UIUserRequestBuilder(self.AppendSegmentToRequestUrl("user"), self.Client)
+        return UIUserRequestBuilder(self.append_segment_to_request_url("user"), self.Client)

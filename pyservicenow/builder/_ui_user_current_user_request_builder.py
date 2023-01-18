@@ -35,4 +35,4 @@ class UIUserCurrentUserRequestBuilder(EntityRequestBuilder):
             UIUserCurrentUserRequest: The constructed UI User CurrentUser Request
         """
         
-        return UIUserCurrentUserRequest(self.RequestUrl, self.Client, options)
+        return UIUserCurrentUserRequest(self.request_url, self.Client, options)

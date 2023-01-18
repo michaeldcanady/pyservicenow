@@ -21,5 +21,5 @@ class UIUserRequestBuilder(EntityRequestBuilder):
         """
 
         return UIUserCurrentUserRequestBuilder(
-            self.AppendSegmentToRequestUrl("current_user"), self.Client
+            self.append_segment_to_request_url("current_user"), self.Client
         )

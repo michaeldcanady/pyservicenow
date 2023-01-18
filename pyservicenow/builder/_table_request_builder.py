@@ -47,7 +47,7 @@ class TableRequestBuilder(EntityRequestBuilder):
         """
 
         return TableEntryCollectionRequest[ServiceNowEntry](
-            self.RequestUrl, self.Client, options
+            self.request_url, self.Client, options
         )
 
     def id(self, sys_id: str) -> TableEntryRequest:
@@ -61,5 +61,5 @@ class TableRequestBuilder(EntityRequestBuilder):
         """
 
         return TableEntryRequest[ServiceNowEntry](
-            self.AppendSegmentToRequestUrl(sys_id), self.Client, None
+            self.append_segment_to_request_url(sys_id), self.Client, None
         )

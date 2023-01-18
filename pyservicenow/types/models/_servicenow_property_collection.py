@@ -25,16 +25,19 @@ C = TypeVar("C", bound="ServiceNowClient")
 
 
 class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], BaseEntity):
+    
+    __slots__ = ["is_null", "_internaldict", "_changed_keys"]
+    
+    is_null: bool
+    _internaldict: Dict[str, ServiceNowProperty]
+    _changed_keys: List[str]
+    
     def __init__(self, client: C) -> None:
         super().__init__(client)
 
-        self.is_null: bool = True
-        self._internaldict: Dict[str, ServiceNowProperty] = dict()
-        self._changed_keys: List[str] = list()
-
-    @property
-    def Client(self) -> C:
-        return super().Client
+        self.is_null = True
+        self._internaldict = {}
+        self._changed_keys = []
 
     @property
     def IsNull(self) -> bool:

@@ -13,6 +13,8 @@ from typing import (
     Tuple,
 )
 
+import json
+
 from logging import getLogger
 
 if TYPE_CHECKING:
@@ -68,7 +70,7 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
     def Get(self: B) -> B:
         """Sets request to get request"""
 
-        self._headers.append(
+        self.header_options.append(
             ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json)
         )
 
@@ -78,7 +80,7 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
 
     def Post(self: B, input_object: S) -> B:
 
-        self._headers.append(
+        self.header_options.append(
             ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json)
         )
 
@@ -89,7 +91,7 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
     @property
     def Delete(self: B) -> B:
 
-        self._headers.append(
+        self.header_options.append(
             ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json)
         )
 
@@ -99,7 +101,7 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
 
     def Put(self: B, input_object: S) -> B:
 
-        self._headers.append(
+        self.header_options.append(
             ServiceNowHeaderOption(Header.Accept, MimeTypeNames.Application.Json)
         )
 
@@ -123,11 +125,11 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         if _response is None:
             return None
 
-        _json = _response.json()
+        _json_text = _response.text
+        _json = json.loads(_json_text)
         _result = _json["result"]
-        del _json
 
-        return parse_result(self.GenericType, _result, self.Client)
+        return parse_result(self.generic_type, _result, self.Client)
 
     @property
     def Invoke(self: B) -> Optional[Union[List[S], S]]:
