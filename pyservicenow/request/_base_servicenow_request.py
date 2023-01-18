@@ -13,7 +13,6 @@ from typing import (
     Dict,
     Any,
     Callable,
-    get_args,
 )
 
 from logging import getLogger
