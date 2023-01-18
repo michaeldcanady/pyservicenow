@@ -12,8 +12,6 @@ from pyservicenow.types.enums import EncryptionContext
 
 
 class AttachmentEntry(ServiceNowEntry):
-    def __init__(self, client: ServiceNowClient) -> None:
-        super().__init__(client)
 
     @property
     def ContentType(self):

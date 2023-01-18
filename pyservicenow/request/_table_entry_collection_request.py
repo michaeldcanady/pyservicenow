@@ -21,7 +21,7 @@ class TableEntryCollectionRequest(BaseTableRequest[S]):
     """The Table Entry Collection Request"""
 
     def __init__(
-        self,
+        self: B,
         request_url: str,
         client: "ServiceNowClient",
         options: Optional[
@@ -30,11 +30,12 @@ class TableEntryCollectionRequest(BaseTableRequest[S]):
     ) -> None:
         super().__init__(request_url, client, options)
 
+    @property
     def Invoke(self: B) -> List[S]:
 
         _return = super().Invoke
 
-        _type = self.GenericType
+        _type = self.generic_type
 
         if type(_return) is not list:
             raise UnexpectedReturnType(type(_return), List[Type[_type]])

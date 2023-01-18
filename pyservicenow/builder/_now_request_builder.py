@@ -25,7 +25,7 @@ class NowRequestBuilder(EntityRequestBuilder):
         """
 
         return TableRequestBuilder(
-            self.AppendSegmentToRequestUrl(f"/table/{table_name}"), self.Client
+            self.append_segment_to_request_url(f"/table/{table_name}"), self.Client
         )
 
     @property
@@ -37,7 +37,7 @@ class NowRequestBuilder(EntityRequestBuilder):
         """
 
         return AttachmentRequestBuilder(
-            self.AppendSegmentToRequestUrl("attachment"), self.Client
+            self.append_segment_to_request_url("attachment"), self.Client
         )
 
     @property
@@ -48,4 +48,4 @@ class NowRequestBuilder(EntityRequestBuilder):
             UIRequestBuilder: UI request builder
         """
 
-        return UIRequestBuilder(self.AppendSegmentToRequestUrl("ui"), self.Client)
+        return UIRequestBuilder(self.append_segment_to_request_url("ui"), self.Client)

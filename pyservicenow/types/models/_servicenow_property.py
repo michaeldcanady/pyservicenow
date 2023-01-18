@@ -3,13 +3,17 @@ from typing import Dict, Any
 
 
 class ServiceNowProperty(object):
+    
+    __slots__ = ["_display_value", "_value", "_link"]
 
-    _display_value: str = ""
-    _value: str = ""
-    _link: str = ""
+    _display_value: str
+    _value: str
+    _link: str
 
     def __init__(self) -> None:
-        pass
+        self._display_value = ""
+        self._value = ""
+        self._link = ""
 
     @property
     def DisplayValue(self) -> str:
