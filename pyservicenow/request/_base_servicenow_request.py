@@ -57,7 +57,7 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         return self._object
 
     @input_object.setter
-    def input_object(self: B, value: Optional[S]) -> None:
+    def input_object(self, value: Optional[S]) -> None:
         Logger.info("%s.Object: function called", type(self).__name__)
 
         self._object = value
@@ -121,7 +121,7 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         self.input_object = input_object
 
     def parse_response(
-        self, _response: Optional[Response]
+        self: B, _response: Optional[Response]
     ) -> Optional[Union[List[S], S]]:
         """Parses response into expected return type, list of generic type,
         single generic type or None"""
@@ -134,12 +134,6 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         _result = _json["result"]
 
         return parse_result(self.generic_type, _result, self.Client)
-
-    @property
-    def Invoke(self: B) -> Optional[Union[List[S], S]]:
-        """Invokes the specified method"""
-
-        return self.Send(self._object)
 
 def parse_result(
     obj_type: Type[S],

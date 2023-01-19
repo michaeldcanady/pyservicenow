@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 class NowRequestBuilder(BaseRequestBuilder):
     """The Now Request Builder type"""
 
-    def Table(self, table_name: str) -> TableRequestBuilder:
+    def table_api(self, table_name: str) -> TableRequestBuilder:
         """Get a specified serviceNow table
 
         Args:
@@ -29,7 +29,7 @@ class NowRequestBuilder(BaseRequestBuilder):
         )
 
     @property
-    def Attachment(self) -> AttachmentRequestBuilder:
+    def attachment_api(self) -> AttachmentRequestBuilder:
         """Gets attachment request builder
 
         Returns:

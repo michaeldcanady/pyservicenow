@@ -1,8 +1,7 @@
-from typing import Union, List
+from typing import Union, List, TypeVar, Type
 import inspect
 from pyservicenow.types.enums import OrderBy, Operators
 
-# internal imports
 from ..exceptions import (
     QueryEmpty,
     QueryExpressionError,
@@ -10,6 +9,7 @@ from ..exceptions import (
     QueryMultipleExpressions,
 )
 
+Q = TypeVar("Q", bound="QueryBuilder")
 
 class QueryBuilder:
     """Query Builder type"""
@@ -30,7 +30,7 @@ class QueryBuilder:
         self.l_oper = None
 
     @classmethod
-    def parse(cls, query: str) -> "QueryBuilder":
+    def parse(cls: Type[Q], query: str) -> Q:
         """Parses query into new QueryBuilder
 
         Args:
@@ -113,7 +113,7 @@ class QueryBuilder:
 
         return query_builder
 
-    def field(self, field: str) -> "QueryBuilder":
+    def field(self: Q, field: str) -> Q:
         """Sets the field to operate on
 
         Args:
@@ -127,7 +127,7 @@ class QueryBuilder:
 
         return self
 
-    def order_by(self, direction: OrderBy) -> "QueryBuilder":
+    def order_by(self: Q, direction: OrderBy) -> Q:
         """Sets the order by direction
 
         Args:
@@ -156,34 +156,34 @@ class QueryBuilder:
 
         return self
 
-    def equals(self, data: Union[str, int]) -> "QueryBuilder":
+    def equals(self: Q, data: Union[str, int]) -> Q:
         """Adds new `=` condition"""
 
         return self._add_condition(Operators.Comparison.EQUALS, data, types=[int, str])
 
-    def IN(self, data: List) -> "QueryBuilder":
+    def IN(self:Q , data: List) -> Q:
         """Adds new `IN` condition"""
 
         return self._add_condition(Operators.Comparison.IN, ",".join(map(str, data)), types=[str])
 
-    def contains(self, contains: str):
+    def contains(self: Q, contains: str) -> Q:
         """Adds new `LIKE` condition
         """
 
         return self._add_condition(Operators.Comparison.LIKE, contains, types=[str])
 
     @property
-    def AND(self) -> "QueryBuilder":
+    def AND(self: Q) -> Q:
         """Adds an and-operator"""
         return self._add_logical_operator(Operators.Logical.AND)
 
     @property
-    def OR(self) -> "QueryBuilder":
+    def OR(self: Q) -> Q:
         """Adds an or-operator"""
         return self._add_logical_operator(Operators.Logical.OR)
 
     @property
-    def NQ(self) -> "QueryBuilder":
+    def NQ(self: Q) -> Q:
         """Adds a NQ-operator (new query)"""
         return self._add_logical_operator(Operators.Logical.NEWQUERY)
 
@@ -206,7 +206,7 @@ class QueryBuilder:
 
         return str().join(self._query)
 
-    def _add_logical_operator(self, operator: Operators.Logical) -> "QueryBuilder":
+    def _add_logical_operator(self: Q, operator: Operators.Logical) -> Q:
         """Adds a logical operator in query
         :param operator: logical operator (str)
         :raise:
@@ -232,7 +232,7 @@ class QueryBuilder:
         self._query.append(operator)
         return self
 
-    def _add_condition(self, operator, operand, types) -> "QueryBuilder":
+    def _add_condition(self: Q, operator, operand, types) -> Q:
         """Appends condition to self._query after performing validation
         :param operator: operator (str)
         :param operand: operand
