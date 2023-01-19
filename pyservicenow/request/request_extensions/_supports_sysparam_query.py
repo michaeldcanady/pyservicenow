@@ -1,7 +1,6 @@
 """Houses Supports Sysparam Query"""
 
-from typing import Union
-from sys import version_info
+from typing import Union, TypeVar
 
 
 from pyservicenow.types.enums import QueryParameters
@@ -10,16 +9,13 @@ from pyservicenow.request.request_extensions._supports_query_options import (
     SupportsQueryOptions,
 )
 
-if version_info >= (3, 11):
-    from typing import Self
-else:
-    from typing_extensions import Self
+S = TypeVar("S", bound="SupportsSysparamQuery")
 
 
 class SupportsSysparamQuery(SupportsQueryOptions):
     """Supports Sysparam Query Type"""
 
-    def sysparam_query(self, query: Union[str, QueryBuilder]) -> Self:
+    def sysparam_query(self: S, query: Union[str, QueryBuilder]) -> S:
         """Encoded query used to filter the result set.
         You can use a UI filter to obtain a properly encoded query.
 

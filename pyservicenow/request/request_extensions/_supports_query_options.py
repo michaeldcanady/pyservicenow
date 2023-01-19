@@ -2,7 +2,6 @@
 
 from typing import Protocol
 
-
 from pyrestsdk.type.model import QueryOptionCollection
 
 
@@ -15,3 +14,9 @@ class SupportsQueryOptions(Protocol):
 
     def __init__(self) -> None:
         self._query_options = QueryOptionCollection()
+
+    @property
+    def query_options(self) -> QueryOptionCollection:
+        """Gets the query options"""
+
+        return self._query_options

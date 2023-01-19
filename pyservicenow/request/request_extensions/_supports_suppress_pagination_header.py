@@ -1,6 +1,6 @@
 """Houses Supports Suppress Pagination Header"""
 
-from sys import version_info
+from typing import TypeVar
 
 
 from pyservicenow.types.enums import QueryParameters
@@ -9,16 +9,13 @@ from pyservicenow.request.request_extensions._supports_query_options import (
     SupportsQueryOptions,
 )
 
-if version_info >= (3, 11):
-    from typing import Self
-else:
-    from typing_extensions import Self
+S = TypeVar("S", bound="SupportsSuppressPaginationHeader")
 
 
 class SupportsSuppressPaginationHeader(SupportsQueryOptions):
     """Supports Suppress Pagination Header Type"""
 
-    def suppress_pagination_header(self, suppress_pagination_header: bool) -> Self:
+    def suppress_pagination_header(self: S, suppress_pagination_header: bool) -> S:
         """Flag that indicates whether to remove the Link header from the response.
         The Link header provides various URLs to relative pages in the
         record set which you can use to paginate the returned record set.
