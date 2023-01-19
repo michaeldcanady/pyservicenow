@@ -1,6 +1,6 @@
 """Houses Supports Display Value"""
 
-from sys import version_info
+from typing import TypeVar
 
 
 from pyservicenow.types.enums import QueryParameters, DisplayValue
@@ -9,16 +9,13 @@ from pyservicenow.request.request_extensions._supports_query_options import (
     SupportsQueryOptions,
 )
 
-if version_info >= (3, 11):
-    from typing import Self
-else:
-    from typing_extensions import Self
+S = TypeVar("S", bound="SupportsDisplayValue")
 
 
 class SupportsDisplayValue(SupportsQueryOptions):
     """Supports Display Value Type"""
 
-    def display_value(self, values: DisplayValue) -> Self:
+    def display_value(self: S, values: DisplayValue) -> S:
         """Sets the sysparm_display_value
 
         Args:

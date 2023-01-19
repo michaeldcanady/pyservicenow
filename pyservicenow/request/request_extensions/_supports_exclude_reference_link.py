@@ -1,7 +1,6 @@
 """Houses Supports Exclude Reference Link"""
 
-from sys import version_info
-
+from typing import TypeVar
 
 from pyservicenow.types.enums import QueryParameters
 from pyservicenow.types.models import ServiceNowQueryOption
@@ -9,16 +8,13 @@ from pyservicenow.request.request_extensions._supports_query_options import (
     SupportsQueryOptions,
 )
 
-if version_info >= (3, 11):
-    from typing import Self
-else:
-    from typing_extensions import Self
+S = TypeVar("S", bound="SupportsExcludeReferenceLink")
 
 
 class SupportsExcludeReferenceLink(SupportsQueryOptions):
     """Supports Exclude Reference Link Type"""
 
-    def exclude_reference_link(self, exclude_reference_link: bool) -> Self:
+    def exclude_reference_link(self: S, exclude_reference_link: bool) -> S:
         """Adds if to exclude reference links
 
         Args:

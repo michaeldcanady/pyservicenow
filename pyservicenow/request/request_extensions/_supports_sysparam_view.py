@@ -1,6 +1,6 @@
 """Houses Supports Sysparam View"""
 
-from sys import version_info
+from typing import TypeVar
 
 
 from pyservicenow.types.enums import QueryParameters, View
@@ -9,16 +9,13 @@ from pyservicenow.request.request_extensions._supports_query_options import (
     SupportsQueryOptions,
 )
 
-if version_info >= (3, 11):
-    from typing import Self
-else:
-    from typing_extensions import Self
+S = TypeVar("S", bound="SupportsSysparamView")
 
 
 class SupportsSysparamView(SupportsQueryOptions):
     """Supports Query Options Type"""
 
-    def sysparam_view(self, view: View) -> Self:
+    def sysparam_view(self: S, view: View) -> S:
         """UI view for which to render the data. Determines the fields returned in the response.
 
         Args:
