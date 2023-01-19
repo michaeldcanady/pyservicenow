@@ -13,7 +13,7 @@ def test_attachment_url():
 
     table_name = "alm_hardware"
 
-    hardware_request = client.Now().Table(table_name).request.sysparam_limit(1).Get
+    hardware_request = client.Now.v2.table_api(table_name).request.sysparam_limit(1).Get
 
     assert hardware_request.request_url == client.base_url+"/now/table/"+table_name
 
@@ -26,7 +26,7 @@ def test_get_first_attachment():
 
     client = ServiceNowClient(credential=creds, instance=os.environ["INSTANCE"])
 
-    hardware = client.Now().Table("alm_hardware").request.sysparam_limit(1).Get.Invoke
+    hardware = client.Now.v2.table_api("alm_hardware").request.sysparam_limit(1).Get.invoke_request
 
     assert isinstance(hardware, list)
     assert isinstance(hardware[0], ServiceNowEntry)

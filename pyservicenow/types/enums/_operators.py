@@ -1,7 +1,9 @@
+"""Houses Operators"""
+
 from strenum import StrEnum
 
 
-class Operators():
+class Operators:
     """Operators Enum"""
 
     class Comparison(StrEnum):
@@ -11,7 +13,7 @@ class Operators():
         EQUALS = "="
         IN = "IN"
         LIKE = "LIKE"
-    
+
     class Logical(StrEnum):
         """Logical Operator Enum"""
 

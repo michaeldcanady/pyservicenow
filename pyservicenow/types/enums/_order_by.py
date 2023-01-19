@@ -1,3 +1,5 @@
+"""Houses Order By Enum"""
+
 from enum import IntEnum, auto
 
 

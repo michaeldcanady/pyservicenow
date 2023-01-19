@@ -19,7 +19,7 @@ pkginfo==1.9.2
 platformdirs==2.6.0
 pycparser==2.21
 Pygments==2.14.0
-pyrestsdk==0.2.3
+pyrestsdk==0.2.6
 pyspnego==0.7.0
 pywin32-ctypes==0.2.0
 readme-renderer==37.3
@@ -32,6 +32,7 @@ six==1.16.0
 StrEnum==0.4.9
 tomli==2.0.1
 twine==4.0.2
+typing_extensions==4.4.0
 urllib3==1.26.13
 webencodings==0.5.1
 zipp==3.11.0

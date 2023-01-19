@@ -1,41 +1,10 @@
-from ._unexpected_return_type import UnexpectedReturnType
-
-
-class PysnowException(Exception):
-    pass
-
-
-class InvalidUsage(PysnowException):
-    pass
-
-
-class UnexpectedResponseFormat(PysnowException):
-    pass
-
-
-class ResponseError(PysnowException):
-    message = "<empty>"
-    detail = "<empty>"
-
-    def __init__(self, error):
-        if "message" in error:
-            self.message = error["message"] or self.message
-        if "detail" in error:
-            self.detail = error["detail"] or self.detail
-
-    def __str__(self):
-        return "Error in response. Message: %s, Details: %s" % (
-            self.message,
-            self.detail,
-        )
-
-
-class MissingResult(PysnowException):
-    pass
-
-
-class NoResults(PysnowException):
-    pass
+from pyservicenow.types.exceptions._unexpected_return_type import UnexpectedReturnType
+from pyservicenow.types.exceptions._py_snow_exception import PysnowException
+from pyservicenow.types.exceptions._unexpected_response_format import UnexpectedResponseFormat
+from pyservicenow.types.exceptions._invalid_usage import InvalidUsage
+from pyservicenow.types.exceptions._response_error import ResponseError
+from pyservicenow.types.exceptions._missing_result import MissingResult
+from pyservicenow.types.exceptions._no_results import NoResults
 
 
 class EmptyContent(PysnowException):

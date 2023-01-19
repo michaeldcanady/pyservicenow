@@ -6,7 +6,9 @@ from pyrestsdk.credential import AbstractBasicCredential
 
 
 class UsernamePasswordCredential(AbstractBasicCredential):
-    """Username Password basic authentication type"""
+    """Username Password Credential Type"""
+    
+    __slots__ = ["username", "password"]
 
     username: str
     password: str

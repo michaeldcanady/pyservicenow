@@ -25,16 +25,6 @@ class EncryptionContext(IntEnum):
             case other:
                 raise Exception(f"unknown value {value}")
 
-    # python <3.10
-    #        if value == "" or value is None:
-    #            return EncryptionContext.NULL
-    #        elif "single" in value.casefold():
-    #            return EncryptionContext.SINGLE
-    #        elif "multiple" in value.casefold():
-    #            return EncryptionContext.MULTIPLE
-    #        else:
-    #            raise Exception(f"unknown value {value}")
-
     def __str__(self) -> str:
         return self.name
 

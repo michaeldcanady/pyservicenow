@@ -1,22 +1,21 @@
-"""Houses Attachment Entry Request"""
+"""House Attachment Entry Request"""
 
-from __future__ import annotations
-from typing import TypeVar
-from pyservicenow.request._base_attachment_request import BaseAttachmentRequest
+from pyrestsdk.request.supports_types import SupportsInvokeRequest
 from pyservicenow.types.models import AttachmentEntry
+from pyservicenow.request._base_attachment_request import BaseAttachmentRequest
+from pyservicenow.types.models import (
+    AttachmentEntry,
+)
 from pyservicenow.types.exceptions import UnexpectedReturnType
 
-A = TypeVar("A", bound=AttachmentEntry)
-B = TypeVar("B", bound="AttachmentEntryRequest")
 
-
-class AttachmentEntryRequest(BaseAttachmentRequest[AttachmentEntry]):
-    """Attachment Entry Request type"""
+class AttachmentEntryRequest(BaseAttachmentRequest[AttachmentEntry], SupportsInvokeRequest):
+    """Attachment Entry Request Type"""
 
     @property
-    def Invoke(self: B) -> AttachmentEntry:
+    def invoke_request(self) -> AttachmentEntry:
 
-        _return = super().Invoke
+        _return = super().Send(self.input_object)
 
         if not isinstance(_return, self.generic_type) or _return is None:
             raise UnexpectedReturnType(type(_return), self.generic_type)
