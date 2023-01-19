@@ -10,6 +10,7 @@ from typing import (
     TypeVar,
     Type,
     Any,
+    Union,
 )
 from json import dumps
 from pyrestsdk.type.model._base_entity import BaseEntity
@@ -119,7 +120,11 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
     def as_json(self) -> Dict:
         """Gets the object as it's dict representation"""
         return self.as_dict
-
+    
+    def add_property(self, key, value: Union[Dict[str, Any], str]) -> None:
+        
+        self[key] = ServiceNowProperty.__fromjson__(value)
+    
     @classmethod
     def fromJson(cls: Type[S], entry: Dict[str, Any], client: ServiceNowClient) -> S:
         """Converts entry from dictionary to new ServiceNowPropertyCollection.
@@ -133,17 +138,7 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
 
         new = cls(client)
 
-        for key, value in entry.items():
-            _value = ServiceNowProperty()
-            if isinstance(value, str):
-                _value.actual_value = value
-            else:
-                if value is not None:
-                    _value.display_value = value.get("display_value")
-                    _value.actual_value = value.get("value")
-                    _value.value_link = value.get("link")
-
-            new[key] = _value
+        [new.add_property(key, value) for key, value in entry.items()]
 
         new._check_is_null()
         new._changed_keys = []

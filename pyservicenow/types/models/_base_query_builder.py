@@ -15,7 +15,9 @@ if version_info >= (3, 11):
 else:
     from typing_extensions import Self
 
+
 class BaseQueryBuilder:
+    """Base Query Builder Type"""
 
     __slots__ = ["_query", "current_field", "c_oper", "l_oper"]
 
@@ -26,7 +28,7 @@ class BaseQueryBuilder:
         self.current_field = None
         self.c_oper = None
         self.l_oper = None
-        
+
     def field(self, field: str) -> Self:
         """Sets the field to operate on
 
@@ -40,12 +42,12 @@ class BaseQueryBuilder:
         self.current_field = field
 
         return self
-    
+
     def equals(self, data: Union[str, int]) -> Self:
 
         return self._add_condition(Operators.Comparison.EQUALS, data, types=[int, str])
-    
-    def orderBy(self, direction: OrderBy) -> Self:
+
+    def order_by(self, direction: OrderBy) -> Self:
         """Sets the order by direction
 
         Args:
@@ -59,10 +61,12 @@ class BaseQueryBuilder:
             QueryBuilder: The current QueryBuilder object
         """
 
-        if direction == OrderBy.ASC:
-            self._query.append("ORDERBY{0}".format(self.current_field))
-        elif direction == OrderBy.DESC:
-            self._query.append("ORDERBYDESC{0}".format(self.current_field))
+        _order_by_string = "{order_direction}{current_field}".format(
+            order_direction="ORDERBY" if direction == OrderBy.ASC else "ORDERBYDESC",
+            current_field=self.current_field,
+        )
+
+        self._query.append(_order_by_string)
 
         if (_currentframe := inspect.currentframe()) is None:
             raise Exception("Current Frame is None")
@@ -76,7 +80,7 @@ class BaseQueryBuilder:
 
     def IN(self, data: List) -> Self:
         return self._add_condition("IN", ",".join(map(str, data)), types=[str])
-    
+
     @property
     def AND(self) -> Self:
         """Adds an and-operator"""
@@ -91,14 +95,14 @@ class BaseQueryBuilder:
     def NQ(self) -> Self:
         """Adds a NQ-operator (new query)"""
         return self._add_logical_operator(Operators.Logical.NEWQUERY)
-    
+
     def contains(self, contains) -> Self:
         """Adds new `LIKE` condition
         :param contains: Match field containing the provided value
         """
 
         return self._add_condition("LIKE", contains, types=[str])
-    
+
     def __str__(self) -> str:
         """String representation of the query object
         :raise:
@@ -143,7 +147,7 @@ class BaseQueryBuilder:
 
         self._query.append(operator)
         return self
-    
+
     def _add_condition(self, operator, operand, types) -> Self:
         """Appends condition to self._query after performing validation
         :param operator: operator (str)

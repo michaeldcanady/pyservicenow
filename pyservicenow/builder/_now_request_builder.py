@@ -1,20 +1,15 @@
 """Houses the Now Request Builder"""
 
-from __future__ import annotations
-from typing import TYPE_CHECKING
 from pyrestsdk.requestbuilder import BaseRequestBuilder
 from pyservicenow.builder._table_request_builder import TableRequestBuilder
 from pyservicenow.builder._ui_request_builder import UIRequestBuilder
 from pyservicenow.builder._attachment_request_builder import AttachmentRequestBuilder
 
-if TYPE_CHECKING:
-    from pyservicenow.core import ServiceNowClient
-
 
 class NowRequestBuilder(BaseRequestBuilder):
     """The Now Request Builder type"""
 
-    def Table(self, table_name: str) -> TableRequestBuilder:
+    def table_api(self, table_name: str) -> TableRequestBuilder:
         """Get a specified serviceNow table
 
         Args:
@@ -29,7 +24,7 @@ class NowRequestBuilder(BaseRequestBuilder):
         )
 
     @property
-    def Attachment(self) -> AttachmentRequestBuilder:
+    def attachment_api(self) -> AttachmentRequestBuilder:
         """Gets attachment request builder
 
         Returns:
@@ -41,7 +36,7 @@ class NowRequestBuilder(BaseRequestBuilder):
         )
 
     @property
-    def UI(self) -> UIRequestBuilder:
+    def ui_api(self) -> UIRequestBuilder:
         """Gets UI request builder
 
         Returns:

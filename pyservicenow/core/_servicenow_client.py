@@ -160,7 +160,6 @@ class ServiceNowClient(AbstractServiceClient):
         :param url: user provided path
         :return: graph_url
         """
-
         _url = self.base_url + url if (url[0] == "/") else url
 
         Logger.info("%s._servicenow_url: function called", type(self).__name__)

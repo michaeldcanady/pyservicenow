@@ -1,0 +1,2 @@
+class PysnowException(Exception):
+    pass

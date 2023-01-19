@@ -10,7 +10,7 @@ def test_attachment_url():
 
     client = ServiceNowClient(credential=creds, instance=os.environ["INSTANCE"])
 
-    attachment_request = client.Now().Attachment.request.Get
+    attachment_request = client.Now().attachment_api.request.Get
     
     assert attachment_request.request_url == client.base_url+"/now/attachment"
     
@@ -22,7 +22,7 @@ def test_get_first_attachment():
 
     client = ServiceNowClient(credential=creds, instance=os.environ["INSTANCE"])
 
-    attachments = client.Now().Attachment.request.sysparam_limit(1).Get.Invoke
+    attachments = client.Now().attachment_api.request.sysparam_limit(1).Get.Invoke
 
     assert isinstance(attachments, list)
     assert isinstance(attachments[0], AttachmentEntry)

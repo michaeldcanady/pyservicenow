@@ -1,7 +1,7 @@
 """Houses Service-Now Entry"""
 
 from __future__ import annotations
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING, TypeVar, Any
 from datetime import datetime
 from pyservicenow.types.models._servicenow_property_collection import ServiceNowPropertyCollection
 from pyservicenow.types.constants import DATETIME
@@ -24,7 +24,7 @@ class ServiceNowEntry(ServiceNowPropertyCollection):
             str: The sys id
         """
 
-        return self["sys_id"].actual_value or self["sys_id"].display_value
+        return self._get_output("sys_id")
 
     @property
     def sys_updated_on(self) -> datetime:
@@ -56,10 +56,15 @@ class ServiceNowEntry(ServiceNowPropertyCollection):
             datetime: The created on date
         """
 
-        raw_date = self["sys_created_on"].actual_value
-
-        return datetime.strptime(raw_date, DATETIME)
+        return datetime.strptime(self._get_output("sys_created_on"), DATETIME)
 
     def update_object(self) -> bool:
         """updates the object in Service-Now"""
         raise NotImplementedError("Update is not implemented")
+
+    def _get_output(self, key: str) -> Any:
+        """Gets the actual or display value based on which has a valid value"""
+        
+        _value = self[key]
+        
+        return _value.actual_value or _value.display_value

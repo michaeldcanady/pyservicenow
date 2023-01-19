@@ -1,7 +1,12 @@
 """Houses the Service-Now Property"""
-
+from sys import version_info
 from json import dumps
-from typing import Dict, Any
+from typing import Dict, Any, Union
+
+if version_info >= (3, 11):
+    from typing import Self
+else:
+    from typing_extensions import Self
 
 
 class ServiceNowProperty:
@@ -71,3 +76,22 @@ class ServiceNowProperty:
 
     def __json__(self) -> str:
         return dumps(self.as_dict())
+    
+    @classmethod
+    def __fromjson__(cls, value: Union[str, Dict]) -> Self:
+        
+        _value = cls()
+        
+        if not isinstance(value, str) and not isinstance(value, dict):
+            return _value
+        
+        if value is None:
+            pass
+        elif isinstance(value, str):
+            _value.actual_value = value
+        else:
+            _value.display_value = value.get("display_value", "")
+            _value.actual_value = value.get("value", "")
+            _value.value_link = value.get("link", "")
+            
+        return _value
