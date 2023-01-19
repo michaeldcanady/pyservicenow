@@ -26,7 +26,7 @@ def test_get_first_attachment():
 
     client = ServiceNowClient(credential=creds, instance=os.environ["INSTANCE"])
 
-    hardware = client.Now.v2.table_api("alm_hardware").request.sysparam_limit(1).Get.Invoke
+    hardware = client.Now.v2.table_api("alm_hardware").request.sysparam_limit(1).Get.invoke_request
 
     assert isinstance(hardware, list)
     assert isinstance(hardware[0], ServiceNowEntry)
