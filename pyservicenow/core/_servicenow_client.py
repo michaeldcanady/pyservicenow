@@ -35,17 +35,11 @@ class ServiceNowClient(AbstractServiceClient):
             instance, session, **kwargs
         )
 
-    def Now(self, version: APIVersion = APIVersion.NULL) -> NowRequestBuilder:
+    @property
+    def Now(self) -> NowRequestBuilder:
         """Constructs Now Request Builder"""
 
-        base_url = self.base_url + "/now"
-
-        if version == APIVersion.V1:
-            base_url += "/v1"
-        elif version == APIVersion.V2:
-            base_url += "/v2"
-
-        return NowRequestBuilder(base_url, self)
+        return NowRequestBuilder(f"{self.base_url}/now", self)
 
     @property
     def base_url(self) -> str:

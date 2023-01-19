@@ -1,9 +1,15 @@
 """Houses the Now Request Builder"""
 
+from sys import version_info
 from pyrestsdk.requestbuilder import BaseRequestBuilder
 from pyservicenow.builder._table_request_builder import TableRequestBuilder
 from pyservicenow.builder._ui_request_builder import UIRequestBuilder
 from pyservicenow.builder._attachment_request_builder import AttachmentRequestBuilder
+
+if version_info >= (3, 11):
+    from typing import Self
+else:
+    from typing_extensions import Self
 
 
 class NowRequestBuilder(BaseRequestBuilder):
@@ -22,6 +28,20 @@ class NowRequestBuilder(BaseRequestBuilder):
         return TableRequestBuilder(
             self.append_segment_to_request_url(f"/table/{table_name}"), self.Client
         )
+        
+    @property
+    def v2(self) -> Self:
+        
+        self.append_segment_to_request_url("/v2")
+        
+        return self
+    
+    @property
+    def v1(self) -> Self:
+        
+        self.append_segment_to_request_url("/v1")
+        
+        return self
 
     @property
     def attachment_api(self) -> AttachmentRequestBuilder:
