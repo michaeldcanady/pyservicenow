@@ -1,9 +1,14 @@
-"""Houses Attachment Entry Request"""
+"""House Attachment Entry Request"""
 
-from __future__ import annotations
 from typing import TypeVar
-from pyservicenow.request._base_attachment_request import BaseAttachmentRequest
+
 from pyservicenow.types.models import AttachmentEntry
+from pyservicenow.request._base_attachment_request import BaseAttachmentRequest
+from pyservicenow.types.models import (
+    ServiceNowQueryOption,
+    ServiceNowHeaderOption,
+    AttachmentEntry,
+)
 from pyservicenow.types.exceptions import UnexpectedReturnType
 
 A = TypeVar("A", bound=AttachmentEntry)
@@ -11,7 +16,7 @@ B = TypeVar("B", bound="AttachmentEntryRequest")
 
 
 class AttachmentEntryRequest(BaseAttachmentRequest[AttachmentEntry]):
-    """Attachment Entry Request type"""
+    """Attachment Entry Request Type"""
 
     @property
     def Invoke(self: B) -> AttachmentEntry:
