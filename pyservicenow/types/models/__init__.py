@@ -16,6 +16,11 @@ if version_info > (3,10):
 else:
     from pyservicenow.types.models._query_builder310 import QueryBuilder
 
+if version_info > (3,10):
+    from pyservicenow.types.models._query_builder39 import QueryBuilder
+else:
+    from pyservicenow.types.models._query_builder310 import QueryBuilder
+
 __all__ = [
     "AttachmentEntry",
     "QueryBuilder",
