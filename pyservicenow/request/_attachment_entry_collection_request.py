@@ -1,8 +1,9 @@
 """Houses Attachment Entry Collection Request"""
 
 from typing import TypeVar, List
-from pyservicenow.types.models import AttachmentEntry
 from pyrestsdk.request.supports_types import SupportsInvokeRequest
+
+from pyservicenow.types.models import AttachmentEntry
 from pyservicenow.request._base_attachment_request import BaseAttachmentRequest
 from pyservicenow.types.exceptions import UnexpectedReturnType
 

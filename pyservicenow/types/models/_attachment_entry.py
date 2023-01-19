@@ -108,7 +108,3 @@ class AttachmentEntry(ServiceNowEntry):
     def Json(self) -> Dict:
         """Gets the object as it's dict representation"""
         return super().Json
-
-    def update_object(self) -> bool:
-        """updates the object in Service-Now"""
-        return super().update_object()

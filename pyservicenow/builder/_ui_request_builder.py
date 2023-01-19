@@ -1,7 +1,5 @@
 """Houses UI Request Builder"""
 
-from __future__ import annotations
-from typing import TYPE_CHECKING
 from pyrestsdk.requestbuilder import BaseRequestBuilder
 from pyservicenow.builder._ui_user_request_builder import UIUserRequestBuilder
 

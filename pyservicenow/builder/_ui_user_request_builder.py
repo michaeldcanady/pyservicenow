@@ -11,7 +11,6 @@ class UIUserRequestBuilder(BaseRequestBuilder):
 
     @property
     def current_user(self) -> UIUserCurrentUserRequestBuilder:
-    def current_user(self) -> UIUserCurrentUserRequestBuilder:
         """Gets a UI User Current User Request Builder
 
         Returns:

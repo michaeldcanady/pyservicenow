@@ -6,8 +6,6 @@ from pyservicenow.request._ui_user_current_user_request import UIUserCurrentUser
 from pyservicenow.types.models import ServiceNowHeaderOption, ServiceNowQueryOption
 
 
-
-
 class UIUserCurrentUserRequestBuilder(EntityRequestBuilder):
     """The UI User Current User Request Builder type"""
 
@@ -18,7 +16,7 @@ class UIUserCurrentUserRequestBuilder(EntityRequestBuilder):
         Returns:
             UIUserCurrentUserRequest: The constructed UI User CurrentUser Request
         """
-        
+
         return self.Request(None)
 
     def Request(
@@ -30,7 +28,8 @@ class UIUserCurrentUserRequestBuilder(EntityRequestBuilder):
         """Constructs a UI User CurrentUser Request
 
         Args:
-            options (Optional[ Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]] ]): query or header options to include in the request
+            options (Optional[ Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]] ]):
+            query or header options to include in the request
 
         Returns:
             UIUserCurrentUserRequest: The constructed UI User CurrentUser Request
