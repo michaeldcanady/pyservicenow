@@ -1,7 +1,12 @@
 """Houses base attachment request"""
 
 from __future__ import annotations
-from typing import TypeVar
+from typing import Union, TypeVar, Iterable, TYPE_CHECKING, Type, Optional
+
+if TYPE_CHECKING:
+    from pyservicenow.core import ServiceNowClient
+
+# Interal Imports
 from pyservicenow.request._base_servicenow_request import BaseServiceNowEntryRequest
 from pyservicenow.request.request_extensions import (
     SupportsSysparamOffset,
