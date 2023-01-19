@@ -1,110 +1,114 @@
+"""Houses attachment Entry Model"""
+
 from __future__ import annotations
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from pyservicenow.core import ServiceNowClient
-
 from os.path import exists, join
-
-# internal imports
+from typing import Dict
 from pyservicenow.types.models._servicenow_entry import ServiceNowEntry
 from pyservicenow.types.enums import EncryptionContext
 
-
 class AttachmentEntry(ServiceNowEntry):
+    """Attachment Entry Type"""
 
     @property
-    def ContentType(self):
+    def content_type(self):
         """Gets the content type of the associated attachment file."""
 
-        return self["content_type"].Value
+        return self["content_type"].actual_value
 
     @property
-    def FileName(self) -> str:
+    def file_name(self) -> str:
         """Get the file name of the attachment"""
 
-        return self["file_name"].Value
+        return self["file_name"].actual_value
 
     @property
-    def Tags(self) -> str:
+    def sys_tags(self) -> str:
         """Gets any system tags associated with the attachment file"""
 
-        return self["sys_tags"].Value
+        return self["sys_tags"].actual_value
 
     @property
-    def TableName(self) -> str:
+    def table_name(self) -> str:
         """Gets the table name it's attached to"""
 
-        return self["table_name"].Value
+        return self["table_name"].actual_value
 
     @property
-    def DownloadLink(self) -> str:
+    def download_link(self) -> str:
         """Gets the download URL of the attachment on the ServiceNow instance"""
 
-        return self["download_link"].Value
+        return self["download_link"].actual_value
 
-    def GetRecord(self) -> ServiceNowEntry:
+    def get_record(self) -> ServiceNowEntry:
         """Gets the record the attachment is associated with"""
 
-        return self.Client.Now().Table(self.TableName).id(self.TableSysId).Get.Invoke
+        return self.Client.Now().Table(self.table_name).id(self.table_sys_id).Get.Invoke
 
-    def Download(self, download_path: str, use_filename: bool = True) -> None:
+    def download_file(self, download_path: str, use_filename: bool = True) -> None:
         """Downloads attachment to designated filepath
 
         Args:
             download_path (str): The path to download the file to.
-            use_filename (bool, optional): whether to use the file name supplied by Service-Now. Defaults to True.
+            use_filename (bool, optional):
+            whether to use the file namesupplied by Service-Now. Defaults to True.
         """
 
         if not exists(download_path):
             raise Exception(f"Invalid download path: {download_path}")
 
         if use_filename:
-            download_path = join(download_path, self.FileName)
+            download_path = join(download_path, self.file_name)
 
-        _response = self.Client.get(self.DownloadLink)
+        _response = self.Client.get(self.download_link)
 
         with open(download_path, "wb") as file:
             file.write(_response.content)
 
     @property
-    def EncryptionContext(self) -> EncryptionContext:
+    def encryption_context(self) -> EncryptionContext:
         """Gets the encryption context"""
-
-        return EncryptionContext.fromString(self["encryption_context"].Value)
-
-    @property
-    def State(self) -> str:
-        return self["state"].Value
+        return EncryptionContext.from_string(self["encryption_context"].actual_value)
 
     @property
-    def Size(self) -> int:
+    def file_state(self) -> str:
+        """Gets the state of the attachment"""
+        return self["state"].actual_value
+
+    @property
+    def size_bytes(self) -> int:
         """Gets the size of the attachment"""
-
-        return int(self["size_bytes"].Value)
+        return int(self["size_bytes"].actual_value)
 
     @property
-    def CompressedSize(self) -> int:
+    def compressed_size(self) -> int:
         """Gets the size of the compressed attachment file. If the file is not compressed, empty."""
-
-        return int(self["size_compressed"].Value)
+        return int(self["size_compressed"].actual_value)
 
     @property
-    def TableSysId(self) -> str:
+    def table_sys_id(self) -> str:
         """Gets the sys_id of the table associated with the attachment"""
-
-        return self["table_sys_id"].Value
-
-    @property
-    def Hash(self) -> str:
-        return self["hash"].Value
+        return self["table_sys_id"].actual_value
 
     @property
-    def ChunkSize(self) -> int:
-        return int(self["chunk_size_bytes"].Value)
+    def file_hash(self) -> str:
+        """Gets the file hash of the attachment"""
+        return self["hash"].actual_value
 
     @property
-    def IsCompressed(self) -> bool:
+    def chunk_size_bytes(self) -> int:
+        """Gets the chunk size of the attachment in bytes"""
+        return int(self["chunk_size_bytes"].actual_value)
+
+    @property
+    def is_compressed(self) -> bool:
         """Gets whether the file has been compressed or not"""
+        return bool(self["compressed"].actual_value)
 
-        return bool(self["compressed"].Value)
+    @property
+    def Json(self) -> Dict:
+        """Gets the object as it's dict representation"""
+        return super().Json
+
+    def update_object(self) -> bool:
+        """updates the object in Service-Now"""
+        return super().update_object()

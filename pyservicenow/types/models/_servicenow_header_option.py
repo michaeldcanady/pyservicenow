@@ -1,9 +1,10 @@
-from pyrestsdk.type.model import HeaderOption
+"""Houses Service-Now Header Option"""
 
-# internal imports
+from pyrestsdk.type.model import HeaderOption
 from pyservicenow.types.enums import Header
 
 
 class ServiceNowHeaderOption(HeaderOption):
+    """Service-Now Header Option"""
 
     Name: Header

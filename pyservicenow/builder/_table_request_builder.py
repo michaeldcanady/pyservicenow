@@ -39,7 +39,7 @@ class TableRequestBuilder(EntityRequestBuilder):
         """Constructs a Table Entry Collection Request
 
         Args:
-            options (Optional[Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]] \]):
+            options (Optional[Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]]):
             query or header options to include in the request
 
         Returns:
@@ -59,7 +59,6 @@ class TableRequestBuilder(EntityRequestBuilder):
         Returns:
             TableEntryRequest: The constructed Table Entry Request
         """
-
         return TableEntryRequest[ServiceNowEntry](
             self.append_segment_to_request_url(sys_id), self.Client, None
         )

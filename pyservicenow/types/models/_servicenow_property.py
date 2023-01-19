@@ -1,8 +1,11 @@
+"""Houses the Service-Now Property"""
+
 from json import dumps
 from typing import Dict, Any
 
 
-class ServiceNowProperty(object):
+class ServiceNowProperty:
+    """Service-Now Property type"""
     
     __slots__ = ["_display_value", "_value", "_link"]
 
@@ -16,7 +19,7 @@ class ServiceNowProperty(object):
         self._link = ""
 
     @property
-    def DisplayValue(self) -> str:
+    def display_value(self) -> str:
         """Gets/Sets the display value
 
         Returns:
@@ -25,12 +28,12 @@ class ServiceNowProperty(object):
 
         return self._display_value
 
-    @DisplayValue.setter
-    def DisplayValue(self, value: str) -> None:
+    @display_value.setter
+    def display_value(self, value: str) -> None:
         self._display_value = value
 
     @property
-    def Link(self) -> str:
+    def value_link(self) -> str:
         """Gets/Sets the link
 
         Returns:
@@ -39,12 +42,12 @@ class ServiceNowProperty(object):
 
         return self._link
 
-    @Link.setter
-    def Link(self, value: str) -> None:
+    @value_link.setter
+    def value_link(self, value: str) -> None:
         self._link = value
 
     @property
-    def Value(self) -> str:
+    def actual_value(self) -> str:
         """Gets/Sets the value
 
         Returns:
@@ -53,17 +56,18 @@ class ServiceNowProperty(object):
 
         return self._value
 
-    def asdict(self) -> Dict[str, Any]:
+    @actual_value.setter
+    def actual_value(self, value: str) -> None:
+        self._value = value
+
+    def as_dict(self) -> Dict[str, Any]:
+        """Gets object as dict"""
 
         return {
-            "display_value": self.DisplayValue,
-            "value": self.Value,
-            "link": self.Link,
+            "display_value": self.display_value,
+            "value": self.actual_value,
+            "link": self.value_link,
         }
 
     def __json__(self) -> str:
-        return dumps(self.asdict())
-
-    @Value.setter
-    def Value(self, value: str) -> None:
-        self._value = value
+        return dumps(self.as_dict())

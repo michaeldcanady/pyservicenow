@@ -35,7 +35,8 @@ class ServiceNowClient(AbstractServiceClient):
             instance, session, **kwargs
         )
 
-    def Now(self, version: APIVersion = APIVersion.Null) -> NowRequestBuilder:
+    def Now(self, version: APIVersion = APIVersion.NULL) -> NowRequestBuilder:
+        """Constructs Now Request Builder"""
 
         base_url = self.base_url + "/now"
 
@@ -46,16 +47,18 @@ class ServiceNowClient(AbstractServiceClient):
 
         return NowRequestBuilder(base_url, self)
 
-    def CustomEndpoint(self, endpoint: str) -> Response:
-        return self.get(endpoint)
-
     @property
     def base_url(self) -> str:
+        """Gets/Sets the request's base URL"""
         return self.lu_edm_api_session.base_url  # type: ignore
 
     @base_url.setter
     def base_url(self, base: str) -> None:
         self.lu_edm_api_session.base_url = base  # type: ignore
+
+    def custom_endpoint(self, endpoint: str) -> Response:
+        """Construct request to non-standard endpoint"""
+        return self.get(endpoint)
 
     def get(self, url: str, **kwargs) -> Response:
         r"""Sends a GET request. Returns :class:`Response` object.
@@ -63,10 +66,9 @@ class ServiceNowClient(AbstractServiceClient):
         :param \*\*kwargs: Optional arguments that ``request`` takes.
         :rtype: requests.Response
         """
-        Logger.info(f"{type(self).__name__}.get: function called")
-
-        Logger.debug(f"url: {self._instance_url(url)}")
-        Logger.debug(f"kwargs: {kwargs}")
+        Logger.info("%s.get: function called", type(self).__name__)
+        Logger.debug("url: %s", self._instance_url(url))
+        Logger.debug("kwargs: %s", kwargs)
 
         return self.lu_edm_api_session.get(self._instance_url(url), **kwargs)
 
@@ -76,6 +78,9 @@ class ServiceNowClient(AbstractServiceClient):
         :param \*\*kwargs: Optional arguments that ``request`` takes.
         :rtype: requests.Response
         """
+        Logger.info("%s.options: function called", type(self).__name__)
+        Logger.debug("url: %s", self._instance_url(url))
+        Logger.debug("kwargs: %s", kwargs)
 
         return self.lu_edm_api_session.options(self._instance_url(url), **kwargs)
 
@@ -85,6 +90,9 @@ class ServiceNowClient(AbstractServiceClient):
         :param \*\*kwargs: Optional arguments that ``request`` takes.
         :rtype: requests.Response
         """
+        Logger.info("%s.head: function called", type(self).__name__)
+        Logger.debug("url: %s", self._instance_url(url))
+        Logger.debug("kwargs: %s", kwargs)
 
         return self.lu_edm_api_session.head(self._instance_url(url), **kwargs)
 
@@ -97,6 +105,12 @@ class ServiceNowClient(AbstractServiceClient):
         :param \*\*kwargs: Optional arguments that ``request`` takes.
         :rtype: requests.Response
         """
+        Logger.info("%s.post: function called", type(self).__name__)
+        Logger.debug("url: %s", self._instance_url(url))
+        Logger.debug("kwargs: %s", kwargs)
+        Logger.debug("data: %s", data)
+        Logger.debug("json: %s", json)
+
         return self.lu_edm_api_session.post(
             self._instance_url(url), data=data, json=json, **kwargs
         )
@@ -110,9 +124,7 @@ class ServiceNowClient(AbstractServiceClient):
         :rtype: requests.Response
         """
 
-        return self.lu_edm_api_session.put(
-            self._instance_url(url), data=data, **kwargs
-        )
+        return self.lu_edm_api_session.put(self._instance_url(url), data=data, **kwargs)
 
     def patch(self, url: str, data=None, **kwargs) -> Response:
         r"""Sends a PATCH request. Returns :class:`Response` object.
@@ -122,6 +134,11 @@ class ServiceNowClient(AbstractServiceClient):
         :param \*\*kwargs: Optional arguments that ``request`` takes.
         :rtype: requests.Response
         """
+        Logger.info("%s.patch: function called", type(self).__name__)
+        Logger.debug("url: %s", self._instance_url(url))
+        Logger.debug("kwargs: %s", kwargs)
+        Logger.debug("data: %s", data)
+
         return self.lu_edm_api_session.patch(
             self._instance_url(url), data=data, **kwargs
         )
@@ -132,6 +149,10 @@ class ServiceNowClient(AbstractServiceClient):
         :param \*\*kwargs: Optional arguments that ``request`` takes.
         :rtype: requests.Response
         """
+        Logger.info("%s.delete: function called", type(self).__name__)
+        Logger.debug("url: %s", self._instance_url(url))
+        Logger.debug("kwargs: %s", kwargs)
+
         return self.lu_edm_api_session.delete(self._instance_url(url), **kwargs)
 
     def _instance_url(self, url: str) -> str:
@@ -139,21 +160,27 @@ class ServiceNowClient(AbstractServiceClient):
         :param url: user provided path
         :return: graph_url
         """
-        return self.base_url + url if (url[0] == "/") else url
+
+        _url = self.base_url + url if (url[0] == "/") else url
+
+        Logger.info("%s._servicenow_url: function called", type(self).__name__)
+        Logger.debug("url: %s", _url)
+
+        return _url
 
     @staticmethod
     def _get_session(instance: str, session: Session, **kwargs) -> Session:
         """Method to always retrun a single instance of an HTTP Client"""
 
-        Logger.info(f"LUEDMServiceClient._get_luedmapi_session: function called")
+        Logger.info("LUEDMServiceClient._get_luedmapi_session: function called")
 
         credential = kwargs.pop("credential", None)
 
-        Logger.debug(f"credential: {credential}")
+        Logger.debug("credential: %s", credential)
 
         middleware = kwargs.pop("middleware", None)
 
-        Logger.debug(f"middleware: {middleware}")
+        Logger.debug("middleware: %s", middleware)
 
         if credential and middleware:
             raise ValueError(

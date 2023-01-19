@@ -1,64 +1,65 @@
+"""Houses Service-Now Entry"""
+
 from __future__ import annotations
 from typing import TYPE_CHECKING, TypeVar
+from datetime import datetime
+from pyservicenow.types.models._servicenow_property_collection import ServiceNowPropertyCollection
+from pyservicenow.types.constants import DATETIME
 
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
-
-from datetime import datetime
-
-# internal import
-from ._servicenow_property_collection import ServiceNowPropertyCollection
-from pyservicenow.types.constants import DATETIME
 
 S = TypeVar("S", bound="ServiceNowEntry")
 C = TypeVar("C", bound="ServiceNowClient")
 
 
 class ServiceNowEntry(ServiceNowPropertyCollection):
+    """Service-Now Entry Type"""
 
     @property
-    def SysId(self) -> str:
+    def user_sys_id(self) -> str:
         """Gets the sys id
 
         Returns:
             str: The sys id
         """
 
-        return self["sys_id"].Value or self["sys_id"].DisplayValue
+        return self["sys_id"].actual_value or self["sys_id"].display_value
 
     @property
-    def UpdatedOn(self) -> datetime:
+    def sys_updated_on(self) -> datetime:
         """Gets the updated on date
 
         Returns:
             datetime: The updated on date
         """
 
-        raw_date = self["sys_updated_on"].Value
+        raw_date = self["sys_updated_on"].actual_value
 
         return datetime.strptime(raw_date, DATETIME)
 
     @property
-    def UpdatedBy(self) -> str:
+    def sys_updated_by(self) -> str:
         """Gets the last updater's username
 
         Returns:
             str: The last updater's username
         """
 
-        return self["sys_updated_by"].Value
+        return self["sys_updated_by"].actual_value
 
     @property
-    def CreatedOn(self) -> datetime:
+    def sys_created_on(self) -> datetime:
         """Gets the created on date
 
         Returns:
             datetime: The created on date
         """
 
-        raw_date = self["sys_created_on"].Value
+        raw_date = self["sys_created_on"].actual_value
 
         return datetime.strptime(raw_date, DATETIME)
 
-    def Update(self) -> bool:
+    def update_object(self) -> bool:
+        """updates the object in Service-Now"""
         raise NotImplementedError("Update is not implemented")

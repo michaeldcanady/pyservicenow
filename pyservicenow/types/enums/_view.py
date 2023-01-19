@@ -1,7 +1,10 @@
+"""Houses View Enum"""
+
 from strenum import StrEnum
 
 
 class View(StrEnum):
-    Desktop = "desktop"
-    Mobile = "mobile"
-    Both = "both"
+    """View type enum"""
+    DESKTOP = "desktop"
+    MOBILE = "mobile"
+    BOTH = "both"

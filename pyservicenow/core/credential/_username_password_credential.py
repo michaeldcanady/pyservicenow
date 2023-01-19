@@ -1,9 +1,12 @@
+"""Houses Username Password Credential"""
+
 from base64 import b64encode
 from typing import Union
 from pyrestsdk.credential import AbstractBasicCredential
 
 
 class UsernamePasswordCredential(AbstractBasicCredential):
+    """Username Password basic authentication type"""
 
     username: str
     password: str
