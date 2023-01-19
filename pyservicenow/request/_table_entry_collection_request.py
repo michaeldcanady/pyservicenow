@@ -2,22 +2,22 @@
 
 from __future__ import annotations
 from typing import TypeVar, List, Type
+from pyrestsdk.request.supports_types import SupportsInvokeRequest
 from pyservicenow.types.models import ServiceNowEntry
 from pyservicenow.types.exceptions import UnexpectedReturnType
 from pyservicenow.request._base_table_request import BaseTableRequest
 
 S = TypeVar("S", bound=ServiceNowEntry)
-B = TypeVar("B", bound="TableEntryCollectionRequest")
 
 
-class TableEntryCollectionRequest(BaseTableRequest[S]):
+class TableEntryCollectionRequest(BaseTableRequest[S], SupportsInvokeRequest):
     """The Table Entry Collection Request"""
 
     @property
-    def Invoke(self: B) -> List[S]:
+    def Invoke(self) -> List[S]:
         """Invokes the specified method"""
 
-        _return = super().Invoke
+        _return = super().Send(self.input_object)
 
         _type = self.generic_type
 

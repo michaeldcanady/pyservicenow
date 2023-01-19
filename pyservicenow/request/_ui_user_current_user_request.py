@@ -1,22 +1,19 @@
 """Houses the UI User Current User Request"""
 
-from __future__ import annotations
-from typing import TypeVar
+from pyrestsdk.request.supports_types import SupportsInvokeRequest
 from pyservicenow.request._base_servicenow_request import BaseServiceNowEntryRequest
 from pyservicenow.types.models import CurrentUser
 from pyservicenow.types.exceptions import UnexpectedReturnType
 
-B = TypeVar("B", bound="UIUserCurrentUserRequest")
 
-
-class UIUserCurrentUserRequest(BaseServiceNowEntryRequest[CurrentUser]):
+class UIUserCurrentUserRequest(BaseServiceNowEntryRequest[CurrentUser], SupportsInvokeRequest):
     """The Table Entry Collection Request"""
 
     @property
-    def Invoke(self: B) -> CurrentUser:
+    def invoke_request(self) -> CurrentUser:
         """Invokes the specified method"""
 
-        _return = super().Invoke
+        _return = super().Send(self.input_object)
 
         if not isinstance(_return, self.generic_type) or _return is None:
             raise UnexpectedReturnType(type(_return), type(self.generic_type))
