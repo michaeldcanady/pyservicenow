@@ -7,7 +7,7 @@ if TYPE_CHECKING:
 # Interal Imports
 from pyservicenow.types.enums import QueryParameters, DisplayValue, View
 from pyservicenow.request._base_servicenow_request import BaseServiceNowEntryRequest
-from pyservicenow.types.models._querybuilder import QueryBuilder
+from pyservicenow.types.models._query_builder39 import QueryBuilder
 from pyservicenow.types.models import (
     ServiceNowQueryOption,
     ServiceNowEntry,
