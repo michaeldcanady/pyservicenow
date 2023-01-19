@@ -9,7 +9,7 @@ from pyservicenow.types.enums._header import Header
 from pyservicenow.types.enums._order_by import OrderBy
 from pyservicenow.types.enums._operators import Operators
 
-if version_info > (3,10):
+if version_info < (3,10):
     from pyservicenow.types.enums._encryption_context39 import EncryptionContext
 else:
     from pyservicenow.types.enums._encryption_context310 import EncryptionContext
