@@ -135,12 +135,6 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
 
         return parse_result(self.generic_type, _result, self.Client)
 
-    @property
-    def Invoke(self: B) -> Optional[Union[List[S], S]]:
-        """Invokes the specified method"""
-
-        return self.Send(self._object)
-
 def parse_result(
     obj_type: Type[S],
     result: Union[Dict[str, Any], List[Dict[str, Any]]],

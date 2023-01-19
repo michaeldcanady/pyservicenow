@@ -22,7 +22,7 @@ def test_get_first_attachment():
 
     client = ServiceNowClient(credential=creds, instance=os.environ["INSTANCE"])
 
-    attachments = client.Now.v2.attachment_api.request.sysparam_limit(1).Get.Invoke
+    attachments = client.Now.v2.attachment_api.request.sysparam_limit(1).Get.invoke_request
 
     assert isinstance(attachments, list)
     assert isinstance(attachments[0], AttachmentEntry)
