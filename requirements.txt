@@ -19,7 +19,7 @@ pkginfo==1.9.2
 platformdirs==2.6.0
 pycparser==2.21
 Pygments==2.14.0
-pyrestsdk==0.2.6
+pyrestsdk==0.2.7
 pyspnego==0.7.0
 pywin32-ctypes==0.2.0
 readme-renderer==37.3

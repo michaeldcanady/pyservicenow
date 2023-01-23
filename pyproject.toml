@@ -33,7 +33,7 @@ dependencies = [
     "platformdirs==2.6.0",
     "pycparser==2.21",
     "Pygments==2.14.0",
-    "pyrestsdk==0.2.6",
+    "pyrestsdk==0.2.7",
     "pyspnego==0.7.0",
     "pywin32-ctypes==0.2.0",
     "readme-renderer==37.3",
@@ -49,7 +49,7 @@ dependencies = [
     "typing_extensions==4.4.0",
     "urllib3==1.26.13",
     "webencodings==0.5.1",
-    "zipp==3.11.0",
+    "zipp==3.11.0"
 ]
 
 [project.urls]
