@@ -6,7 +6,6 @@ from pyservicenow.request._base_attachment_request import BaseAttachmentRequest
 from pyservicenow.types.models import (
     AttachmentEntry,
 )
-from pyservicenow.types.exceptions import UnexpectedReturnType
 
 
 class AttachmentEntryRequest(BaseAttachmentRequest[AttachmentEntry], SupportsInvokeRequest):

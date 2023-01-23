@@ -16,9 +16,9 @@ A = TypeVar("A", bound=AttachmentEntry)
 
 
 class BaseAttachmentRequest(
-    BaseServiceNowEntryRequest[A],
     SupportsSysparamOffset,
     SupportsSysparamLimit,
     SupportsSysparamQuery,
+    BaseServiceNowEntryRequest[A],
 ):
     """Base Attachment Request type"""
