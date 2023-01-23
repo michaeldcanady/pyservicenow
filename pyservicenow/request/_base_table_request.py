@@ -24,7 +24,6 @@ S = TypeVar("S", bound=ServiceNowEntry)
 
 
 class BaseTableRequest(
-    BaseServiceNowEntryRequest[S],
     SupportsSysparamOffset,
     SupportsSysparamLimit,
     SupportsSysparamQuery,
@@ -36,5 +35,6 @@ class BaseTableRequest(
     SupportsNoDomain,
     SupportsSuppressPaginationHeader,
     SupportsSysparamView,
+    BaseServiceNowEntryRequest[S],
 ):
     """Base Table Request types"""

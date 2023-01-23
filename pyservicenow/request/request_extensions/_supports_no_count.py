@@ -1,7 +1,6 @@
 """Houses Supports No Count"""
 
-from sys import version_info
-
+from typing import TypeVar
 
 from pyservicenow.types.enums import QueryParameters
 from pyservicenow.types.models import ServiceNowQueryOption
@@ -9,16 +8,13 @@ from pyservicenow.request.request_extensions._supports_query_options import (
     SupportsQueryOptions,
 )
 
-if version_info >= (3, 11):
-    from typing import Self
-else:
-    from typing_extensions import Self
+S = TypeVar("S", bound="SupportsNoCount")
 
 
 class SupportsNoCount(SupportsQueryOptions):
     """Supports No Count Type"""
 
-    def no_count(self, no_count: bool) -> Self:
+    def no_count(self: S, no_count: bool) -> S:
         """Flag that indicates whether to execute a select count(*)
         query on the table to return the number of rows in the associated table.
 

@@ -1,7 +1,6 @@
 """Houses Supports Sysparam Fields"""
 
-from typing import List
-from sys import version_info
+from typing import List, TypeVar
 
 
 from pyservicenow.types.enums import QueryParameters
@@ -10,16 +9,13 @@ from pyservicenow.request.request_extensions._supports_query_options import (
     SupportsQueryOptions,
 )
 
-if version_info >= (3, 11):
-    from typing import Self
-else:
-    from typing_extensions import Self
+S = TypeVar("S", bound="SupportsSysparamFields")
 
 
 class SupportsSysparamFields(SupportsQueryOptions):
     """Supports Sysparam Fields Type"""
 
-    def sysparam_fields(self, fields: List[str]) -> Self:
+    def sysparam_fields(self: S, fields: List[str]) -> S:
         """Adds the listed fields
 
         Args:

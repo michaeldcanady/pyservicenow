@@ -1,18 +1,16 @@
-from sys import version_info
+from typing import TypeVar, Type
 
 from pyservicenow.types.enums import Operators
 from pyservicenow.types.models._base_query_builder import BaseQueryBuilder
 
-if version_info >= (3, 11):
-    from typing import Self
-else:
-    from typing_extensions import Self
+Q = TypeVar("Q", bound="BaseQueryBuilder")
 
 
 class QueryBuilder(BaseQueryBuilder):
-
+    """Query Builder Type"""
+    
     @classmethod
-    def parse(cls, query: str) -> Self:
+    def parse(cls: Type[Q], query: str) -> Q:
         """Parses query into new QueryBuilder
 
         Args:

@@ -1,6 +1,6 @@
 """Houses Supports No Domain"""
 
-from sys import version_info
+from typing import TypeVar
 
 
 from pyservicenow.types.enums import QueryParameters
@@ -9,16 +9,13 @@ from pyservicenow.request.request_extensions._supports_query_options import (
     SupportsQueryOptions,
 )
 
-if version_info >= (3, 11):
-    from typing import Self
-else:
-    from typing_extensions import Self
+S = TypeVar("S", bound="SupportsNoDomain")
 
 
 class SupportsNoDomain(SupportsQueryOptions):
     """Supports No Domain type"""
 
-    def no_domain(self, no_domain: bool) -> Self:
+    def no_domain(self: S, no_domain: bool) -> S:
         """Flag that indicates whether to restrict the record
         search to only the domains for which the logged in user is configured.
 

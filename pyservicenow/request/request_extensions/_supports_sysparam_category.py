@@ -1,6 +1,6 @@
 """Houses Supports Sysparam Category"""
 
-from sys import version_info
+from typing import TypeVar
 
 
 from pyservicenow.types.enums import QueryParameters
@@ -9,16 +9,13 @@ from pyservicenow.request.request_extensions._supports_query_options import (
     SupportsQueryOptions,
 )
 
-if version_info >= (3, 11):
-    from typing import Self
-else:
-    from typing_extensions import Self
+S = TypeVar("S", bound="SupportsSysparamCategory")
 
 
 class SupportsSysparamCategory(SupportsQueryOptions):
     """Supports Sysparam Category Type"""
 
-    def sysparam_category(self, category: str) -> Self:
+    def sysparam_category(self: S, category: str) -> S:
         """Name of the category to use for queries.
 
         Args:

@@ -1,12 +1,20 @@
 """Houses HTTPClientFactory"""
 
 from logging import getLogger
+
+from typing import List, TypeVar
+
 from requests import Session
+
 from pyrestsdk.middleware.authorizationhandler import BasicAuthorizationHandler
+from pyrestsdk.middleware import MiddlewarePipeline, BaseMiddleware
 from pyrestsdk.clientfactory import AbstractHTTPClientFactory
+
 from pyservicenow.core.credential._username_password_credential import (
     UsernamePasswordCredential,
 )
+
+B = TypeVar("B", bound=BaseMiddleware)
 
 Logger = getLogger(__name__)
 
@@ -57,3 +65,17 @@ class HTTPClientFactory(AbstractHTTPClientFactory):
             type(self),
             self.session.base_url,
         )
+
+    def _register(self, middleware: List[B]) -> None:
+        """
+        Helper method that constructs a middleware_pipeline with the specified middleware
+        """
+
+        Logger.info("%s._register: method called", type(self))
+
+        if middleware:
+            middleware_pipeline = MiddlewarePipeline()
+            for ware in middleware:
+                middleware_pipeline.add_middleware(ware)
+
+            self.session.mount("https://", middleware_pipeline)

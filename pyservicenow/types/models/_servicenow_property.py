@@ -1,12 +1,10 @@
 """Houses the Service-Now Property"""
-from sys import version_info
+from typing import TypeVar, Type
+
 from json import dumps
 from typing import Dict, Any, Union
 
-if version_info >= (3, 11):
-    from typing import Self
-else:
-    from typing_extensions import Self
+S = TypeVar("S", bound="ServiceNowProperty")
 
 
 class ServiceNowProperty:
@@ -78,7 +76,7 @@ class ServiceNowProperty:
         return dumps(self.as_dict())
     
     @classmethod
-    def __fromjson__(cls, value: Union[str, Dict]) -> Self:
+    def __fromjson__(cls: Type[S], value: Union[str, Dict]) -> S:
         
         _value = cls()
         

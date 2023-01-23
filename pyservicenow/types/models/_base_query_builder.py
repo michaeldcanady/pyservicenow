@@ -1,6 +1,4 @@
-from sys import version_info
-from typing import Union
-from typing import List
+from typing import Union, List, TypeVar
 import inspect
 from pyservicenow.types.enums import OrderBy, Operators
 from ..exceptions import (
@@ -10,10 +8,7 @@ from ..exceptions import (
     QueryMultipleExpressions,
 )
 
-if version_info >= (3, 11):
-    from typing import Self
-else:
-    from typing_extensions import Self
+Q = TypeVar("Q", bound="BaseQueryBuilder")
 
 
 class BaseQueryBuilder:
@@ -29,7 +24,7 @@ class BaseQueryBuilder:
         self.c_oper = None
         self.l_oper = None
 
-    def field(self, field: str) -> Self:
+    def field(self: Q, field: str) -> Q:
         """Sets the field to operate on
 
         Args:
@@ -43,11 +38,11 @@ class BaseQueryBuilder:
 
         return self
 
-    def equals(self, data: Union[str, int]) -> Self:
+    def equals(self: Q, data: Union[str, int]) -> Q:
 
         return self._add_condition(Operators.Comparison.EQUALS, data, types=[int, str])
 
-    def order_by(self, direction: OrderBy) -> Self:
+    def order_by(self: Q, direction: OrderBy) -> Q:
         """Sets the order by direction
 
         Args:
@@ -78,25 +73,25 @@ class BaseQueryBuilder:
 
         return self
 
-    def IN(self, data: List) -> Self:
+    def IN(self: Q, data: List) -> Q:
         return self._add_condition("IN", ",".join(map(str, data)), types=[str])
 
     @property
-    def AND(self) -> Self:
+    def AND(self: Q) -> Q:
         """Adds an and-operator"""
         return self._add_logical_operator(Operators.Logical.AND)
 
     @property
-    def OR(self) -> Self:
+    def OR(self: Q) -> Q:
         """Adds an or-operator"""
         return self._add_logical_operator(Operators.Logical.OR)
 
     @property
-    def NQ(self) -> Self:
+    def NQ(self: Q) -> Q:
         """Adds a NQ-operator (new query)"""
         return self._add_logical_operator(Operators.Logical.NEWQUERY)
 
-    def contains(self, contains) -> Self:
+    def contains(self: Q, contains) -> Q:
         """Adds new `LIKE` condition
         :param contains: Match field containing the provided value
         """
@@ -122,7 +117,7 @@ class BaseQueryBuilder:
 
         return str().join(self._query)
 
-    def _add_logical_operator(self, operator: Operators.Logical) -> Self:
+    def _add_logical_operator(self: Q, operator: Operators.Logical) -> Q:
         """Adds a logical operator in query
         :param operator: logical operator (str)
         :raise:
@@ -148,7 +143,7 @@ class BaseQueryBuilder:
         self._query.append(operator)
         return self
 
-    def _add_condition(self, operator, operand, types) -> Self:
+    def _add_condition(self: Q, operator, operand, types) -> Q:
         """Appends condition to self._query after performing validation
         :param operator: operator (str)
         :param operand: operand
