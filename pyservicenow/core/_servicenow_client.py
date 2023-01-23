@@ -37,8 +37,6 @@ class ServiceNowClient(AbstractServiceClient):
 
     @property
     def Now(self) -> NowRequestBuilder:
-    @property
-    def Now(self) -> NowRequestBuilder:
         """Constructs Now Request Builder"""
 
         return NowRequestBuilder(f"{self.base_url}/now", self)
