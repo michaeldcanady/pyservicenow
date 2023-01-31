@@ -17,6 +17,8 @@ from typing import (
 
 from logging import getLogger
 from requests import Response
+
+from pyrestsdk.request.supports_types import SupportsGetMethod, SupportsPostMethod
 from pyrestsdk.request import BaseRequest
 from pyrestsdk.type.enum import HttpsMethod
 from pyservicenow.types.models import (
@@ -35,7 +37,7 @@ S = TypeVar("S", bound=ServiceNowEntry)
 Logger = getLogger(__name__)
 
 
-class BaseServiceNowEntryRequest(BaseRequest[S]):
+class BaseServiceNowEntryRequest(SupportsGetMethod, BaseRequest[S]):
     """Base Service-Now Entry Request"""
 
     def __init__(
@@ -47,6 +49,10 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         ],
     ) -> None:
         super().__init__(request_url, client, options)
+        
+        self.header_options.append(
+            ServiceNowHeaderOption(Header.ACCEPT, MimeTypeName.Application.JSON)
+        )
 
         self._object = None
 
@@ -63,18 +69,6 @@ class BaseServiceNowEntryRequest(BaseRequest[S]):
         self._object = value
 
         Logger.info("%s.Object: object changed", type(self).__name__)
-
-    @property
-    def Get(self: B) -> B:
-        """Sets request to get request"""
-
-        self.header_options.append(
-            ServiceNowHeaderOption(Header.ACCEPT, MimeTypeName.Application.JSON)
-        )
-
-        self._update_request_type(HttpsMethod.GET, None)
-
-        return self
 
     def Post(self: B, input_object: S) -> B:
         """Sets request to post request"""
