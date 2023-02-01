@@ -9,7 +9,7 @@ from requests import Session
 from pyrestsdk.middleware.authorizationhandler import BasicAuthorizationHandler
 from pyrestsdk.middleware import MiddlewarePipeline, BaseMiddleware
 from pyrestsdk.clientfactory import AbstractHTTPClientFactory
-from pyrestsdk.credential._basic_credential import BasicCredential
+from pyrestsdk.credential import BasicCredential
 
 B = TypeVar("B", bound=BaseMiddleware)
 
