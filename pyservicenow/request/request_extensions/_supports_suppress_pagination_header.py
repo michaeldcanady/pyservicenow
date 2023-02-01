@@ -25,7 +25,7 @@ class SupportsSuppressPaginationHeader(SupportsQueryOptions):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        self._query_options.append(
+        self.query_options.append(
             ServiceNowQueryOption(
                 QueryParameters.SUPPRESSPAGINATIONHEADER, suppress_pagination_header
             )

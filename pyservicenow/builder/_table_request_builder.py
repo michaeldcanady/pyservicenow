@@ -1,41 +1,33 @@
 """Houses attachment request builder"""
 
 from __future__ import annotations
-from typing import TYPE_CHECKING, Iterable, Optional, Union
+
+from typing import Iterable, Optional, Union
+
 from pyrestsdk.requestbuilder import EntityRequestBuilder
+
 from pyservicenow.types.models import (
     ServiceNowEntry,
     ServiceNowHeaderOption,
     ServiceNowQueryOption,
 )
-from pyservicenow.request._table_entry_collection_request import (
-    TableEntryCollectionRequest,
+
+from pyservicenow.request import (
+    ServiceNowTableEntryCollectionRequest,
 )
+
 from pyservicenow.request import TableEntryRequest
 
-if TYPE_CHECKING:
-    from pyservicenow.core import ServiceNowClient
 
-
-class TableRequestBuilder(EntityRequestBuilder):
+class TableRequestBuilder(EntityRequestBuilder[ServiceNowTableEntryCollectionRequest]):
     """The Table Request Builder type"""
 
-    @property
-    def request(self) -> TableEntryCollectionRequest:
-        """Constructs a Table Entry Collection Request
-
-        Returns:
-            TableEntryCollectionRequest: The constructed Table Entry Collection Request
-        """
-
-        return self.Request(None)
-
-    def Request(
+    def request_with_options(
         self,
         options: Optional[
             Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]
         ],
-    ) -> TableEntryCollectionRequest:
+    ) -> ServiceNowTableEntryCollectionRequest:
         """Constructs a Table Entry Collection Request
 
         Args:
@@ -46,8 +38,8 @@ class TableRequestBuilder(EntityRequestBuilder):
             AttachmentEntryCollectionRequest: The constructed Table Entry Collection Request
         """
 
-        return TableEntryCollectionRequest[ServiceNowEntry](
-            self.request_url, self.Client, options
+        return ServiceNowTableEntryCollectionRequest(
+            self.request_url, self.request_client, options
         )
 
     def id(self, sys_id: str) -> TableEntryRequest:
@@ -60,5 +52,5 @@ class TableRequestBuilder(EntityRequestBuilder):
             TableEntryRequest: The constructed Table Entry Request
         """
         return TableEntryRequest[ServiceNowEntry](
-            self.append_segment_to_request_url(sys_id), self.Client, None
+            self.append_segment_to_request_url(sys_id), self.request_client, None
         )

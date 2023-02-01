@@ -105,6 +105,6 @@ class AttachmentEntry(ServiceNowEntry):
         return bool(self["compressed"].actual_value)
 
     @property
-    def Json(self) -> Dict:
+    def as_json(self) -> Dict:
         """Gets the object as it's dict representation"""
-        return super().Json
+        return super().as_json

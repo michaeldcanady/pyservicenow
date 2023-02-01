@@ -23,5 +23,5 @@ class SupportsSysparamView(SupportsQueryOptions):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        self._query_options.append(ServiceNowQueryOption(QueryParameters.VIEW, view))
+        self.query_options.append(ServiceNowQueryOption(QueryParameters.VIEW, view))
         return self

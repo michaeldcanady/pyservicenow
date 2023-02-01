@@ -23,5 +23,5 @@ class SupportsSysparamLimit(SupportsQueryOptions):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        self._query_options.append(ServiceNowQueryOption(QueryParameters.LIMIT, limit))
+        self.query_options.append(ServiceNowQueryOption(QueryParameters.LIMIT, limit))
         return self

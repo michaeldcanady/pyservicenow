@@ -56,64 +56,6 @@ class BaseServiceNowEntryRequest(SupportsGetMethod, BaseRequest[S]):
 
         self._object = None
 
-    @property
-    def input_object(self: B) -> Optional[S]:
-        """Gets/Sets object"""
-
-        return self._object
-
-    @input_object.setter
-    def input_object(self, value: Optional[S]) -> None:
-        Logger.info("%s.Object: function called", type(self).__name__)
-
-        self._object = value
-
-        Logger.info("%s.Object: object changed", type(self).__name__)
-
-    def Post(self: B, input_object: S) -> B:
-        """Sets request to post request"""
-
-        self.header_options.append(
-            ServiceNowHeaderOption(Header.ACCEPT, MimeTypeName.Application.JSON)
-        )
-
-        self._update_request_type(HttpsMethod.POST, input_object)
-
-        return self
-
-    @property
-    def Delete(self: B) -> B:
-        """Sets request to delete request"""
-
-        self.header_options.append(
-            ServiceNowHeaderOption(Header.ACCEPT, MimeTypeName.Application.JSON)
-        )
-
-        self._update_request_type(HttpsMethod.DELETE, None)
-
-        return self
-
-    def Put(self: B, input_object: S) -> B:
-        """Sets request to put request"""
-
-        self.header_options.append(
-            ServiceNowHeaderOption(Header.ACCEPT, MimeTypeName.Application.JSON)
-        )
-
-        self._update_request_type(HttpsMethod.PUT, input_object)
-
-        return self
-
-    def _update_request_type(
-        self: B, method: HttpsMethod, input_object: Optional[S]
-    ) -> None:
-        """Updates the request type, sSets the method and object to the provided values"""
-
-        Logger.info("%s._update_request_type: function called", type(self).__name__)
-
-        self.Method = method
-        self.input_object = input_object
-
     def parse_response(
         self: B, _response: Optional[Response]
     ) -> Optional[Union[List[S], S]]:
@@ -128,9 +70,9 @@ class BaseServiceNowEntryRequest(SupportsGetMethod, BaseRequest[S]):
         _result = _json["result"]
 
         return parse_result(self.generic_type, _result, self.Client)
-
+    
 def parse_result(
-    obj_type: Type[S],
+    obj_type: S,
     result: Union[Dict[str, Any], List[Dict[str, Any]]],
     client
 ) -> Union[List[S], S]:
@@ -139,9 +81,9 @@ def parse_result(
     _operation_dict: Dict[
         Type, Callable[[Union[Dict, List], ServiceNowClient], Union[List[S], S]]
     ] = {
-        dict: lambda x, y: obj_type.fromJson(x, y),  # type: ignore
+        dict: lambda x, y: obj_type.from_json(x, y),  # type: ignore
         list: lambda x, y: [
-            obj_type.fromJson(raw_result, y) for raw_result in x
+            obj_type.from_json(raw_result, y) for raw_result in x
         ],
     }
 

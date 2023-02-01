@@ -9,10 +9,7 @@ from requests import Session
 from pyrestsdk.middleware.authorizationhandler import BasicAuthorizationHandler
 from pyrestsdk.middleware import MiddlewarePipeline, BaseMiddleware
 from pyrestsdk.clientfactory import AbstractHTTPClientFactory
-
-from pyservicenow.core.credential._username_password_credential import (
-    UsernamePasswordCredential,
-)
+from pyrestsdk.credential._basic_credential import BasicCredential
 
 B = TypeVar("B", bound=BaseMiddleware)
 
@@ -33,7 +30,7 @@ class HTTPClientFactory(AbstractHTTPClientFactory):
         # self._set_default_timeout()
 
     def create_with_default_middleware(
-        self, credential: UsernamePasswordCredential, **kwargs
+        self, credential: BasicCredential, **kwargs
     ) -> Session:
         """Applies the default middleware chain to the HTTP Client"""
 

@@ -13,7 +13,9 @@ from typing import (
     Union,
 )
 from json import dumps
-from pyrestsdk.type.model._base_entity import BaseEntity
+from pyrestsdk.type.model import Entity
+from pyrestsdk.type.model._common_base import FrozenAttributes
+
 from pyservicenow.types.models._servicenow_property import ServiceNowProperty
 
 if TYPE_CHECKING:
@@ -23,11 +25,13 @@ S = TypeVar("S", bound="ServiceNowPropertyCollection")
 C = TypeVar("C", bound="ServiceNowClient")
 
 
-class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], BaseEntity):
+class ServiceNowPropertyCollection(Entity, MutableMapping[str, ServiceNowProperty]):
     """Service-Now Property Collection"""
     
+    __metaclass__ = FrozenAttributes
     
-    __slots__ = ["_is_null", "_internaldict", "_changed_keys"]
+    
+    #__slots__ = ["_is_null", "_internaldict", "_changed_keys"]
     
     _is_null: bool
     _internaldict: Dict[str, ServiceNowProperty]
@@ -39,6 +43,10 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
         self._is_null = True
         self._internaldict = {}
         self._changed_keys = []
+    
+    @property
+    def Client(self: S) -> C:
+        return super().Client
 
     @property
     def is_null(self) -> bool:
@@ -126,7 +134,7 @@ class ServiceNowPropertyCollection(MutableMapping[str, ServiceNowProperty], Base
         self[key] = ServiceNowProperty.__fromjson__(value)
     
     @classmethod
-    def fromJson(cls: Type[S], entry: Dict[str, Any], client: ServiceNowClient) -> S:
+    def from_json(cls: Type[S], entry: Dict[str, Any], client: ServiceNowClient) -> S:
         """Converts entry from dictionary to new ServiceNowPropertyCollection.
 
         Args:

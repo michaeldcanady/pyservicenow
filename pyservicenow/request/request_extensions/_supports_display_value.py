@@ -23,7 +23,7 @@ class SupportsDisplayValue(SupportsQueryOptions):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        self._query_options.append(
+        self.query_options.append(
             ServiceNowQueryOption(QueryParameters.DISPLAYVALUE, str(values))
         )
         return self

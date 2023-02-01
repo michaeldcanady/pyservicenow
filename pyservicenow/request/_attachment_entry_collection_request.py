@@ -14,8 +14,8 @@ B = TypeVar("B", bound="AttachmentEntryCollectionRequest")
 
 
 class AttachmentEntryCollectionRequest(
-    BaseAttachmentRequest[AttachmentEntry],
     SupportsInvokeCollectionRequest,
-    SupportsPostMethod
+    SupportsPostMethod,
+    BaseAttachmentRequest[AttachmentEntry],
 ):
     """Attachment Entry Collection Request type"""

@@ -27,6 +27,6 @@ class SupportsSysparamQuery(SupportsQueryOptions):
         if not isinstance(query, QueryBuilder):
             query = QueryBuilder.parse(query)
 
-        self._query_options.append(ServiceNowQueryOption(QueryParameters.QUERY, query))
+        self.query_options.append(ServiceNowQueryOption(QueryParameters.QUERY, query))
 
         return self

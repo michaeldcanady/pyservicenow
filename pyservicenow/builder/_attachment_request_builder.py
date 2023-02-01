@@ -13,24 +13,10 @@ from pyservicenow.request import (
 )
 
 
-if TYPE_CHECKING:
-    from pyservicenow.core import ServiceNowClient
-
-
-class AttachmentRequestBuilder(EntityRequestBuilder):
+class AttachmentRequestBuilder(EntityRequestBuilder[AttachmentEntryCollectionRequest]):
     """The Attachment Request Builder type"""
 
-    @property
-    def request(self) -> AttachmentEntryCollectionRequest:
-        """Constructs an Attachment Entry Collection Request
-
-        Returns:
-            AttachmentEntryCollectionRequest: The constructed Table Entry Collection Request
-        """
-
-        return self.Request(None)
-
-    def Request(
+    def request_with_options(
         self,
         options: Optional[
             Iterable[Union[ServiceNowQueryOption, ServiceNowHeaderOption]]
@@ -46,7 +32,7 @@ class AttachmentRequestBuilder(EntityRequestBuilder):
             AttachmentEntryCollectionRequest: The constructed Table Entry Collection Request
         """
 
-        return AttachmentEntryCollectionRequest(self.request_url, self.Client, options)
+        return AttachmentEntryCollectionRequest(self.request_url, self.request_client, options)
 
     def id(self, sys_id: str) -> AttachmentEntryRequest:
         """Constructs a Table Entry Requst using the provided sys_id
@@ -59,5 +45,5 @@ class AttachmentRequestBuilder(EntityRequestBuilder):
         """
 
         return AttachmentEntryRequest(
-            self.append_segment_to_request_url(sys_id), self.Client, None
+            self.append_segment_to_request_url(sys_id), self.request_client, None
         )

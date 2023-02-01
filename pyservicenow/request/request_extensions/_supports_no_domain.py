@@ -25,7 +25,7 @@ class SupportsNoDomain(SupportsQueryOptions):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        self._query_options.append(
+        self.query_options.append(
             ServiceNowQueryOption(QueryParameters.NODOMAIN, no_domain)
         )
         return self
