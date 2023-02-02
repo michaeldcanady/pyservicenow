@@ -1,6 +1,6 @@
 """Houses Service-Now Client"""
 
-from typing import Any
+import typing
 
 from logging import getLogger
 
@@ -9,8 +9,6 @@ from requests import Session, Response
 from pyrestsdk import AbstractServiceClient
 from pyrestsdk.credential import BasicCredential
 from pyrestsdk.middleware import BaseMiddleware
-
-from multipledispatch import dispatch
 
 from pyservicenow.builder._now_request_builder import NowRequestBuilder
 from pyservicenow.core._client_factory import HTTPClientFactory
@@ -21,13 +19,26 @@ Logger = getLogger(__name__)
 class ServiceNowClient(AbstractServiceClient):
     """Service-Now Client type"""
 
-    @dispatch(BasicCredential, str, session=Session)
-    def __init__(self, credential: Any, instance: str, session: Session = Session()) -> None:        
-        self.lu_edm_api_session = self._get_session(instance, session, credential)
+    @typing.overload
+    def __init__(self, credential: BasicCredential, instance: str, session: Session = Session()) -> None:
+        ...
 
-    @dispatch(BaseMiddleware, str, session=Session)
+    @typing.overload
     def __init__(self, middleware: BaseMiddleware, instance: str, session: Session = Session()) -> None:
-        self.lu_edm_api_session = self._get_session(instance, session, middleware)
+        ...
+
+    def __init__(self, *args, **kwargs) -> None:
+        Logger.info("getting LUEDMAPI session")
+
+        instance = kwargs.pop("instance", None)
+        session = kwargs.pop("session", Session())
+
+        if instance is None:
+            raise Exception("instance is required")
+
+        self.lu_edm_api_session: Session = self._get_session(
+            instance, session, **kwargs
+        )
 
     @property
     def Now(self) -> NowRequestBuilder:
@@ -156,26 +167,33 @@ class ServiceNowClient(AbstractServiceClient):
         return _url
 
     @staticmethod
-    @dispatch(str, Session, BasicCredential)
-    def _get_session(instance: str, session: Session, credential: BasicCredential) -> Session:
+    def _get_session(instance: str, session: Session, **kwargs) -> Session:
         """Method to always retrun a single instance of an HTTP Client"""
 
         Logger.info("LUEDMServiceClient._get_luedmapi_session: function called")
+
+        credential = kwargs.pop("credential", None)
 
         Logger.debug("credential: %s", credential)
 
-        Logger.debug("Creating with default middleware")
-        return HTTPClientFactory(instance, session).create_with_default_middleware(credential)
-        
-
-    @staticmethod
-    @dispatch(str, Session, BaseMiddleware)
-    def _get_session(instance: str, session: Session, middleware: BaseMiddleware) -> Session:
-        """Method to always retrun a single instance of an HTTP Client"""
-        
-        Logger.info("LUEDMServiceClient._get_luedmapi_session: function called")
+        middleware = kwargs.pop("middleware", None)
 
         Logger.debug("middleware: %s", middleware)
 
-        Logger.debug("Creating with custom middleware")        
-        return HTTPClientFactory(instance, session).create_with_custom_middleware(middleware)
+        if credential and middleware:
+            raise ValueError(
+                "Invalid parameters! Both TokenCredential and middleware cannot be passed"
+            )
+        if not credential and not middleware:
+            raise ValueError(
+                "Invalid parameters!. Missing TokenCredential or middleware"
+            )
+
+        if credential is not None:
+            Logger.debug("Creating with default middleware")
+            return HTTPClientFactory(instance, session).create_with_default_middleware(
+                credential, **kwargs
+            )
+        return HTTPClientFactory(instance, session).create_with_custom_middleware(
+            middleware
+        )
