@@ -1,12 +1,14 @@
 import os
+
+from pyrestsdk.credential import BasicCredential
+
 from pyservicenow.core import ServiceNowClient
-from pyservicenow.core.credential import UsernamePasswordCredential
 from pyservicenow.types.models import AttachmentEntry
 
 
 def test_attachment_url():
 
-    creds = UsernamePasswordCredential(os.environ["USERNAME"], os.environ["PASSWORD"])
+    creds = BasicCredential(os.environ["USERNAME"], os.environ["PASSWORD"])
 
     client = ServiceNowClient(credential=creds, instance=os.environ["INSTANCE"])
 
@@ -18,7 +20,7 @@ def test_attachment_url():
 def test_get_first_attachment():
     """tests successfully getting attachment collection"""
 
-    creds = UsernamePasswordCredential(os.environ["USERNAME"], os.environ["PASSWORD"])
+    creds = BasicCredential(os.environ["USERNAME"], os.environ["PASSWORD"])
 
     client = ServiceNowClient(credential=creds, instance=os.environ["INSTANCE"])
 
