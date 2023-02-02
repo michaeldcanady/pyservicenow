@@ -1,8 +1,6 @@
 """Request Extensions to give requests more capabilities"""
 
-from pyservicenow.request.request_extensions._supports_query_options import (
-    SupportsQueryOptions,
-)
+from pyrestsdk.request.supports_types import SupportsQueryOptions
 from pyservicenow.request.request_extensions._supports_sysparam_limit import (
     SupportsSysparamLimit,
 )

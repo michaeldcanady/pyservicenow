@@ -5,9 +5,7 @@ from typing import Union, TypeVar
 
 from pyservicenow.types.enums import QueryParameters
 from pyservicenow.types.models import ServiceNowQueryOption, QueryBuilder
-from pyservicenow.request.request_extensions._supports_query_options import (
-    SupportsQueryOptions,
-)
+from pyrestsdk.request.supports_types import SupportsQueryOptions
 
 S = TypeVar("S", bound="SupportsSysparamQuery")
 
@@ -29,6 +27,6 @@ class SupportsSysparamQuery(SupportsQueryOptions):
         if not isinstance(query, QueryBuilder):
             query = QueryBuilder.parse(query)
 
-        self._query_options.append(ServiceNowQueryOption(QueryParameters.QUERY, query))
+        self.query_options.append(ServiceNowQueryOption(QueryParameters.QUERY, query))
 
         return self

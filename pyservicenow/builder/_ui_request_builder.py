@@ -17,5 +17,5 @@ class UIRequestBuilder(BaseRequestBuilder):
         """
 
         return UIUserRequestBuilder(
-            self.append_segment_to_request_url("user"), self.Client
+            self.append_segment_to_request_url("user"), self.request_client
         )

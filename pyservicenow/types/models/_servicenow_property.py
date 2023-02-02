@@ -10,7 +10,7 @@ S = TypeVar("S", bound="ServiceNowProperty")
 class ServiceNowProperty:
     """Service-Now Property type"""
     
-    __slots__ = ["_display_value", "_value", "_link"]
+    #__slots__ = ["_display_value", "_value", "_link"]
 
     _display_value: str
     _value: str

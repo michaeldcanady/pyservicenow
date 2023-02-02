@@ -17,7 +17,7 @@ class CurrentUser(ServiceNowEntry):
         """
         profile_id = self["user_avatar"].actual_value
 
-        return self.Client.CustomEndpoint(profile_id).content  # type: ignore
+        return self.Client.custom_endpoint(profile_id).content  # type: ignore
 
     @property
     def user_sys_id(self) -> str:

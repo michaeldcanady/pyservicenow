@@ -38,3 +38,6 @@ class BaseTableRequest(
     BaseServiceNowEntryRequest[S],
 ):
     """Base Table Request types"""
+    
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)

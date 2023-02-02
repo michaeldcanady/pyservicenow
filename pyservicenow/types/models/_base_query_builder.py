@@ -14,8 +14,6 @@ Q = TypeVar("Q", bound="BaseQueryBuilder")
 class BaseQueryBuilder:
     """Base Query Builder Type"""
 
-    __slots__ = ["_query", "current_field", "c_oper", "l_oper"]
-
     def __init__(self) -> None:
         """Constructs a new query builder"""
 

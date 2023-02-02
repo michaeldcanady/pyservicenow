@@ -5,9 +5,7 @@ from typing import TypeVar
 
 from pyservicenow.types.enums import QueryParameters
 from pyservicenow.types.models import ServiceNowQueryOption
-from pyservicenow.request.request_extensions._supports_query_options import (
-    SupportsQueryOptions,
-)
+from pyrestsdk.request.supports_types import SupportsQueryOptions
 
 S = TypeVar("S", bound="SupportsNoDomain")
 
@@ -27,7 +25,7 @@ class SupportsNoDomain(SupportsQueryOptions):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        self._query_options.append(
+        self.query_options.append(
             ServiceNowQueryOption(QueryParameters.NODOMAIN, no_domain)
         )
         return self

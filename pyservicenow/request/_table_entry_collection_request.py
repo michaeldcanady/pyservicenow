@@ -12,5 +12,8 @@ from pyservicenow.request._base_table_request import BaseTableRequest
 S = TypeVar("S", bound=ServiceNowEntry)
 
 
-class TableEntryCollectionRequest(SupportsInvokeCollectionRequest, BaseTableRequest[S]):
+class TableEntryCollectionRequest(BaseTableRequest[S], SupportsInvokeCollectionRequest):
     """The Table Entry Collection Request"""
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
