@@ -66,10 +66,22 @@ class BaseServiceNowEntryRequest(SupportsGetMethod, BaseRequest[S]):
             return None
 
         _json_text = _response.text
-        _json = json.loads(_json_text)
-        _result = _json["result"]
+        _json = json.loads(_json_text)    
+    
+        try:
+            _response.raise_for_status()
+        except Exception as e:
+            self.parse_exception(_json)
+        else:
+            _result = _json["result"]
+            
+        print(self._generic_type)
 
-        return parse_result(self.generic_type, _result, self.Client)
+        return parse_result(self._generic_type, _result, self.Client)
+    
+    def parse_exception(self, json: Dict[str, Any]):
+        print(json)
+        raise Exception("ERROR")
     
 def parse_result(
     obj_type: S,
