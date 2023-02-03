@@ -13,4 +13,4 @@ def test_current_url():
 
     attachment_request = client.Now.v2.ui_api.User.current_user
     
-    assert attachment_request.request_url == client.base_url+"/ui/user/current_user"
+    assert attachment_request.request_url == client.base_url+"/now/ui/user/current_user"
