@@ -24,5 +24,5 @@ client = ServiceNowClient(credential=credential, instance="instance")
 
 query = QueryBuilder().field("serial_number").equals("92XWKW2")
 
-Ticket = client.Now().Table("alm_hardware").Request.Query(str(query)).Limit(1).Get.Invoke
+Ticket = client.Now.table_api("alm_hardware").Request.sysparam_query(query).sysparam_limit(1).Get.invoke_request
 ```
