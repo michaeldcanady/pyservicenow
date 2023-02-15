@@ -17,7 +17,9 @@ from pyrestsdk.type.model import Entity
 from pyrestsdk.type.model._common_base import FrozenAttributes
 
 from pyservicenow.types.models._servicenow_property import ServiceNowProperty
-from pyservicenow.types.models._abstract_servicenow_propery_collection import AbstractServiceNowPropertyCollection
+from pyservicenow.types.models._abstract_servicenow_propery_collection import (
+    AbstractServiceNowPropertyCollection,
+)
 
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
@@ -30,9 +32,6 @@ class ServiceNowPropertyCollection(AbstractServiceNowPropertyCollection, Entity)
     """Service-Now Property Collection"""
 
     __metaclass__ = FrozenAttributes
-
-    def __init__(self, client: C) -> None:
-        super().__init__(client)
 
     @property
     def Client(self: S) -> C:

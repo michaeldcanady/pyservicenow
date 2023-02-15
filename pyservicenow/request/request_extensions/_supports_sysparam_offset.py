@@ -1,11 +1,10 @@
 """Houses Supports Sysparam Offset"""
-
 from typing import TypeVar
 
+from pyrestsdk.request.supports_types import SupportsQueryOptions
 
 from pyservicenow.types.enums import QueryParameters
 from pyservicenow.types.models import ServiceNowQueryOption
-from pyrestsdk.request.supports_types import SupportsQueryOptions
 
 S = TypeVar("S", bound="SupportsSysparamOffset")
 
@@ -27,7 +26,5 @@ class SupportsSysparamOffset(SupportsQueryOptions):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        self.query_options.append(
-            ServiceNowQueryOption(QueryParameters.OFFSET, offset)
-        )
+        self.query_options.append(ServiceNowQueryOption(QueryParameters.OFFSET, offset))
         return self

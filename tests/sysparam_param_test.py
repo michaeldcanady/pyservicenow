@@ -10,6 +10,7 @@ from pyservicenow.types.enums import DisplayValue, View
 
 from pyservicenow.types.models import QueryBuilder
 
+
 def test_sysparam_fields():
     """Testing that lambda builds query options properly"""
 
@@ -110,12 +111,13 @@ def test_sysparam_query():
     creds = BasicCredential(os.environ["USERNAME"], os.environ["PASSWORD"])
 
     client = ServiceNowClient(credential=creds, instance=os.environ["INSTANCE"])
-    
+
     query = QueryBuilder().field("serial").equals("92XWKW2")
 
     request = client.Now.v2.table_api("alm_hardware").request.sysparam_query(query)
-    
+
     assert str(request.query_options) == "sysparm_query=serial%3D92XWKW2"
+
 
 def test_sysparam_view():
     """Testing sysparam view query option"""
@@ -125,5 +127,5 @@ def test_sysparam_view():
     client = ServiceNowClient(credential=creds, instance=os.environ["INSTANCE"])
 
     request = client.Now.v2.table_api("alm_hardware").request.sysparam_view(View.BOTH)
-    
+
     assert str(request.query_options) == "sysparm_view=both"

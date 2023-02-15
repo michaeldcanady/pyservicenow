@@ -2,4 +2,6 @@
 
 from pyservicenow.core._servicenow_client import ServiceNowClient
 
-__all__ = ["ServiceNowClient"]
+__all__ = [
+    "ServiceNowClient",
+]

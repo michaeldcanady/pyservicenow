@@ -13,7 +13,6 @@ from typing import (
     Union,
 )
 from abc import abstractmethod
-from json import dumps
 from pyrestsdk.type.model._abstract_entity import AbstractEntity
 
 from pyservicenow.types.models._servicenow_property import ServiceNowProperty
@@ -32,7 +31,7 @@ class AbstractServiceNowPropertyCollection(
     _is_null: bool
     _internaldict: Dict[str, ServiceNowProperty]
     _changed_keys: List[str]
-    
+
     @abstractmethod
     def __init__(self, client: C) -> None:
         super().__init__(client)
@@ -61,12 +60,11 @@ class AbstractServiceNowPropertyCollection(
         Returns:
             bool: If the collection is null
         """
-    
+
     @abstractmethod
     def _check_is_null(self) -> None:
-        """checks if the object is empty
-        """
-        
+        """checks if the object is empty"""
+
     @abstractmethod
     def __setitem__(self, key: str, value: ServiceNowProperty) -> None:
         """Sets item at specificed key
@@ -86,7 +84,7 @@ class AbstractServiceNowPropertyCollection(
         Returns:
             ServiceNowProperty: _description_
         """
-    
+
     @abstractmethod
     def __len__(self) -> int:
         """Gets count of properties
@@ -94,7 +92,7 @@ class AbstractServiceNowPropertyCollection(
         Returns:
             int: Count of properties
         """
-    
+
     @abstractmethod
     def __iter__(self) -> Iterator:
         """Gets properties as iterator
@@ -102,7 +100,7 @@ class AbstractServiceNowPropertyCollection(
         Yields:
             Iterator: Properties as iterator
         """
-    
+
     @abstractmethod
     def __delitem__(self, key: str) -> None:
         """Deletes item at specified key
@@ -110,7 +108,7 @@ class AbstractServiceNowPropertyCollection(
         Args:
             key (str): The key to remove
         """
-    
+
     @abstractmethod
     def keys(self) -> List[str]:
         """Gets a list of the collection keys
@@ -118,7 +116,7 @@ class AbstractServiceNowPropertyCollection(
         Returns:
             List[str]: list of the collection keys
         """
-    
+
     @abstractmethod
     def items(self) -> ItemsView[str, ServiceNowProperty]:
         """Gets a set like collection of keys and values from the collection
@@ -126,7 +124,7 @@ class AbstractServiceNowPropertyCollection(
         Returns:
             ItemsView[str, ServiceNowProperty]: Set like collection of keys and values
         """
-    
+
     @abstractmethod
     def _changed_dict(self) -> Dict[str, Any]:
         """Gets a dictionary of the changed keys and their values
@@ -134,7 +132,7 @@ class AbstractServiceNowPropertyCollection(
         Returns:
             Dict[str, Any]: Dictionary of the changed keys and their values
         """
-    
+
     @property
     @abstractmethod
     def as_dict(self) -> Dict[str, Any]:
@@ -143,7 +141,7 @@ class AbstractServiceNowPropertyCollection(
         Returns:
             Dict[str, Any]: The object's dictionary representation
         """
-        
+
     @property
     @abstractmethod
     def __json__(self) -> str:
@@ -161,7 +159,7 @@ class AbstractServiceNowPropertyCollection(
         Returns:
             str: The object as json
         """
-    
+
     @abstractmethod
     def add_property(self, key: str, value: Union[Dict[str, Any], str]) -> None:
         """Adds property to collection
@@ -170,7 +168,7 @@ class AbstractServiceNowPropertyCollection(
             key (str): Key to add
             value (Union[Dict[str, Any], str]): Value to add
         """
-        
+
     @classmethod
     @abstractmethod
     def from_json(cls: Type[S], entry: Dict[str, Any], client: ServiceNowClient) -> S:

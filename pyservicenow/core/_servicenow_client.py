@@ -20,18 +20,22 @@ class ServiceNowClient(AbstractServiceClient):
     """Service-Now Client type"""
 
     @typing.overload
-    def __init__(self, credential: BasicCredential, instance: str, session: Session = Session()) -> None:
+    def __init__(
+        self, credential: BasicCredential, instance: str, session: Session = Session()
+    ) -> None:
         ...
 
     @typing.overload
-    def __init__(self, middleware: BaseMiddleware, instance: str, session: Session = Session()) -> None:
+    def __init__(
+        self, middleware: BaseMiddleware, instance: str, session: Session = Session()
+    ) -> None:
         ...
 
     def __init__(self, *args, **kwargs) -> None:
-        
+
         instance: str = ""
         session: Session = Session()
-        
+
         if len(args) == 0:
             instance = kwargs.pop("instance", None)
             session = kwargs.pop("session", Session())
@@ -40,7 +44,7 @@ class ServiceNowClient(AbstractServiceClient):
                 unknown, instance = args
             else:
                 unknown, instance, session = args
-            
+
             if isinstance(unknown, BaseMiddleware):
                 kwargs["middleware"] = unknown
             elif isinstance(unknown, BasicCredential):

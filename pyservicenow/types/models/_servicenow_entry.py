@@ -3,7 +3,9 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, TypeVar, Any
 from datetime import datetime
-from pyservicenow.types.models._servicenow_property_collection import ServiceNowPropertyCollection
+from pyservicenow.types.models._servicenow_property_collection import (
+    ServiceNowPropertyCollection,
+)
 from pyservicenow.types.constants import DATETIME
 
 if TYPE_CHECKING:
@@ -64,7 +66,7 @@ class ServiceNowEntry(ServiceNowPropertyCollection):
 
     def _get_output(self, key: str) -> Any:
         """Gets the actual or display value based on which has a valid value"""
-        
+
         _value = self[key]
-        
+
         return _value.actual_value or _value.display_value

@@ -66,7 +66,7 @@ class CurrentUser(ServiceNowEntry):
         }
 
     @property
-    def Json(self) -> Dict:
+    def as_json(self) -> Dict:
         """Gets the object as it's dict representation"""
         return self.as_dict
 

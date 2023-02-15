@@ -49,7 +49,7 @@ class BaseServiceNowEntryRequest(SupportsGetMethod, BaseRequest[S]):
         ],
     ) -> None:
         super().__init__(request_url, client, options)
-        
+
         self.header_options.append(
             ServiceNowHeaderOption(Header.ACCEPT, MimeTypeName.Application.JSON)
         )
@@ -66,8 +66,8 @@ class BaseServiceNowEntryRequest(SupportsGetMethod, BaseRequest[S]):
             return None
 
         _json_text = _response.text
-        _json = json.loads(_json_text)    
-    
+        _json = json.loads(_json_text)
+
         try:
             _response.raise_for_status()
         except Exception as e:
@@ -76,14 +76,13 @@ class BaseServiceNowEntryRequest(SupportsGetMethod, BaseRequest[S]):
             _result = _json["result"]
 
         return parse_result(self._generic_type, _result, self.Client)
-    
+
     def parse_exception(self, json: Dict[str, Any]):
         raise Exception("ERROR")
-    
+
+
 def parse_result(
-    obj_type: S,
-    result: Union[Dict[str, Any], List[Dict[str, Any]]],
-    client
+    obj_type: S, result: Union[Dict[str, Any], List[Dict[str, Any]]], client
 ) -> Union[List[S], S]:
     """parses return into expected return type"""
 
@@ -91,9 +90,7 @@ def parse_result(
         Type, Callable[[Union[Dict, List], ServiceNowClient], Union[List[S], S]]
     ] = {
         dict: lambda x, y: obj_type.from_json(x, y),  # type: ignore
-        list: lambda x, y: [
-            obj_type.from_json(raw_result, y) for raw_result in x
-        ],
+        list: lambda x, y: [obj_type.from_json(raw_result, y) for raw_result in x],
     }
 
     if (_func := _operation_dict.get(type(result), None)) is None:
