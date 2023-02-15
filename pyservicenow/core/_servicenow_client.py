@@ -28,10 +28,23 @@ class ServiceNowClient(AbstractServiceClient):
         ...
 
     def __init__(self, *args, **kwargs) -> None:
-        Logger.info("getting LUEDMAPI session")
-
-        instance = kwargs.pop("instance", None)
-        session = kwargs.pop("session", Session())
+        
+        instance: str = ""
+        session: Session = Session()
+        
+        if len(args) == 0:
+            instance = kwargs.pop("instance", None)
+            session = kwargs.pop("session", Session())
+        else:
+            if len(args) == 2:
+                unknown, instance = args
+            else:
+                unknown, instance, session = args
+            
+            if isinstance(unknown, BaseMiddleware):
+                kwargs["middleware"] = unknown
+            elif isinstance(unknown, BasicCredential):
+                kwargs["credential"] = unknown
 
         if instance is None:
             raise Exception("instance is required")
