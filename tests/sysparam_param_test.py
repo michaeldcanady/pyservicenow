@@ -33,7 +33,7 @@ def test_exclude_reference_link():
         True
     )
 
-    assert str(request.query_options) == "sysparm_exclude_reference_link=true"
+    assert str(request.query_options) == "sysparm_exclude_reference_link=True"
 
 
 def test_display_value():
@@ -57,7 +57,7 @@ def test_no_count():
 
     request = client.Now.v2.table_api("alm_hardware").request.no_count(False)
 
-    assert str(request.query_options) == "sysparm_no_count=false"
+    assert str(request.query_options) == "sysparm_no_count=False"
 
 
 def test_suppress_pagination_header():
@@ -70,7 +70,7 @@ def test_suppress_pagination_header():
         "alm_hardware"
     ).request.suppress_pagination_header(False)
 
-    assert str(request.query_options) == "sysparm_suppress_pagination_header=false"
+    assert str(request.query_options) == "sysparm_suppress_pagination_header=False"
 
 
 def test_sysparam_limit():
@@ -105,7 +105,7 @@ def test_sysparam_query():
 
     request = client.Now.v2.table_api("alm_hardware").request.sysparam_query(query)
     
-    assert str(request.query_options) == "sysparm_query=serial=92XWKW2"
+    assert str(request.query_options) == "sysparm_query=serial%3D92XWKW2"
 
 def test_sysparam_view():
 
