@@ -1,3 +1,5 @@
+"""Attachment tests"""
+
 import os
 
 from pyrestsdk.credential import BasicCredential
@@ -7,6 +9,7 @@ from pyservicenow.types.models import AttachmentEntry
 
 
 def test_attachment_url():
+    """tests if the url is built properly"""
 
     creds = BasicCredential(os.environ["USERNAME"], os.environ["PASSWORD"])
 

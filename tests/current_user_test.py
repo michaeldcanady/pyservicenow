@@ -1,11 +1,13 @@
+"""Current users tests"""
+
 import os
 
 from pyrestsdk.credential import BasicCredential
 
 from pyservicenow.core import ServiceNowClient
-from pyservicenow.types.models import AttachmentEntry
 
 def test_current_url():
+    """Tests that the current user url is build properly"""
 
     creds = BasicCredential(os.environ["USERNAME"], os.environ["PASSWORD"])
 

@@ -1,3 +1,5 @@
+"""Table Tests"""
+
 import os
 
 from pyrestsdk.credential import BasicCredential
