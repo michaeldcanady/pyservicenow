@@ -33,7 +33,7 @@ def test_exclude_reference_link():
         True
     )
 
-    assert request.query_options == "sysparm_exclude_reference_link=true"
+    assert str(request.query_options) == "sysparm_exclude_reference_link=true"
 
 
 def test_display_value():
@@ -46,7 +46,7 @@ def test_display_value():
         DisplayValue.ALL
     )
 
-    assert request.query_options == "sysparm_display_value=all"
+    assert str(request.query_options) == "sysparm_display_value=all"
 
 
 def test_no_count():
@@ -57,7 +57,7 @@ def test_no_count():
 
     request = client.Now.v2.table_api("alm_hardware").request.no_count(False)
 
-    assert request.query_options == "sysparm_no_count=false"
+    assert str(request.query_options) == "sysparm_no_count=false"
 
 
 def test_suppress_pagination_header():
@@ -70,7 +70,7 @@ def test_suppress_pagination_header():
         "alm_hardware"
     ).request.suppress_pagination_header(False)
 
-    assert request.query_options == "sysparm_suppress_pagination_header=false"
+    assert str(request.query_options) == "sysparm_suppress_pagination_header=false"
 
 
 def test_sysparam_limit():
@@ -81,7 +81,7 @@ def test_sysparam_limit():
 
     request = client.Now.v2.table_api("alm_hardware").request.sysparam_limit(1)
 
-    assert request.query_options == "sysparm_limit=1"
+    assert str(request.query_options) == "sysparm_limit=1"
 
 
 def test_sysparam_offset():
@@ -92,7 +92,7 @@ def test_sysparam_offset():
 
     request = client.Now.v2.table_api("alm_hardware").request.sysparam_offset(1)
 
-    assert request.query_options == "sysparm_offset=1"
+    assert str(request.query_options) == "sysparm_offset=1"
 
 
 def test_sysparam_query():
@@ -105,7 +105,7 @@ def test_sysparam_query():
 
     request = client.Now.v2.table_api("alm_hardware").request.sysparam_query(query)
     
-    assert request.query_options == "sysparm_query=serial=92XWKW2"
+    assert str(request.query_options) == "sysparm_query=serial=92XWKW2"
 
 def test_sysparam_view():
 
@@ -115,4 +115,4 @@ def test_sysparam_view():
 
     request = client.Now.v2.table_api("alm_hardware").request.sysparam_view(View.BOTH)
     
-    assert request.query_options == "sysparm_view=both"
+    assert str(request.query_options) == "sysparm_view=both"
