@@ -22,8 +22,8 @@ from pyservicenow.request import (
 
 
 class AttachmentRequestBuilder(
-    AbstractAttachmentRequestBuilder,
     EntityRequestBuilder[AttachmentEntryCollectionRequest],
+    AbstractAttachmentRequestBuilder,
 ):
     """The Attachment Request Builder type"""
 
