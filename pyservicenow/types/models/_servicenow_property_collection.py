@@ -30,6 +30,9 @@ C = TypeVar("C", bound="ServiceNowClient")
 
 class ServiceNowPropertyCollection(AbstractServiceNowPropertyCollection, Entity):
     """Service-Now Property Collection"""
+    
+    def __init__(self, client: C) -> None:
+        super().__init__(client)
 
     __metaclass__ = FrozenAttributes
 
