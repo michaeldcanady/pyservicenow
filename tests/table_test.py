@@ -5,8 +5,8 @@ from pyrestsdk.credential import BasicCredential
 from pyservicenow.core import ServiceNowClient
 from pyservicenow.types.models import ServiceNowEntry
 
-def test_attachment_url():
-    """tests if the attachment url is generated property
+def test_table_url():
+    """tests if the table url is generated property
     """
 
     creds = BasicCredential(os.environ["USERNAME"], os.environ["PASSWORD"])
@@ -20,8 +20,8 @@ def test_attachment_url():
     assert hardware_request.request_url == client.base_url+"/now/table/"+table_name
 
 
-def test_get_first_attachment():
-    """tests successfully getting attachment collection
+def test_get_one_element():
+    """tests successfully getting table collection with one object
     """
 
     creds = BasicCredential(os.environ["USERNAME"], os.environ["PASSWORD"])
