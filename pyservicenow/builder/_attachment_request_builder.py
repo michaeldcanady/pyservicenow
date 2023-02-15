@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Iterable, Optional, Union
+from typing import Iterable, Optional, Union, TypeVar, TYPE_CHECKING
 
 from pyrestsdk.requestbuilder import EntityRequestBuilder
 
@@ -20,12 +20,19 @@ from pyservicenow.request import (
     AttachmentEntryCollectionRequest,
 )
 
+if TYPE_CHECKING:
+    from pyservicenow.core import ServiceNowClient
+
+B = TypeVar("B", bound="EntityRequestBuilder")
 
 class AttachmentRequestBuilder(
     EntityRequestBuilder[AttachmentEntryCollectionRequest],
     AbstractAttachmentRequestBuilder,
 ):
     """The Attachment Request Builder type"""
+    
+    def __init__(self: B, request_url: str, client: ServiceNowClient) -> None:
+        super().__init__(request_url, client)
 
     def request_with_options(
         self,
