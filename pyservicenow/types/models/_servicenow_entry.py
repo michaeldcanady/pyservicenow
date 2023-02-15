@@ -19,7 +19,7 @@ class ServiceNowEntry(ServiceNowPropertyCollection):
     """Service-Now Entry Type"""
 
     @property
-    def user_sys_id(self) -> str:
+    def sys_id(self) -> str:
         """Gets the sys id
 
         Returns:
