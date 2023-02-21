@@ -25,11 +25,11 @@ C = TypeVar("C", bound="ServiceNowClient")
 
 
 class AbstractServiceNowPropertyCollection(
-    AbstractEntity, MutableMapping[str, ServiceNowProperty]
+    AbstractEntity, MutableMapping[str, Union[ServiceNowProperty, 'AbstractServiceNowPropertyCollection']]
 ):
 
     _is_null: bool
-    _internaldict: Dict[str, ServiceNowProperty]
+    _internaldict: Dict[str, Union[ServiceNowProperty, 'AbstractServiceNowPropertyCollection']]
     _changed_keys: List[str]
 
     @abstractmethod
@@ -66,7 +66,7 @@ class AbstractServiceNowPropertyCollection(
         """checks if the object is empty"""
 
     @abstractmethod
-    def __setitem__(self, key: str, value: ServiceNowProperty) -> None:
+    def __setitem__(self, key: str, value: Union[ServiceNowProperty, 'AbstractServiceNowPropertyCollection']) -> None:
         """Sets item at specificed key
 
         Args:
@@ -75,7 +75,7 @@ class AbstractServiceNowPropertyCollection(
         """
 
     @abstractmethod
-    def __getitem__(self, key: str) -> ServiceNowProperty:
+    def __getitem__(self, key: str) -> Union[ServiceNowProperty, 'AbstractServiceNowPropertyCollection']:
         """Gets the value at specificed key
 
         Args:
