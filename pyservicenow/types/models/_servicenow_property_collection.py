@@ -31,6 +31,9 @@ class ServiceNowPropertyCollection(AbstractServiceNowPropertyCollection, Entity)
     """Service-Now Property Collection"""
 
     __metaclass__ = FrozenAttributes
+    
+    def __init__(self, client: C) -> None:
+        super().__init__(client)
 
     @property
     def Client(self: S) -> C:
