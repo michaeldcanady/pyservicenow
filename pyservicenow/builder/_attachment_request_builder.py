@@ -45,7 +45,7 @@ class AttachmentRequestBuilder(
             self.request_url, self.request_client, options
         )
 
-    def id(self, sys_id: str) -> AttachmentEntryRequest:
+    def request_by_id(self, sys_id: str) -> AttachmentEntryRequest:
 
         return AttachmentEntryRequest(
             self.append_segment_to_request_url(sys_id), self.request_client, None

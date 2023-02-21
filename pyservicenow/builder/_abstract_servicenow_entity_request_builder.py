@@ -14,6 +14,8 @@ B = TypeVar("B", bound=BaseServiceNowEntryRequest)
 
 
 class AbstractServiceNowEntityRequestBuilder(AbstractEntityRequestBuilder):
+    """Abstract Service-Now Entity Request Builder Type"""
+    
     @abstractmethod
     def request_by_id(self, sys_id: str) -> B:
         """Constructs a Entry Request using the provided sys_id

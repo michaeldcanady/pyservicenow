@@ -18,15 +18,15 @@ from typing import (
 from logging import getLogger
 from requests import Response
 
-from pyrestsdk.request.supports_types import SupportsGetMethod, SupportsPostMethod
+from pyrestsdk.request.supports_types import SupportsGetMethod
 from pyrestsdk.request import BaseRequest
-from pyrestsdk.type.enum import HttpsMethod
 from pyservicenow.types.models import (
     ServiceNowQueryOption,
     ServiceNowHeaderOption,
     ServiceNowEntry,
 )
 from pyservicenow.types.enums import Header, MimeTypeName
+from pyservicenow.types.exceptions import PyServiceNowException
 
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
@@ -70,15 +70,15 @@ class BaseServiceNowEntryRequest(SupportsGetMethod, BaseRequest[S]):
 
         try:
             _response.raise_for_status()
-        except Exception as e:
+        except:
             self.parse_exception(_json)
         else:
             _result = _json["result"]
 
         return parse_result(self._generic_type, _result, self.Client)
 
-    def parse_exception(self, json: Dict[str, Any]):
-        raise Exception("ERROR")
+    def parse_exception(self, raw_json: Dict[str, Any]):
+        raise PyServiceNowException.from_json(raw_json)
 
 
 def parse_result(

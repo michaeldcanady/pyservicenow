@@ -42,7 +42,7 @@ class TableRequestBuilder(EntityRequestBuilder[ServiceNowTableEntryCollectionReq
             self.request_url, self.request_client, options
         )
 
-    def id(self, sys_id: str) -> TableEntryRequest:
+    def request_by_id(self, sys_id: str) -> TableEntryRequest:
         """Constructs a Table Entry Requst using the provided sys_id
 
         Args:

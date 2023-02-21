@@ -20,6 +20,7 @@ from pyservicenow.types.exceptions._unexpected_response_format import (
     UnexpectedResponseFormat,
 )
 from pyservicenow.types.exceptions._unexpected_return_type import UnexpectedReturnType
+from pyservicenow.types.exceptions._py_servicenow_exception import PyServiceNowException
 
 __all__ = [
     "EmptyContent",
@@ -38,4 +39,5 @@ __all__ = [
     "TokenCreateError",
     "UnexpectedResponseFormat",
     "UnexpectedReturnType",
+    "PyServiceNowException",
 ]

@@ -6,7 +6,9 @@ from typing import Iterable, Optional, Union
 
 from abc import abstractmethod
 
-from pyrestsdk.requestbuilder._abstract_entity_request import AbstractEntityRequestBuilder
+from pyrestsdk.requestbuilder._abstract_entity_request import (
+    AbstractEntityRequestBuilder,
+)
 
 from pyservicenow.types.models import (
     ServiceNowQueryOption,
@@ -19,7 +21,9 @@ from pyservicenow.request import (
 )
 
 
-class AbstractAttachmentRequestBuilder(AbstractEntityRequestBuilder[AttachmentEntryCollectionRequest]):
+class AbstractAttachmentRequestBuilder(
+    AbstractEntityRequestBuilder[AttachmentEntryCollectionRequest]
+):
     """The Abstract Attachment Request Builder type"""
 
     @abstractmethod
@@ -40,7 +44,7 @@ class AbstractAttachmentRequestBuilder(AbstractEntityRequestBuilder[AttachmentEn
         """
 
     @abstractmethod
-    def id(self, sys_id: str) -> AttachmentEntryRequest:
+    def request_by_id(self, sys_id: str) -> AttachmentEntryRequest:
         """Constructs a Table Entry Request using the provided sys_id
 
         Args:
