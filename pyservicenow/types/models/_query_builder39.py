@@ -1,3 +1,5 @@
+"""Houses Query Builder Type"""
+
 from typing import TypeVar, Type
 
 from pyservicenow.types.enums import Operators

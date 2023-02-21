@@ -8,9 +8,9 @@ from pyservicenow.types.exceptions._multiple_results import MultipleResults
 from pyservicenow.types.exceptions._no_results import NoResults
 from pyservicenow.types.exceptions._py_snow_exception import PysnowException
 from pyservicenow.types.exceptions._query_empty import QueryEmpty
-from pyservicenow.types.exceptions._query_expression_Error import QueryExpressionError
+from pyservicenow.types.exceptions._query_expression_exception import QueryExpressionError
 from pyservicenow.types.exceptions._query_missing_field import QueryMissingField
-from pyservicenow.types.exceptions._query_multiple_Expressions import (
+from pyservicenow.types.exceptions._query_multiple_expressions_exception import (
     QueryMultipleExpressions,
 )
 from pyservicenow.types.exceptions._query_type_error import QueryTypeError

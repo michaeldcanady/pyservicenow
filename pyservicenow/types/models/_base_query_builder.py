@@ -53,11 +53,8 @@ class BaseQueryBuilder:
         Returns:
             QueryBuilder: The current QueryBuilder object
         """
-
-        _order_by_string = "{order_direction}{current_field}".format(
-            order_direction="ORDERBY" if direction == OrderBy.ASC else "ORDERBYDESC",
-            current_field=self.current_field,
-        )
+            
+        _order_by_string = f"{direction}{self.current_field}"
 
         self._query.append(_order_by_string)
 
@@ -165,10 +162,10 @@ class BaseQueryBuilder:
             raise QueryMultipleExpressions("Expected logical operator after expression")
 
         if (_currentframe := inspect.currentframe()) is None:
-            raise Exception("Current Frame is None")
+            raise ValueError("Current Frame is None")
 
         if (_f_back := _currentframe.f_back) is None:
-            raise Exception("f_back is None")
+            raise ValueError("f_back is None")
 
         self.c_oper = _f_back.f_code.co_name
 
