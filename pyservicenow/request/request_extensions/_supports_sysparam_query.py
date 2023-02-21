@@ -1,11 +1,10 @@
 """Houses Supports Sysparam Query"""
-
 from typing import Union, TypeVar
 
+from pyrestsdk.request.supports_types import SupportsQueryOptions
 
 from pyservicenow.types.enums import QueryParameters
 from pyservicenow.types.models import ServiceNowQueryOption, QueryBuilder
-from pyrestsdk.request.supports_types import SupportsQueryOptions
 
 S = TypeVar("S", bound="SupportsSysparamQuery")
 

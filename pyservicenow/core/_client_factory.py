@@ -60,7 +60,7 @@ class HTTPClientFactory(AbstractHTTPClientFactory):
         Logger.debug(
             "%s._set_base_url() : base url set to: %s",
             type(self),
-            self.session.base_url,
+            self.session.base_url, # type: ignore
         )
 
     def _register(self, middleware: List[B]) -> None:

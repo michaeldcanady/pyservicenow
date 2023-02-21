@@ -1,16 +1,13 @@
 """Houses the Service-Now Property"""
-from typing import TypeVar, Type
+from typing import TypeVar, Type, Dict, Any, Union
 
 from json import dumps
-from typing import Dict, Any, Union
 
 S = TypeVar("S", bound="ServiceNowProperty")
 
 
 class ServiceNowProperty:
     """Service-Now Property type"""
-    
-    #__slots__ = ["_display_value", "_value", "_link"]
 
     _display_value: str
     _value: str
@@ -74,15 +71,15 @@ class ServiceNowProperty:
 
     def __json__(self) -> str:
         return dumps(self.as_dict())
-    
+
     @classmethod
     def __fromjson__(cls: Type[S], value: Union[str, Dict]) -> S:
-        
+
         _value = cls()
-        
+
         if not isinstance(value, str) and not isinstance(value, dict):
             return _value
-        
+
         if value is None:
             pass
         elif isinstance(value, str):
@@ -91,5 +88,5 @@ class ServiceNowProperty:
             _value.display_value = value.get("display_value", "")
             _value.actual_value = value.get("value", "")
             _value.value_link = value.get("link", "")
-            
+
         return _value

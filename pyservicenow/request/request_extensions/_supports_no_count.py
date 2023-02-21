@@ -1,10 +1,10 @@
 """Houses Supports No Count"""
-
 from typing import TypeVar
+
+from pyrestsdk.request.supports_types import SupportsQueryOptions
 
 from pyservicenow.types.enums import QueryParameters
 from pyservicenow.types.models import ServiceNowQueryOption
-from pyrestsdk.request.supports_types import SupportsQueryOptions
 
 S = TypeVar("S", bound="SupportsNoCount")
 

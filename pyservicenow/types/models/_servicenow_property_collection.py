@@ -2,7 +2,6 @@
 from __future__ import annotations
 from typing import (
     TYPE_CHECKING,
-    MutableMapping,
     Dict,
     Iterator,
     ItemsView,
@@ -17,6 +16,9 @@ from pyrestsdk.type.model import Entity
 from pyrestsdk.type.model._common_base import FrozenAttributes
 
 from pyservicenow.types.models._servicenow_property import ServiceNowProperty
+from pyservicenow.types.models._abstract_servicenow_propery_collection import (
+    AbstractServiceNowPropertyCollection,
+)
 
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
@@ -25,25 +27,14 @@ S = TypeVar("S", bound="ServiceNowPropertyCollection")
 C = TypeVar("C", bound="ServiceNowClient")
 
 
-class ServiceNowPropertyCollection(Entity, MutableMapping[str, ServiceNowProperty]):
+class ServiceNowPropertyCollection(AbstractServiceNowPropertyCollection, Entity):
     """Service-Now Property Collection"""
-    
+
     __metaclass__ = FrozenAttributes
-    
-    
-    #__slots__ = ["_is_null", "_internaldict", "_changed_keys"]
-    
-    _is_null: bool
-    _internaldict: Dict[str, ServiceNowProperty]
-    _changed_keys: List[str]
     
     def __init__(self, client: C) -> None:
         super().__init__(client)
 
-        self._is_null = True
-        self._internaldict = {}
-        self._changed_keys = []
-    
     @property
     def Client(self: S) -> C:
         return super().Client
@@ -81,26 +72,15 @@ class ServiceNowPropertyCollection(Entity, MutableMapping[str, ServiceNowPropert
         del self._internaldict[key]
         self._check_is_null()
 
-    def keys(self):
-        """Gets a list of the collection keys
+    def keys(self) -> List[str]:
 
-        Returns:
-            _type_: _description_
-        """
-
-        return self._internaldict.keys()
+        return list(self._internaldict.keys())
 
     def items(self) -> ItemsView[str, ServiceNowProperty]:
-        """Gets a set like collection of keys and values from the collection
-
-        Returns:
-            ItemsView[str, ServiceNowProperty]: Set like collection of keys and values
-        """
 
         return self._internaldict.items()
 
     def _changed_dict(self) -> Dict[str, Any]:
-        """Gets a dictionary of the changed keys and their values"""
 
         changed_dict: Dict[str, Any] = {}
 
@@ -110,8 +90,7 @@ class ServiceNowPropertyCollection(Entity, MutableMapping[str, ServiceNowPropert
         return changed_dict
 
     @property
-    def as_dict(self) -> Dict:
-        """Gets the object as it's dict representation"""
+    def as_dict(self) -> Dict[str, Any]:
 
         _dict: Dict[str, Any] = {}
 
@@ -128,25 +107,17 @@ class ServiceNowPropertyCollection(Entity, MutableMapping[str, ServiceNowPropert
     def as_json(self) -> Dict:
         """Gets the object as it's dict representation"""
         return self.as_dict
-    
+
     def add_property(self, key, value: Union[Dict[str, Any], str]) -> None:
-        
+
         self[key] = ServiceNowProperty.__fromjson__(value)
-    
+
     @classmethod
     def from_json(cls: Type[S], entry: Dict[str, Any], client: ServiceNowClient) -> S:
-        """Converts entry from dictionary to new ServiceNowPropertyCollection.
-
-        Args:
-            entry (Dict): The entry to convert
-
-        Returns:
-            ServiceNowPropertyCollection: The Service-Now Property Collection
-        """
 
         new = cls(client)
 
-        [new.add_property(key, value) for key, value in entry.items()]
+        _ = [new.add_property(key, value) for key, value in entry.items()]
 
         new._check_is_null()
         new._changed_keys = []

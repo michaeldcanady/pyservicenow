@@ -4,7 +4,6 @@ from pyrestsdk.requestbuilder import BaseRequestBuilder
 from pyservicenow.builder._ui_user_request_builder import UIUserRequestBuilder
 
 
-
 class UIRequestBuilder(BaseRequestBuilder):
     """The UI Request Builder type"""
 

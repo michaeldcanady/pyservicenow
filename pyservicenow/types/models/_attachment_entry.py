@@ -6,6 +6,7 @@ from typing import Dict, Any
 from pyservicenow.types.models._servicenow_entry import ServiceNowEntry
 from pyservicenow.types.enums import EncryptionContext
 
+
 class AttachmentEntry(ServiceNowEntry):
     """Attachment Entry Type"""
 
@@ -108,3 +109,8 @@ class AttachmentEntry(ServiceNowEntry):
     def as_json(self) -> Dict[str, Any]:
         """Gets the object as it's dict representation"""
         return super().as_json
+
+    def update_object(self) -> bool:
+        """Attachment Entry cannot be updated currently"""
+
+        return False

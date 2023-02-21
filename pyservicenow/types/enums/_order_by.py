@@ -8,6 +8,16 @@ class OrderBy(IntEnum):
 
     ASC = auto()
     DESC = auto()
+    
+    def __str__(self) -> str:
+        
+        if self == OrderBy.ASC:
+            return "ORDERBY"
+        elif self == OrderBy.DESC:
+            return "ORDERBYDESC"
+        else:
+            raise ValueError(f"{self} is not a valid type")
+        
 
 
 OrderBy.ASC.__doc__ = """Orders results ascendingly"""

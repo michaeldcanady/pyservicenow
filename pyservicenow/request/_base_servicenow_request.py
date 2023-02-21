@@ -18,15 +18,15 @@ from typing import (
 from logging import getLogger
 from requests import Response
 
-from pyrestsdk.request.supports_types import SupportsGetMethod, SupportsPostMethod
+from pyrestsdk.request.supports_types import SupportsGetMethod
 from pyrestsdk.request import BaseRequest
-from pyrestsdk.type.enum import HttpsMethod
 from pyservicenow.types.models import (
     ServiceNowQueryOption,
     ServiceNowHeaderOption,
     ServiceNowEntry,
 )
 from pyservicenow.types.enums import Header, MimeTypeName
+from pyservicenow.types.exceptions import PyServiceNowException
 
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
@@ -49,7 +49,7 @@ class BaseServiceNowEntryRequest(SupportsGetMethod, BaseRequest[S]):
         ],
     ) -> None:
         super().__init__(request_url, client, options)
-        
+
         self.header_options.append(
             ServiceNowHeaderOption(Header.ACCEPT, MimeTypeName.Application.JSON)
         )
@@ -66,24 +66,23 @@ class BaseServiceNowEntryRequest(SupportsGetMethod, BaseRequest[S]):
             return None
 
         _json_text = _response.text
-        _json = json.loads(_json_text)    
-    
+        _json = json.loads(_json_text)
+
         try:
             _response.raise_for_status()
-        except Exception as e:
+        except:
             self.parse_exception(_json)
         else:
             _result = _json["result"]
 
         return parse_result(self._generic_type, _result, self.Client)
-    
-    def parse_exception(self, json: Dict[str, Any]):
-        raise Exception("ERROR")
-    
+
+    def parse_exception(self, raw_json: Dict[str, Any]):
+        raise PyServiceNowException.from_json(raw_json)
+
+
 def parse_result(
-    obj_type: S,
-    result: Union[Dict[str, Any], List[Dict[str, Any]]],
-    client
+    obj_type: S, result: Union[Dict[str, Any], List[Dict[str, Any]]], client
 ) -> Union[List[S], S]:
     """parses return into expected return type"""
 
@@ -91,9 +90,7 @@ def parse_result(
         Type, Callable[[Union[Dict, List], ServiceNowClient], Union[List[S], S]]
     ] = {
         dict: lambda x, y: obj_type.from_json(x, y),  # type: ignore
-        list: lambda x, y: [
-            obj_type.from_json(raw_result, y) for raw_result in x
-        ],
+        list: lambda x, y: [obj_type.from_json(raw_result, y) for raw_result in x],
     }
 
     if (_func := _operation_dict.get(type(result), None)) is None:
