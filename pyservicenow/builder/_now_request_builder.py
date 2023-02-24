@@ -7,6 +7,7 @@ from pyrestsdk.requestbuilder import BaseRequestBuilder
 from pyservicenow.builder._table_request_builder import TableRequestBuilder
 from pyservicenow.builder._ui_request_builder import UIRequestBuilder
 from pyservicenow.builder._attachment_request_builder import AttachmentRequestBuilder
+from pyservicenow.builder._sc_req_item_request_builder import SCReqItemEntryCollectionRequest
 
 N = TypeVar("N", bound="NowRequestBuilder")
 
@@ -82,3 +83,13 @@ class NowRequestBuilder(BaseRequestBuilder):
         return UIRequestBuilder(
             self.append_segment_to_request_url("ui"), self.request_client
         )
+
+    @property
+    def sc_req_item(self) -> SCReqItemEntryCollectionRequest:
+        """Gets the SCReqItem request builder
+
+        Returns:
+            SCReqItemRequestBuilder: The SCReqItem request builder
+        """
+        
+        return SCReqItemEntryCollectionRequest(self.append_segment_to_request_url("table/sc_req_item"), self.request_client)

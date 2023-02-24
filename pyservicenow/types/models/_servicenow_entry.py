@@ -74,7 +74,7 @@ class ServiceNowEntry(ServiceNowPropertyCollection):
 
         return _value.actual_value or _value.display_value
 
-    def get(self, key: str, _type: Optional[Type[R]] = None) -> Union[R, datetime, str, None]:
+    def get(self, key: str, _type: Optional[Type[Any]] = None) -> Any:
         """Gets the value of the key and returns it as the included type
 
         Args:
@@ -106,7 +106,7 @@ class ServiceNowEntry(ServiceNowPropertyCollection):
         
         raise ValueError(f"value: {raw_value} of type: {type(raw_value)} is unexpected")
     
-    def _get_value(self, property: ServiceNowProperty, _type: Type[R]) -> Union[R, str, None]:
+    def _get_value(self, property: ServiceNowProperty, _type: Type[Any]) -> Any:
         
         if property.display_value != "" and property.display_value is not None:
             return _type(property.display_value)

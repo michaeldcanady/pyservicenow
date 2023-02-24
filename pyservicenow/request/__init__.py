@@ -15,6 +15,7 @@ from pyservicenow.request._table_entry_collection_request import (
 )
 from pyservicenow.request._table_entry_request import TableEntryRequest
 from pyservicenow.request._ui_user_current_user_request import UIUserCurrentUserRequest
+from pyservicenow.request._sc_req_item_entry_collection_request import SCReqItemEntryCollectionRequest
 
 __all__ = [
     "AttachmentEntryCollectionRequest",
@@ -26,4 +27,5 @@ __all__ = [
     "TableEntryCollectionRequest",
     "TableEntryRequest",
     "UIUserCurrentUserRequest",
+    "SCReqItemEntryCollectionRequest",
 ]
