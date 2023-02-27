@@ -1,11 +1,17 @@
 """Houses Service-Now Entry"""
 
 from __future__ import annotations
+
 from typing import TYPE_CHECKING, TypeVar, Any, Optional, Type, Union
+
 from datetime import datetime
+
+from pyservicenow.types.models._abstract_servicenow_entry import AbstractServiceNowEntry
+
 from pyservicenow.types.models._servicenow_property_collection import (
     ServiceNowPropertyCollection,
 )
+
 from pyservicenow.types.models._servicenow_property import ServiceNowProperty
 
 from pyservicenow.types.constants import DATETIME, DATE
@@ -18,7 +24,7 @@ C = TypeVar("C", bound="ServiceNowClient")
 R = TypeVar("R")
 
 
-class ServiceNowEntry(ServiceNowPropertyCollection):
+class ServiceNowEntry(ServiceNowPropertyCollection, AbstractServiceNowEntry):
     """Service-Now Entry Type"""
 
     @property
@@ -39,9 +45,7 @@ class ServiceNowEntry(ServiceNowPropertyCollection):
             datetime: The updated on date
         """
 
-        raw_date = self["sys_updated_on"].actual_value
-
-        return datetime.strptime(raw_date, DATETIME)
+        return self.get("sys_updated_on", datetime)
 
     @property
     def sys_updated_by(self) -> str:
@@ -61,7 +65,7 @@ class ServiceNowEntry(ServiceNowPropertyCollection):
             datetime: The created on date
         """
 
-        return datetime.strptime(self._get_output("sys_created_on"), DATETIME)
+        return self.get("sys_created_on", datetime)
 
     def update_object(self) -> bool:
         """updates the object in Service-Now"""
@@ -75,18 +79,6 @@ class ServiceNowEntry(ServiceNowPropertyCollection):
         return _value.actual_value or _value.display_value
 
     def get(self, key: str, _type: Optional[Type[R]] = None) -> Union[R, datetime, str, None]:
-        """Gets the value of the key and returns it as the included type
-
-        Args:
-            key (str): The key to get
-            _type (Optional[Type[R]], optional): The type to return it as. Defaults to None.
-
-        Raises:
-            ValueError: _description_
-
-        Returns:
-            Union[R, datetime, None]: The ke as the expected type
-        """
         
         #TODO Add support for sys_id checking
         

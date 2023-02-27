@@ -27,7 +27,7 @@ S = TypeVar("S", bound="ServiceNowPropertyCollection")
 C = TypeVar("C", bound="ServiceNowClient")
 
 
-class ServiceNowPropertyCollection(AbstractServiceNowPropertyCollection, Entity):
+class ServiceNowPropertyCollection(Entity, AbstractServiceNowPropertyCollection):
     """Service-Now Property Collection"""
 
     __metaclass__ = FrozenAttributes
@@ -95,7 +95,7 @@ class ServiceNowPropertyCollection(AbstractServiceNowPropertyCollection, Entity)
         _dict: Dict[str, Any] = {}
 
         for key, value in self._internaldict.items():
-            _dict[key] = value.as_dict()
+            _dict[key] = value.as_dict
 
         return _dict
 

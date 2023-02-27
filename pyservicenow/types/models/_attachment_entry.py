@@ -11,7 +11,7 @@ class AttachmentEntry(ServiceNowEntry):
     """Attachment Entry Type"""
 
     @property
-    def content_type(self):
+    def content_type(self) -> str:
         """Gets the content type of the associated attachment file."""
 
         return self["content_type"].actual_value
@@ -68,11 +68,13 @@ class AttachmentEntry(ServiceNowEntry):
     @property
     def encryption_context(self) -> EncryptionContext:
         """Gets the encryption context"""
+
         return EncryptionContext.from_string(self["encryption_context"].actual_value)
 
     @property
     def file_state(self) -> str:
         """Gets the state of the attachment"""
+
         return self["state"].actual_value
 
     @property
@@ -83,34 +85,33 @@ class AttachmentEntry(ServiceNowEntry):
     @property
     def compressed_size(self) -> int:
         """Gets the size of the compressed attachment file. If the file is not compressed, empty."""
+
         return int(self["size_compressed"].actual_value)
 
     @property
     def table_sys_id(self) -> str:
         """Gets the sys_id of the table associated with the attachment"""
+
         return self["table_sys_id"].actual_value
 
     @property
     def file_hash(self) -> str:
         """Gets the file hash of the attachment"""
+
         return self["hash"].actual_value
 
     @property
     def chunk_size_bytes(self) -> int:
         """Gets the chunk size of the attachment in bytes"""
+
         return int(self["chunk_size_bytes"].actual_value)
 
     @property
     def is_compressed(self) -> bool:
         """Gets whether the file has been compressed or not"""
+
         return bool(self["compressed"].actual_value)
 
-    @property
-    def as_json(self) -> Dict[str, Any]:
-        """Gets the object as it's dict representation"""
-        return super().as_json
-
     def update_object(self) -> bool:
-        """Attachment Entry cannot be updated currently"""
-
-        return False
+        
+        raise NotImplementedError("update_object is not implemented")

@@ -1,11 +1,14 @@
 """Houses current user model"""
 
 from __future__ import annotations
-from typing import Dict
+
+from typing import Dict, Any
+
+from pyservicenow.types.models._abstract_current_user import AbstractCurrentUser
+
 from pyservicenow.types.models._servicenow_entry import ServiceNowEntry
 
-
-class CurrentUser(ServiceNowEntry):
+class CurrentUser(ServiceNowEntry, AbstractCurrentUser):
     """Current User Type"""
 
     @property
@@ -26,7 +29,8 @@ class CurrentUser(ServiceNowEntry):
         Returns:
             str: The sys id
         """
-        return self["user_sys_id"].actual_value
+
+        return self.get("user_sys_id", str)
 
     @property
     def user_name(self) -> str:
@@ -35,7 +39,8 @@ class CurrentUser(ServiceNowEntry):
         Returns:
             str: The username
         """
-        return self["user_name"].actual_value
+
+        return self.get("user_name", str)
 
     @property
     def user_display_name(self) -> str:
@@ -44,7 +49,8 @@ class CurrentUser(ServiceNowEntry):
         Returns:
             str: The display name
         """
-        return self["user_display_name"].actual_value
+
+        return self.get("user_display_name", str)
 
     @property
     def user_initials(self) -> str:
@@ -53,16 +59,22 @@ class CurrentUser(ServiceNowEntry):
         Returns:
             str: The initials
         """
-        return self["user_initials"].actual_value
+
+        return self.get("user_initials", str)
 
     @property
-    def as_dict(self) -> Dict:
-        """Gets the object as it's dict representation"""
+    def as_dict(self) -> Dict[str, Any]:
+        """Gets the object as it's dict representation
+
+        Returns:
+            Dict[str, Any]: The object as it's dict representation
+        """
+
         return {
-            "user_initials": self["user_initials"].as_dict(),
-            "user_display_name": self["user_display_name"].as_dict(),
-            "user_name": self["user_name"].as_dict(),
-            "user_sys_id": self["user_sys_id"].as_dict(),
+            "user_initials": self["user_initials"].as_dict,
+            "user_display_name": self["user_display_name"].as_dict,
+            "user_name": self["user_name"].as_dict,
+            "user_sys_id": self["user_sys_id"].as_dict,
         }
 
     @property
@@ -71,6 +83,10 @@ class CurrentUser(ServiceNowEntry):
         return self.as_dict
 
     def update_object(self) -> bool:
-        """Current User cannot be updated"""
+        """Current User cannot be updated
+
+        Returns:
+            bool: If the current user is updated successfully
+        """
 
         return False
