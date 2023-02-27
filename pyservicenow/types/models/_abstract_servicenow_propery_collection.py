@@ -25,24 +25,24 @@ C = TypeVar("C", bound="ServiceNowClient")
 
 
 class AbstractServiceNowPropertyCollection(
-    AbstractEntity, MutableMapping[str, Union[ServiceNowProperty, 'AbstractServiceNowPropertyCollection']]
+    MutableMapping[str, Union[ServiceNowProperty, 'AbstractServiceNowPropertyCollection']], AbstractEntity
 ):
 
     _is_null: bool
     _internaldict: Dict[str, Union[ServiceNowProperty, 'AbstractServiceNowPropertyCollection']]
     _changed_keys: List[str]
 
-    @abstractmethod
-    def __init__(self, client: C) -> None:
+    #@abstractmethod
+    def __init__(self, client: ServiceNowClient) -> None:
         super().__init__(client)
-
+        
         self._is_null = True
         self._internaldict = {}
         self._changed_keys = []
 
     @property
     @abstractmethod
-    def Client(self: S) -> C:
+    def Client(self) -> ServiceNowClient:
         """Gets the client
 
         Args:

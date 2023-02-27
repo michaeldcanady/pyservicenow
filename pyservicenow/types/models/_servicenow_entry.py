@@ -88,7 +88,7 @@ class ServiceNowEntry(ServiceNowPropertyCollection, AbstractServiceNowEntry):
         raw_value = self[key]
         
         if isinstance(raw_value, ServiceNowProperty) and _type == datetime:
-            return parse_servicenow_datetime(raw_value.actual_value)
+            return self.parse_servicenow_datetime(raw_value.actual_value)
         
         if issubclass(_type, ServiceNowPropertyCollection):
             return _type(self.Client).import_servicenow_property_collection(raw_value)
@@ -114,10 +114,10 @@ class ServiceNowEntry(ServiceNowPropertyCollection, AbstractServiceNowEntry):
         
         return self
         
-    
-def parse_servicenow_datetime(timestamp: str) -> datetime:
-    
-    try:
-        return datetime.strptime(timestamp, DATETIME)
-    except:
-        return datetime.strptime(timestamp, DATE)
+    @staticmethod    
+    def parse_servicenow_datetime(timestamp: str) -> datetime:
+        
+        try:
+            return datetime.strptime(timestamp, DATETIME)
+        except:
+            return datetime.strptime(timestamp, DATE)

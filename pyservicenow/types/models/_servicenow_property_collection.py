@@ -10,12 +10,15 @@ from typing import (
     Type,
     Any,
     Union,
+    KeysView,
 )
+
 from json import dumps
 from pyrestsdk.type.model import Entity
 from pyrestsdk.type.model._common_base import FrozenAttributes
 
 from pyservicenow.types.models._servicenow_property import ServiceNowProperty
+
 from pyservicenow.types.models._abstract_servicenow_propery_collection import (
     AbstractServiceNowPropertyCollection,
 )
@@ -31,14 +34,9 @@ class ServiceNowPropertyCollection(Entity, AbstractServiceNowPropertyCollection)
     """Service-Now Property Collection"""
 
     __metaclass__ = FrozenAttributes
-    
-    def __init__(self, client: C) -> None:
-        super(Entity).__init__(client)
-        super(AbstractServiceNowPropertyCollection).__init__(client)
 
-    @property
-    def Client(self: S) -> C:
-        return super().Client
+    def __init__(self, client: C) -> None:
+        super().__init__(client)
 
     @property
     def is_null(self) -> bool:
@@ -53,14 +51,17 @@ class ServiceNowPropertyCollection(Entity, AbstractServiceNowPropertyCollection)
         """checks if the object is empty"""
         self._is_null = len(self.keys()) == 0
 
-    def __setitem__(self, key: str, value: Union[ServiceNowProperty, 'ServiceNowPropertyCollection']) -> None:
-
+    def __setitem__(
+        self, key: str, value: Union[ServiceNowProperty, "ServiceNowPropertyCollection"]
+    ) -> None:
         self._internaldict[key] = value
         self._check_is_null()
         if key not in self._changed_keys:
             self._changed_keys.append(key)
 
-    def __getitem__(self, key: str) -> Union[ServiceNowProperty, 'ServiceNowPropertyCollection']:
+    def __getitem__(
+        self, key: str
+    ) -> Union[ServiceNowProperty, "ServiceNowPropertyCollection"]:
         return self._internaldict[key]
 
     def __len__(self) -> int:
@@ -74,15 +75,14 @@ class ServiceNowPropertyCollection(Entity, AbstractServiceNowPropertyCollection)
         self._check_is_null()
 
     def keys(self) -> List[str]:
-
         return list(self._internaldict.keys())
 
-    def items(self) -> ItemsView[str, ServiceNowProperty]:
-
+    def items(
+        self,
+    ) -> ItemsView[str, Union[ServiceNowProperty, "ServiceNowPropertyCollection"]]:
         return self._internaldict.items()
 
     def _changed_dict(self) -> Dict[str, Any]:
-
         changed_dict: Dict[str, Any] = {}
 
         for key in self._changed_keys:
@@ -90,9 +90,7 @@ class ServiceNowPropertyCollection(Entity, AbstractServiceNowPropertyCollection)
 
         return changed_dict
 
-
     def as_dict(self) -> Dict[str, Any]:
-
         _dict: Dict[str, Any] = {}
 
         for key, value in self._internaldict.items():
@@ -109,34 +107,33 @@ class ServiceNowPropertyCollection(Entity, AbstractServiceNowPropertyCollection)
         """Gets the object as it's dict representation"""
         return self.as_dict()
 
-    def add_property(self, key, value: Union[Dict[str, Any], str, ServiceNowProperty]) -> None:
-        
+    def add_property(
+        self, key, value: Union[Dict[str, Any], str, ServiceNowProperty]
+    ) -> None:
         if isinstance(value, dict) or isinstance(value, str):
             value = ServiceNowProperty.__fromjson__(value)
-            
+
         self[key] = value
 
     @classmethod
     def from_json(cls: Type[S], entry: Dict[str, Any], client: ServiceNowClient) -> S:
-
         new = cls(client)
-        
+
         for key, value in entry.items():
-            
             if "." in key:
                 parent_key, child_key = key.split(".")
-                
-                
-                if parent_key in new.keys(): # if it has the key
+
+                if parent_key in new.keys():  # if it has the key
                     existing_value = new[parent_key]
                     if isinstance(existing_value, ServiceNowPropertyCollection):
-                        
                         existing_value.add_property(child_key, value)
                 else:
-                    value = ServiceNowPropertyCollection.from_json({child_key: value}, client)
+                    value = ServiceNowPropertyCollection.from_json(
+                        {child_key: value}, client
+                    )
                     new[parent_key] = value
                 continue
-            
+
             new.add_property(key, value)
 
         new._check_is_null()
