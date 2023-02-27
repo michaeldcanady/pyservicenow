@@ -33,7 +33,8 @@ class ServiceNowPropertyCollection(Entity, AbstractServiceNowPropertyCollection)
     __metaclass__ = FrozenAttributes
     
     def __init__(self, client: C) -> None:
-        super().__init__(client)
+        super(Entity).__init__(client)
+        super(AbstractServiceNowPropertyCollection).__init__(client)
 
     @property
     def Client(self: S) -> C:
