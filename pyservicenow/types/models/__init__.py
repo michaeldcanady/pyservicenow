@@ -19,12 +19,15 @@ from pyservicenow.types.models._abstract_servicenow_propery_collection import (
     AbstractServiceNowPropertyCollection,
 )
 
+from pyservicenow.types.models._abstract_base_query_builder import AbstractBaseQueryBuilder
+
 if version_info < (3, 10):
     from pyservicenow.types.models._query_builder39 import QueryBuilder
 else:
     from pyservicenow.types.models._query_builder310 import QueryBuilder
 
 __all__ = [
+    "AbstractBaseQueryBuilder",
     "AbstractAttachmentEntry",
     "AbstractCurrentUser",
     "AbstractServiceNowProperty",
