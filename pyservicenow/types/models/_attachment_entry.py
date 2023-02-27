@@ -39,32 +39,7 @@ class AttachmentEntry(ServiceNowEntry):
         """Gets the download URL of the attachment on the ServiceNow instance"""
 
         return self["download_link"].actual_value
-
-    def get_record(self) -> ServiceNowEntry:
-        """Gets the record the attachment is associated with"""
-
-        return self.Client.Now().Table(self.table_name).id(self.table_sys_id).Get.Invoke
-
-    def download_file(self, download_path: str, use_filename: bool = True) -> None:
-        """Downloads attachment to designated filepath
-
-        Args:
-            download_path (str): The path to download the file to.
-            use_filename (bool, optional):
-            whether to use the file namesupplied by Service-Now. Defaults to True.
-        """
-
-        if not exists(download_path):
-            raise Exception(f"Invalid download path: {download_path}")
-
-        if use_filename:
-            download_path = join(download_path, self.file_name)
-
-        _response = self.Client.get(self.download_link)
-
-        with open(download_path, "wb") as file:
-            file.write(_response.content)
-
+    
     @property
     def encryption_context(self) -> EncryptionContext:
         """Gets the encryption context"""
@@ -111,6 +86,31 @@ class AttachmentEntry(ServiceNowEntry):
         """Gets whether the file has been compressed or not"""
 
         return bool(self["compressed"].actual_value)
+
+    def get_record(self) -> ServiceNowEntry:
+        """Gets the record the attachment is associated with"""
+
+        return self.Client.Now().Table(self.table_name).id(self.table_sys_id).Get.Invoke
+
+    def download_file(self, download_path: str, use_filename: bool = True) -> None:
+        """Downloads attachment to designated filepath
+
+        Args:
+            download_path (str): The path to download the file to.
+            use_filename (bool, optional):
+            whether to use the file namesupplied by Service-Now. Defaults to True.
+        """
+
+        if not exists(download_path):
+            raise Exception(f"Invalid download path: {download_path}")
+
+        if use_filename:
+            download_path = join(download_path, self.file_name)
+
+        _response = self.Client.get(self.download_link)
+
+        with open(download_path, "wb") as file:
+            file.write(_response.content)
 
     def update_object(self) -> bool:
         
