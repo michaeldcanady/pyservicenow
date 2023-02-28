@@ -13,6 +13,9 @@ from pyservicenow.types.enums import EncryptionContext
 
 class AttachmentEntry(ServiceNowEntry, AbstractAttachmentEntry):
     """Attachment Entry Type"""
+    
+    def __init__(self, client) -> None:
+        super().__init__(client)
 
     @property
     def content_type(self) -> str:

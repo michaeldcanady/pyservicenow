@@ -26,6 +26,9 @@ R = TypeVar("R")
 
 class ServiceNowEntry(ServiceNowPropertyCollection, AbstractServiceNowEntry):
     """Service-Now Entry Type"""
+    
+    def __init__(self, client) -> None:
+        super().__init__(client)
 
     @property
     def sys_id(self) -> str:
