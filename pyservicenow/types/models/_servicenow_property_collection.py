@@ -36,7 +36,12 @@ class ServiceNowPropertyCollection(Entity, AbstractServiceNowPropertyCollection)
     __metaclass__ = FrozenAttributes
 
     def __init__(self, client: C) -> None:
+        
         super().__init__(client)
+        
+        self._is_null = True
+        self._internaldict = {}
+        self._changed_keys = []
 
     @property
     def is_null(self) -> bool:

@@ -36,10 +36,6 @@ class AbstractServiceNowPropertyCollection(
     def __init__(self, client: ServiceNowClient) -> None:
 
         super().__init__(client)
-        
-        self._is_null = True
-        self._internaldict = {}
-        self._changed_keys = []
 
     @property
     @abstractmethod
