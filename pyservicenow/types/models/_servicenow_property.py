@@ -1,19 +1,19 @@
 """Houses the Service-Now Property"""
+
 from typing import TypeVar, Type, Dict, Any, Union
+
+from pyservicenow.types.models._abstract_servicenow_property import AbstractServiceNowProperty
 
 from json import dumps
 
 S = TypeVar("S", bound="ServiceNowProperty")
 
-
-class ServiceNowProperty:
+class ServiceNowProperty(AbstractServiceNowProperty):
     """Service-Now Property type"""
 
-    _display_value: str
-    _value: str
-    _link: str
-
     def __init__(self) -> None:
+        super().__init__()
+        
         self._display_value = ""
         self._value = ""
         self._link = ""
@@ -60,8 +60,8 @@ class ServiceNowProperty:
     def actual_value(self, value: str) -> None:
         self._value = value
 
+    @property
     def as_dict(self) -> Dict[str, Any]:
-        """Gets object as dict"""
 
         return {
             "display_value": self.display_value,
@@ -70,7 +70,8 @@ class ServiceNowProperty:
         }
 
     def __json__(self) -> str:
-        return dumps(self.as_dict())
+        
+        return dumps(self.as_dict)
 
     @classmethod
     def __fromjson__(cls: Type[S], value: Union[str, Dict]) -> S:

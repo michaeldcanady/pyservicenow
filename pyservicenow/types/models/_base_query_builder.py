@@ -1,7 +1,14 @@
-from typing import Union, List, TypeVar
+"""Houses Base Query Builder"""
+
+from typing import Union, List, TypeVar, Any
 import inspect
 from pyservicenow.types.enums import OrderBy, Operators
-from ..exceptions import (
+
+from pyservicenow.types.models._abstract_base_query_builder import (
+    AbstractBaseQueryBuilder,
+)
+
+from pyservicenow.types.exceptions import (
     QueryEmpty,
     QueryExpressionError,
     QueryMissingField,
@@ -11,11 +18,13 @@ from ..exceptions import (
 Q = TypeVar("Q", bound="BaseQueryBuilder")
 
 
-class BaseQueryBuilder:
+class BaseQueryBuilder(AbstractBaseQueryBuilder):
     """Base Query Builder Type"""
 
     def __init__(self) -> None:
         """Constructs a new query builder"""
+
+        super().__init__()
 
         self._query = []
         self.current_field = None
@@ -37,7 +46,6 @@ class BaseQueryBuilder:
         return self
 
     def equals(self: Q, data: Union[str, int]) -> Q:
-
         return self._add_condition(Operators.Comparison.EQUALS, data, types=[int, str])
 
     def order_by(self: Q, direction: OrderBy) -> Q:
@@ -53,7 +61,7 @@ class BaseQueryBuilder:
         Returns:
             QueryBuilder: The current QueryBuilder object
         """
-            
+
         _order_by_string = f"{direction}{self.current_field}"
 
         self._query.append(_order_by_string)
@@ -69,16 +77,18 @@ class BaseQueryBuilder:
         return self
 
     def IN(self: Q, data: List) -> Q:
-        return self._add_condition("IN", ",".join(map(str, data)), types=[str])
+        return self._add_condition(
+            Operators.Comparison.IN, ",".join(map(str, data)), types=[str]
+        )
 
     @property
     def AND(self: Q) -> Q:
-        """Adds an and-operator"""
+
         return self._add_logical_operator(Operators.Logical.AND)
 
     @property
     def OR(self: Q) -> Q:
-        """Adds an or-operator"""
+
         return self._add_logical_operator(Operators.Logical.OR)
 
     @property
@@ -91,7 +101,7 @@ class BaseQueryBuilder:
         :param contains: Match field containing the provided value
         """
 
-        return self._add_condition("LIKE", contains, types=[str])
+        return self._add_condition(Operators.Comparison.LIKE, contains, types=[str])
 
     def __str__(self) -> str:
         """String representation of the query object
@@ -138,7 +148,9 @@ class BaseQueryBuilder:
         self._query.append(operator)
         return self
 
-    def _add_condition(self: Q, operator, operand, types) -> Q:
+    def _add_condition(
+        self: Q, operator: Operators.Comparison, operand: Any, types: List[Any]
+    ) -> Q:
         """Appends condition to self._query after performing validation
         :param operator: operator (str)
         :param operand: operand
