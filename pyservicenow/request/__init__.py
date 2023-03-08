@@ -13,6 +13,10 @@ from pyservicenow.request._servicenow_entry_collection_request import (
 from pyservicenow.request._table_entry_collection_request import (
     TableEntryCollectionRequest,
 )
+
+from pyservicenow.request._knowledge_article_entry_collection_request import KnowledgeArticleEntryCollectionRequest
+from pyservicenow.request._knowledge_article_entry_request import KnowledgeArticleEntryRequest
+
 from pyservicenow.request._table_entry_request import TableEntryRequest
 from pyservicenow.request._ui_user_current_user_request import UIUserCurrentUserRequest
 
@@ -22,6 +26,8 @@ __all__ = [
     "BaseAttachmentRequest",
     "BaseServiceNowEntryRequest",
     "BaseTableRequest",
+    "KnowledgeArticleEntryCollectionRequest",
+    "KnowledgeArticleEntryRequest",
     "ServiceNowTableEntryCollectionRequest",
     "TableEntryCollectionRequest",
     "TableEntryRequest",
