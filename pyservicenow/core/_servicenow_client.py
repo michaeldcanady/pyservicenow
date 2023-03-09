@@ -10,7 +10,7 @@ from pyrestsdk import AbstractServiceClient
 from pyrestsdk.credential import BasicCredential
 from pyrestsdk.middleware import BaseMiddleware
 
-from pyservicenow.builder import NowRequestBuilder, SnKmAPIRequestBuilder
+from pyservicenow.builder import NowRequestBuilder
 from pyservicenow.core._client_factory import HTTPClientFactory
 
 Logger = getLogger(__name__)
@@ -62,11 +62,6 @@ class ServiceNowClient(AbstractServiceClient):
         """Constructs Now Request Builder"""
 
         return NowRequestBuilder(f"{self.base_url}/now", self)
-    
-    @property
-    def sn_km_api(self) -> SnKmAPIRequestBuilder:
-        
-        return SnKmAPIRequestBuilder(f"{self.base_url}/sn_km_api", self)
 
     @property
     def base_url(self) -> str:

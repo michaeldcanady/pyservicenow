@@ -42,6 +42,11 @@ class AbstractAttachmentRequestBuilder(
         Returns:
             AttachmentEntryCollectionRequest: The constructed Table Entry Collection Request
         """
+    
+    @property
+    @abstractmethod
+    def file(self):
+        pass
 
     @abstractmethod
     def request_by_id(self, sys_id: str) -> AttachmentEntryRequest:

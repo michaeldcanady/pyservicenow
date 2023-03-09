@@ -20,6 +20,8 @@ from pyservicenow.request import (
     AttachmentEntryCollectionRequest,
 )
 
+from pyservicenow.builder._attachment_file_request_builder import AttachmentFileRequestBuilder
+
 if TYPE_CHECKING:
     from pyservicenow.core import ServiceNowClient
 
@@ -44,6 +46,11 @@ class AttachmentRequestBuilder(
         return AttachmentEntryCollectionRequest(
             self.request_url, self.request_client, options
         )
+        
+    @property
+    def file(self) -> AttachmentFileRequestBuilder:
+        
+        return AttachmentFileRequestBuilder(self.append_segment_to_request_url("file"), self.request_client)
 
     def request_by_id(self, sys_id: str) -> AttachmentEntryRequest:
 
