@@ -9,7 +9,11 @@ from pyservicenow.request._base_servicenow_request import BaseServiceNowEntryReq
 
 from pyservicenow.types.models import ServiceNowQueryOption
 
-class AttachmentFileEntryRequest(SupportsInvokeRequest, SupportsPostMethod, BaseServiceNowEntryRequest):
+from pyservicenow.types.models import (
+    AttachmentEntry,
+)
+
+class AttachmentFileEntryRequest(SupportsInvokeRequest, SupportsPostMethod, BaseServiceNowEntryRequest[AttachmentEntry]):
     """Attachement File Entry Request Type"""
     
     

@@ -11,6 +11,6 @@ class ServiceNowHeaderOption(HeaderOption):
 
     Name: Header
 
-    
+    @property
     def as_dict(self) -> Dict[str, str]:
         return {str(self.Name): str(self.Value)}

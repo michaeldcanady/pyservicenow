@@ -110,12 +110,12 @@ class ServiceNowPropertyCollection(Entity, AbstractServiceNowPropertyCollection)
 
     @property
     def __json__(self) -> str:
-        return dumps(self.as_dict())
+        return dumps(self.as_dict)
 
     @property
     def as_json(self) -> Dict:
         """Gets the object as it's dict representation"""
-        return self.as_dict()
+        return self.as_dict
 
     def add_property(
         self, key, value: Union[Dict[str, Any], str, ServiceNowProperty]
