@@ -36,9 +36,8 @@ class ServiceNowPropertyCollection(Entity, AbstractServiceNowPropertyCollection)
     __metaclass__ = FrozenAttributes
 
     def __init__(self, client: C) -> None:
-        
         super().__init__(client)
-        
+
         self._is_null = True
         self._internaldict = {}
         self._changed_keys = []
@@ -95,22 +94,28 @@ class ServiceNowPropertyCollection(Entity, AbstractServiceNowPropertyCollection)
 
         return changed_dict
 
+    @property
     def as_dict(self) -> Dict[str, Any]:
         _dict: Dict[str, Any] = {}
 
         for key, value in self._internaldict.items():
-            _dict[key] = value.as_dict
+            
+            _value = value
+            
+            if isinstance(value, ServiceNowProperty) or isinstance(value, ServiceNowPropertyCollection):
+                _value = value.as_dict
+            _dict[key] = _value
 
         return _dict
 
     @property
     def __json__(self) -> str:
-        return dumps(self.as_dict())
+        return dumps(self.as_dict)
 
     @property
     def as_json(self) -> Dict:
         """Gets the object as it's dict representation"""
-        return self.as_dict()
+        return self.as_dict
 
     def add_property(
         self, key, value: Union[Dict[str, Any], str, ServiceNowProperty]

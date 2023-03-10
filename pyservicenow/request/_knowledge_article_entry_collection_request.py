@@ -1,0 +1,9 @@
+
+from pyrestsdk.request.supports_types import SupportsInvokeCollectionRequest
+
+from pyservicenow.request._base_servicenow_request import BaseServiceNowEntryRequest
+
+from pyservicenow.types.models import KnowledgeArticleEntry
+
+class KnowledgeArticleEntryCollectionRequest(SupportsInvokeCollectionRequest, BaseServiceNowEntryRequest[KnowledgeArticleEntry]):
+    pass

@@ -10,6 +10,7 @@ class ServiceNowQueryOption(QueryOption):
 
     Name: QueryParameters
 
+    @property
     def as_dict(self) -> Dict[str, Any]:
 
         if isinstance(self.Value, list):

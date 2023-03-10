@@ -67,33 +67,23 @@ class BaseServiceNowEntryRequest(SupportsGetMethod, BaseRequest[S]):
 
         _json_text = _response.text
         _json = json.loads(_json_text)
+        _result = _json["result"]
 
-        try:
-            _response.raise_for_status()
-        except:
-            self.parse_exception(_json)
-        else:
-            _result = _json["result"]
+        _operation_dict: Dict[
+            Type, Callable[[Union[Dict, List], ServiceNowClient], Union[List[S], S]]
+        ] = {
+            dict: lambda x, y: self.generic_type.from_json(x, y),  # type: ignore
+            list: lambda x, y: [self.generic_type.from_json(raw_result, y) for raw_result in x],
+        }
 
-        return parse_result(self._generic_type, _result, self.Client)
+        if (_func := _operation_dict.get(type(_result), None)) is None:
+            raise Exception(f"unexpected type: {type(_result)}")
 
-    def parse_exception(self, raw_json: Dict[str, Any]):
-        raise PyServiceNowException.from_json(raw_json)
+        return _func(_result, self.Client)
 
-
-def parse_result(
-    obj_type: S, result: Union[Dict[str, Any], List[Dict[str, Any]]], client
-) -> Union[List[S], S]:
-    """parses return into expected return type"""
-
-    _operation_dict: Dict[
-        Type, Callable[[Union[Dict, List], ServiceNowClient], Union[List[S], S]]
-    ] = {
-        dict: lambda x, y: obj_type.from_json(x, y),  # type: ignore
-        list: lambda x, y: [obj_type.from_json(raw_result, y) for raw_result in x],
-    }
-
-    if (_func := _operation_dict.get(type(result), None)) is None:
-        raise Exception(f"unexpected type: {type(result)}")
-
-    return _func(result, client)
+    def parse_exception(self, _response: Response) -> None:
+        
+        _json_text = _response.text
+        _json = json.loads(_json_text)
+        
+        raise PyServiceNowException.from_json(_json)
