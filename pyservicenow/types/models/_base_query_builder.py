@@ -5,10 +5,6 @@ from pyservicenow.types.enums import OrderBy, Operators, RelativeDate
 
 from datetime import datetime
 
-from pyservicenow.types.models._abstract_base_query_builder import (
-    AbstractBaseQueryBuilder,
-)
-
 from pyservicenow.types.exceptions import (
     QueryEmpty,
     QueryExpressionError,
@@ -20,7 +16,7 @@ Q = TypeVar("Q", bound="BaseQueryBuilder")
 
 # https://docs.servicenow.com/en-US/bundle/utah-platform-user-interface/page/use/common-ui-elements/reference/r_OpAvailableFiltersQueries.html
 
-class BaseQueryBuilder(AbstractBaseQueryBuilder):
+class BaseQueryBuilder:
     """A class that builds query strings for the ServiceNow API.
     """
 
@@ -257,8 +253,16 @@ class BaseQueryBuilder(AbstractBaseQueryBuilder):
             raise QueryEmpty("At least one condition is required")
         elif self._conditional_operator is None:
             raise QueryExpressionError("field() expects an expression")
+        
+        query_string = ""
+        
+        for fragment in self._query:
+            
+            if isinstance(fragment, tuple):
+                fragment = "".join(fragment)
+            query_string += fragment
 
-        return str().join(self._query)
+        return query_string
 
     def _add_logical_operator(self: Q, operator: Operators.Logical) -> Q:
         """Adds a logical operator in query
@@ -307,8 +311,11 @@ class BaseQueryBuilder(AbstractBaseQueryBuilder):
         
         if isinstance(operand, datetime):
             operand = self._datetime_to_javascript(operand)
+            
+            
+        # f"{self._current_field}{operator}{operand}"
 
-        self._query.append(f"{self._current_field}{operator}{operand}")
+        self._query.append((self._current_field, operator, operand, ))
 
         return self
     
