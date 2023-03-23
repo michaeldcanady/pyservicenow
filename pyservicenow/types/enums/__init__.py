@@ -8,6 +8,7 @@ from pyservicenow.types.enums._view import View
 from pyservicenow.types.enums._header import Header
 from pyservicenow.types.enums._order_by import OrderBy
 from pyservicenow.types.enums._operators import Operators
+from pyservicenow.types.enums._relative_date import RelativeDate
 
 if version_info < (3,10):
     from pyservicenow.types.enums._encryption_context39 import EncryptionContext
@@ -24,4 +25,5 @@ __all__ = [
     "EncryptionContext",
     "OrderBy",
     "Operators",
+    "RelativeDate",
 ]

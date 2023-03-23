@@ -62,7 +62,7 @@ class AbstractBaseQueryBuilder:
         """
 
     @abstractmethod
-    def IN(self: Q, data: List) -> Q:
+    def is_one_of(self: Q, data: List) -> Q:
         """Sets the operator to in
 
         Args:

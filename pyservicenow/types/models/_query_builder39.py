@@ -53,7 +53,7 @@ class QueryBuilder(BaseQueryBuilder):
 
                 oper_dict = {
                     Operators.Comparison.EQUALS: query_builder.equals,
-                    Operators.Comparison.IN: query_builder.IN,
+                    Operators.Comparison.IN: query_builder.is_one_of,
                     Operators.Comparison.LIKE: query_builder.contains,
                 }
 
@@ -80,7 +80,7 @@ class QueryBuilder(BaseQueryBuilder):
                 if i == n - 1:
                     oper_dict = {
                         Operators.Comparison.EQUALS: query_builder.equals,
-                        Operators.Comparison.IN: query_builder.IN,
+                        Operators.Comparison.IN: query_builder.is_one_of,
                         Operators.Comparison.LIKE: query_builder.contains,
                     }
 
