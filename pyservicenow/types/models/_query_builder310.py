@@ -52,7 +52,7 @@ class QueryBuilder(BaseQueryBuilder):
                         case Operators.Comparison.EQUALS:
                             query_builder.equals(value)
                         case Operators.Comparison.IN:
-                            query_builder.IN(value)
+                            query_builder.is_one_of(value)
                         case Operators.Comparison.LIKE:
                             query_builder.contains(value)
 
@@ -77,7 +77,7 @@ class QueryBuilder(BaseQueryBuilder):
                             case Operators.Comparison.EQUALS:
                                 query_builder.equals(value)
                             case Operators.Comparison.IN:
-                                query_builder.IN(value)
+                                query_builder.is_one_of(value)
                             case Operators.Comparison.LIKE:
                                 query_builder.contains(value)
                 case other:

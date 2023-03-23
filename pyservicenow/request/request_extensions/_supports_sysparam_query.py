@@ -23,8 +23,9 @@ class SupportsSysparamQuery(SupportsQueryOptions):
             TableEntryCollectionRequest: The request object to send.
         """
 
-        if not isinstance(query, QueryBuilder):
-            query = QueryBuilder.parse(query)
+        # removed until completion of Issue #42
+        #if not isinstance(query, QueryBuilder):
+        #    query = QueryBuilder.parse(query)
 
         self.query_options.append(ServiceNowQueryOption(QueryParameters.QUERY, query))
 

@@ -10,9 +10,30 @@ class Operators:
         """Comparision Enum"""
 
         NULL = ""
+        
         EQUALS = "="
+        NOTEQUALS = "!="
+        
         IN = "IN"
+        NOTIN = "NOT IN"
+        
         LIKE = "LIKE"
+        NOTLIKE = "NOT LIKE"
+        
+        STARTSWITH = "STARTSWITH"
+        ENDSWITH = "ENDSWITH"
+        
+        LESSEROREQUAL = "<="
+        GREATEROREQUAL = ">="
+        
+        ISEMPTY = "ISEMPTY"
+        ISNOTEMPTY = "ISNOTEMPTY"
+        ISANYTHING = "ANYTHING"
+        
+        BETWEEN = "BETWEEN"
+        
+        ISSAME = "SAMEAS"
+        ISDIFFERENT = "NSAMEAS"
 
     class Logical(StrEnum):
         """Logical Operator Enum"""
@@ -20,6 +41,7 @@ class Operators:
         AND = "^"
         OR = "^OR"
         NEWQUERY = "^NQ"
+        ENDQUERY = "^EQ"
 
 
 Operators.Comparison.NULL.__doc__ = """No operator selected"""

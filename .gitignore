@@ -32,3 +32,5 @@ pyservicenow.egg-info/
 testing.py
 
 .pypirc
+list_properties_test.py
+parse_test.py
